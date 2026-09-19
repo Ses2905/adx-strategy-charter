@@ -1,0 +1,11 @@
+{
+  "name": "Advertiser Experience deck",
+  "install": "bash .cursor/install.sh",
+  "terminals": [
+    {
+      "name": "deck-server",
+      "command": "bash .cursor/serve.sh"
+    }
+  ],
+  "ports": [8899]
+}
