@@ -3020,6 +3020,131 @@
   .slide.s-ls.s-ls-shallow[data-label="Team"] .person h3 {
     margin: 0 0 var(--space-8);
   }
+
+  /* Surgical visual-audit pass — scoped to approved slides only */
+  .slide[data-label="Revenue"] .evidence {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0 var(--ls-48);
+    max-width: 1520px;
+    width: 100%;
+  }
+  .slide[data-label="Revenue"] .evidence article {
+    padding-top: var(--ls-16);
+    border-top: 1px solid var(--line);
+    min-width: 0;
+  }
+  .slide[data-label="Revenue"] .evidence .n {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 44px;
+    letter-spacing: -0.04em;
+    color: var(--true);
+    line-height: 1;
+    margin: 0 0 var(--ls-8);
+  }
+  .slide[data-label="Revenue"] .evidence .unit {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--true);
+    margin: 0 0 var(--ls-16);
+  }
+  .slide[data-label="Revenue"] .evidence h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 6px;
+  }
+  .slide[data-label="Revenue"] .evidence p {
+    font-size: 15px;
+    line-height: 1.35;
+    color: var(--muted);
+    margin: 0;
+  }
+  .slide[data-label="Revenue"] .evidence .cite {
+    margin-top: var(--ls-16);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+
+  .forecast-line .line { stroke-width: 2px; }
+  .forecast-line .pt-end { fill: var(--true); stroke: var(--true); }
+  .forecast-line .lbl { fill: var(--muted); }
+  .forecast-line .end-val {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 28px;
+    letter-spacing: -0.03em;
+    fill: var(--true);
+  }
+  .forecast-line .end-delta {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    fill: var(--true);
+  }
+
+  .slide[data-label="Goals"] .tbl .tbl-group td {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--true);
+    padding-top: var(--ls-24);
+    padding-bottom: var(--ls-8);
+    border-bottom: 1px solid var(--line);
+    background: none;
+  }
+  .slide[data-label="Goals"] .tbl tbody tr.tbl-group:first-child td {
+    padding-top: var(--ls-8);
+  }
+
+  .slide[data-label="Scorecard"] .tbl .ph {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    opacity: 0.45;
+  }
+
+  .slide[data-label="Rubric"] .route__rail {
+    height: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background: linear-gradient(var(--true), var(--true)) no-repeat 0 3px / 100% 1px;
+  }
+  .slide[data-label="Rubric"] .route__rail::before,
+  .slide[data-label="Rubric"] .route__rail::after {
+    display: none;
+  }
+  .slide[data-label="Rubric"] .route__tick {
+    position: relative;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--true);
+    padding-top: 10px;
+    line-height: 1;
+  }
+  .slide[data-label="Rubric"] .route__tick::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1px;
+    height: 7px;
+    background: var(--true);
+    transform: translateX(-50%);
+  }
+
+  .slide[data-label="Philosophy"] .spectrum-points li::before {
+    width: 10px;
+    height: 10px;
+  }
 </style>
 <link rel="stylesheet" href="editor.css" />
 <link rel="stylesheet" href="css/local-edits.css" />
@@ -3151,16 +3276,17 @@
           <line class="axis" x1="80" y1="280" x2="1040" y2="280"></line>
           <line class="axis" x1="80" y1="80" x2="80" y2="280"></line>
           <polyline class="line" points="80,268 320,216 560,165 800,122 1040,80"></polyline>
-          <circle class="pt" cx="80" cy="268" r="5"></circle>
-          <circle class="pt" cx="320" cy="216" r="5"></circle>
-          <circle class="pt" cx="560" cy="165" r="5"></circle>
-          <circle class="pt" cx="800" cy="122" r="5"></circle>
-          <circle class="pt" cx="1040" cy="80" r="5"></circle>
+          <circle class="pt" cx="80" cy="268" r="4"></circle>
+          <circle class="pt" cx="320" cy="216" r="4"></circle>
+          <circle class="pt" cx="560" cy="165" r="4"></circle>
+          <circle class="pt" cx="800" cy="122" r="4"></circle>
+          <circle class="pt pt-end" cx="1040" cy="80" r="6"></circle>
           <text class="lbl" x="80" y="252" text-anchor="middle">$83.7B</text>
           <text class="lbl" x="320" y="200" text-anchor="middle">$99.8B</text>
           <text class="lbl" x="560" y="149" text-anchor="middle">$115.6B</text>
           <text class="lbl" x="800" y="106" text-anchor="middle">$129.1B</text>
-          <text class="lbl" x="1040" y="64" text-anchor="middle">$142.1B</text>
+          <text class="end-val" x="1040" y="46" text-anchor="middle">$142.1B</text>
+          <text class="end-delta" x="1040" y="66" text-anchor="middle">+70% vs 2026</text>
           <text class="yr" x="80" y="308" text-anchor="middle">2026</text>
           <text class="yr" x="320" y="308" text-anchor="middle">2027</text>
           <text class="yr" x="560" y="308" text-anchor="middle">2028</text>
@@ -3312,33 +3438,36 @@
       <div class="slide-content">
 <div class="slide-content-inner">
 <div class="ls-group">
-<div class="chain" role="img" aria-label="Experience builds trust, which drives adoption, which concentrates investment.">
+<div class="evidence" role="img" aria-label="Four independent evidence points. Different measures, questions, and sources.">
         <article>
-          <span class="dot" aria-hidden="true"></span>
           <div class="n">80%</div>
+          <div class="unit">Share of respondents</div>
           <h3>Experience</h3>
           <p>Would shift more budget when buying is simpler and inventory is accessible.</p>
+          <p class="cite"><a href="https://koddi.com/resources/programmatic-retail-media-report/" target="_blank" rel="noopener">Koddi, 2025</a></p>
         </article>
         <article>
-          <span class="dot" aria-hidden="true"></span>
           <div class="n">−20</div>
+          <div class="unit">Industry NPS</div>
           <h3>Trust</h3>
           <p>Industry NPS across 34 networks. Advocacy is weak where the work is hard.</p>
+          <p class="cite">RMN NPS</p>
         </article>
         <article>
-          <span class="dot" aria-hidden="true"></span>
           <div class="n">93%</div>
+          <div class="unit">Share of respondents</div>
           <h3>Adoption</h3>
           <p>DSP access would move some or significant non-retail media into retail media.</p>
+          <p class="cite"><a href="https://koddi.com/resources/programmatic-retail-media-report/" target="_blank" rel="noopener">Koddi, 2025</a></p>
         </article>
         <article>
-          <span class="dot" aria-hidden="true"></span>
           <div class="n">50%</div>
+          <div class="unit">Share of respondents</div>
           <h3>Investment</h3>
           <p>Expect to consolidate spend across fewer networks. Simplicity decides the next dollar.</p>
+          <p class="cite"><a href="https://skai.io/reports-and-whitepapers/2025-state-of-retail-media-report/" target="_blank" rel="noopener">Skai, 2025</a></p>
         </article>
       </div>
-<div class="source"><a href="https://koddi.com/resources/programmatic-retail-media-report/" target="_blank" rel="noopener">Koddi, The State Of Programmatic Retail Media 2025</a> · <a href="https://skai.io/reports-and-whitepapers/2025-state-of-retail-media-report/" target="_blank" rel="noopener">Skai, 2025 State Of Retail Media Report</a> · RMN NPS</div>
       </div>
 </div>
       </div>
@@ -3514,7 +3643,7 @@
           <p>Negative NPS in every measured month. Systemic, not a release.</p>
         </div>
         <div class="metric">
-          <div class="n">0.89</div>
+          <div class="n">r = 0.89</div>
           <h3>Experience–value correlation</h3>
           <p>How they rate the experience tracks whether they believe it works.</p>
         </div>
@@ -3860,18 +3989,18 @@
             <span class="ax ax-e">Speed without ceremony</span>
             <div class="spectrum-cross" aria-hidden="true"><b class="n"></b><b class="s"></b><b class="w"></b><b class="e"></b></div>
             <ul class="spectrum-points">
-              <li style="--x:12%; --y:14%; --dot:12px;">Annual budget allocation</li>
-              <li style="--x:40%; --y:18%; --dot:10px;">Portfolio planning</li>
-              <li style="--x:16%; --y:28%; --dot:8px;">Campaign objectives</li>
-              <li style="--x:42%; --y:32%; --dot:10px;">Cross-channel planning</li>
-              <li style="--x:14%; --y:40%; --dot:8px;">Audience strategy</li>
-              <li style="--x:44%; --y:24%; --dot:8px;">Retail calendar planning</li>
-              <li style="--x:58%; --y:58%; --dot:10px;">Creative development</li>
-              <li class="is-speed" style="--x:88%; --y:62%; --dot:10px;">Campaign launch</li>
-              <li style="--x:56%; --y:70%; --dot:8px;">Asset management</li>
-              <li style="--x:62%; --y:78%; --dot:8px;">Campaign optimizations</li>
-              <li style="--x:58%; --y:86%; --dot:10px;">Bulk editing</li>
-              <li class="is-speed" style="--x:88%; --y:88%; --dot:12px;">Bid changes</li>
+              <li style="--x:12%; --y:14%;">Annual budget allocation</li>
+              <li style="--x:40%; --y:18%;">Portfolio planning</li>
+              <li style="--x:16%; --y:28%;">Campaign objectives</li>
+              <li style="--x:42%; --y:32%;">Cross-channel planning</li>
+              <li style="--x:14%; --y:40%;">Audience strategy</li>
+              <li style="--x:44%; --y:24%;">Retail calendar planning</li>
+              <li style="--x:58%; --y:58%;">Creative development</li>
+              <li class="is-speed" style="--x:88%; --y:62%;">Campaign launch</li>
+              <li style="--x:56%; --y:70%;">Asset management</li>
+              <li style="--x:62%; --y:78%;">Campaign optimizations</li>
+              <li style="--x:58%; --y:86%;">Bulk editing</li>
+              <li class="is-speed" style="--x:88%; --y:88%;">Bid changes</li>
             </ul>
           </div>
         </div>
@@ -4174,7 +4303,7 @@
             <p>Score 04–06 · time or steps cut; UI, API, and AI support; whether it will be rebuilt when the platform unifies</p>
           </article>
         </div>
-        <div class="route__rail" aria-hidden="true"></div>
+        <div class="route__rail" aria-hidden="true"><span class="route__tick">01</span><span class="route__tick">02</span><span class="route__tick">03</span><span class="route__tick">04</span><span class="route__tick">05</span><span class="route__tick">06</span></div>
         <div class="route__out">
           <article>
             <h3>High pain, high leverage, low rework</h3>
@@ -4972,8 +5101,10 @@
           </tr>
         </thead>
         <tbody>
+          <tr class="tbl-group"><td colspan="4">Established baselines</td></tr>
           <tr><td>Advertiser NPS</td><td>−27</td><td class="ph">[target]</td><td>Established · Pendo, 1,350 responses</td></tr>
           <tr><td>Experience rating</td><td>2 / 5</td><td class="ph">[target]</td><td>Established · Pendo</td></tr>
+          <tr class="tbl-group"><td colspan="4">Instrumentation required</td></tr>
           <tr><td>Time to complete core tasks</td><td>Not measured</td><td class="ph">[target]</td><td>Needs task-level instrumentation</td></tr>
           <tr><td>Task success rate</td><td>Not measured</td><td class="ph">[target]</td><td>Needs funnel definition per workflow</td></tr>
           <tr><td>Workflow abandonment</td><td>Not measured</td><td class="ph">[target]</td><td>Needs event instrumentation</td></tr>
