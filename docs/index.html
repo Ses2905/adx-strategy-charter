@@ -1433,6 +1433,104 @@
   }
   .anatomy .shared p { font-size: 16px; line-height: 1.4; color: var(--muted); max-width: 48em; }
 
+  /* Slide 18 — Platform structure. Scoped. Does not change shared .anatomy or Slide 17. */
+  .platform-topo {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .platform-topo .cell {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .platform-topo .doors .cell {
+    border-top: 0;
+  }
+  .platform-topo .cell::before {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    margin-bottom: 10px;
+    border: 1px solid var(--muted);
+    background: var(--paper);
+  }
+  .platform-topo .lab {
+    margin-bottom: 12px;
+  }
+  .platform-topo .doors,
+  .platform-topo .halls {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    column-gap: 2%;
+  }
+  .platform-topo .doors .cell:nth-child(1) { grid-column: 1 / 3; }
+  .platform-topo .doors .cell:nth-child(2) { grid-column: 4 / 6; }
+  .platform-topo .topo-fan {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 56px;
+    overflow: visible;
+    container-type: inline-size;
+  }
+  .platform-topo .fan-v,
+  .platform-topo .fan-d {
+    position: absolute;
+    top: 0;
+    background: var(--muted);
+    pointer-events: none;
+  }
+  .platform-topo .fan-v {
+    width: 1px;
+    height: 56px;
+  }
+  .platform-topo .fan-d {
+    height: 1px;
+    width: hypot(20.4cqi, 56px);
+    transform-origin: 0 50%;
+  }
+  .platform-topo .fan-sc { left: 4px; }
+  .platform-topo .fan-ac { left: calc(61.2cqi + 4px); }
+  .platform-topo .fan-sc-disp {
+    left: 4px;
+    transform: rotate(atan(56px / 20.4cqi));
+  }
+  .platform-topo .fan-ac-dsp {
+    left: calc(61.2cqi + 4px);
+    transform: rotate(calc(180deg - atan(56px / 20.4cqi)));
+  }
+  .platform-topo .fan-ac-ins {
+    left: calc(61.2cqi + 4px);
+    transform: rotate(atan(56px / 20.4cqi));
+  }
+  .platform-topo .halls {
+    align-items: stretch;
+  }
+  .platform-topo .halls .cell {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+  }
+  .platform-topo .halls .cell::after {
+    content: "";
+    display: block;
+    width: 1px;
+    height: 40px;
+    margin-top: 14px;
+    margin-bottom: 8px;
+    background: var(--muted);
+    flex: 0 0 auto;
+  }
+  .platform-topo .shared {
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+  }
+
   .equation {
     display: grid;
     grid-template-columns: 1fr auto 1fr auto 1fr;
@@ -1530,6 +1628,104 @@
     gap: 40px;
     max-width: 1520px;
     width: 100%;
+  }
+
+  /* Slide 17 — Advertiser Journey. Scoped. Does not change shared .paths. */
+  .slide[data-label="Hallways"] .journey-contrast {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+  .slide[data-label="Hallways"] .journey-contrast .paths .flow {
+    position: relative;
+    align-items: start;
+  }
+  .slide[data-label="Hallways"] .journey-contrast .stop {
+    display: block;
+    border-top: 0;
+    padding: 0;
+    min-width: 0;
+  }
+  .slide[data-label="Hallways"] .journey-contrast .stop::before,
+  .slide[data-label="Hallways"] .journey-contrast .stop::after {
+    display: none;
+  }
+  .slide[data-label="Hallways"] .journey-contrast .stop h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 6px;
+  }
+  .slide[data-label="Hallways"] .journey-contrast .stop p {
+    font-size: 15px;
+    line-height: 1.35;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .slide[data-label="Hallways"] .journey-contrast .is-broken .flow {
+    gap: 0 40px;
+    min-height: 0;
+  }
+  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop {
+    position: relative;
+  }
+  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(1) { margin-top: 0; }
+  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(2) { margin-top: 28px; }
+  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(3) { margin-top: 8px; }
+  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(4) { margin-top: 36px; }
+  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(5) { margin-top: 16px; }
+  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop::before {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    margin-bottom: 10px;
+    border: 1px solid var(--muted);
+    background: var(--paper);
+  }
+  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:not(:last-child)::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 10px;
+    width: calc(100% + 14px);
+    height: 1px;
+    background: var(--muted);
+    transform-origin: 0 50%;
+  }
+  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(1)::after { transform: rotate(6deg); }
+  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(2)::after { transform: rotate(-5deg); }
+  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(3)::after { transform: rotate(7deg); }
+  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(4)::after { transform: rotate(-5deg); }
+
+  .slide[data-label="Hallways"] .journey-contrast .is-one .flow {
+    gap: 0 24px;
+    padding-top: 0;
+  }
+  .slide[data-label="Hallways"] .journey-contrast .is-one .flow::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--true);
+  }
+  .slide[data-label="Hallways"] .journey-contrast .is-one .stop::before {
+    content: "";
+    display: block;
+    position: relative;
+    z-index: 1;
+    width: 10px;
+    height: 10px;
+    margin-bottom: 16px;
+    border-radius: 50%;
+    background: var(--true);
+  }
+  .slide[data-label="Hallways"] .journey-contrast .is-one .stop {
+    border-top: 0;
   }
 
   .forecast .imply {
@@ -1704,37 +1900,152 @@
   }
 
   .spectrum {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0 80px;
-    max-width: 1520px;
-    width: 100%;
     position: relative;
+    width: 100%;
+    max-width: 1520px;
+    min-height: 0;
+    height: 100%;
   }
-  .spectrum::before {
+  .spectrum-field {
+    position: absolute;
+    inset: 0;
+  }
+  .spectrum-cross {
+    position: absolute;
+    inset: 40px 168px 48px 136px;
+    pointer-events: none;
+  }
+  .spectrum-points {
+    position: absolute;
+    inset: 40px 168px 48px 136px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .spectrum-cross::before,
+  .spectrum-cross::after {
     content: "";
     position: absolute;
-    top: 10px; inset-inline: 0;
-    height: 1px;
     background: var(--true);
   }
-  .spectrum > div { padding-top: 32px; }
-  .spectrum .kicker {
+  .spectrum-cross::before {
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    transform: translateX(-50%);
+  }
+  .spectrum-cross::after {
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    transform: translateY(-50%);
+  }
+  .spectrum-cross b {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--true);
+  }
+  .spectrum-cross b.n { left: 50%; top: 0; transform: translate(-50%, -50%); }
+  .spectrum-cross b.s { left: 50%; top: 100%; transform: translate(-50%, -50%); }
+  .spectrum-cross b.w { left: 0; top: 50%; transform: translate(-50%, -50%); }
+  .spectrum-cross b.e { left: 100%; top: 50%; transform: translate(-50%, -50%); }
+  .spectrum .ax {
+    position: absolute;
     font-family: var(--mono);
     font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--true);
-    margin-bottom: 8px;
+    white-space: nowrap;
+    line-height: 1;
+    background: var(--paper);
+    padding: 4px 8px;
   }
-  .spectrum h3 {
-    font-family: var(--display);
-    font-weight: 300;
-    font-size: 28px;
-    letter-spacing: -0.03em;
-    margin-bottom: 12px;
+  .spectrum .ax-n { top: 8px; left: 50%; transform: translate(-50%, 0); }
+  .spectrum .ax-s { bottom: 8px; left: 50%; transform: translate(-50%, 0); }
+  .spectrum .ax-w { left: 0; top: 50%; transform: translate(0, -50%); }
+  .spectrum .ax-e { right: 0; top: 50%; transform: translate(0, -50%); }
+  .spectrum-points li {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    font-size: 14px;
+    line-height: 1.2;
+    color: var(--ink);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    white-space: nowrap;
+    width: max-content;
+    transform: translate(14px, -50%);
   }
-  .spectrum li { font-size: 16px; line-height: 1.4; color: var(--muted); list-style: none; padding: 5px 0; }
+  .spectrum-points li::before {
+    content: "";
+    position: absolute;
+    left: -14px;
+    top: 50%;
+    width: var(--dot, 10px);
+    height: var(--dot, 10px);
+    border-radius: 50%;
+    background: var(--ink);
+    transform: translate(-50%, -50%);
+  }
+  .spectrum-points li.is-speed {
+    transform: translate(calc(-100% - 14px), -50%);
+  }
+  .spectrum-points li.is-speed::before {
+    left: auto;
+    right: -14px;
+    transform: translate(50%, -50%);
+  }
+
+  .slide.s-ls.s-split-matrix {
+    grid-template-rows: var(--head-inset) minmax(0, 1fr) var(--foot-safe);
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    column-gap: var(--ls-64);
+  }
+  .slide.s-ls.s-split-matrix .slide-header {
+    grid-row: 2;
+    grid-column: 1;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    max-width: none;
+    padding-inline-end: 8px;
+  }
+  .slide.s-ls.s-split-matrix .slide-header h2 {
+    max-width: none;
+  }
+  .slide.s-ls.s-split-matrix .slide-content {
+    grid-row: 2;
+    grid-column: 2;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    padding: 0;
+  }
+  .slide.s-ls.s-split-matrix .slide-content-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 0;
+    grid-template-rows: none;
+  }
+  .slide.s-ls.s-split-matrix .slide-content-inner > .spectrum {
+    grid-row: auto;
+    width: auto;
+    height: calc(100% - 16px);
+    max-height: 720px;
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+  }
 
   .axes {
     display: grid;
@@ -2160,8 +2471,11 @@
     <div class="body">
       <div class="slide-header">
 <span class="eyebrow">Industry maturity</span>
+<div class="industry-quote">
+<span class="industry-quote__mark" aria-hidden="true">“</span>
 <h2>Only <em class="mark">13%</em> of networks meet advanced maturity criteria, despite 42% believing they do.</h2>
-<p class="source"><a href="https://info.koddi.com/hubfs/All%20Commerce%20Media%20Playbook.pdf" target="_blank" rel="noopener">Koddi, The Commerce Media Playbook, Forrester Criteria</a></p>
+<p class="source industry-quote__source"><span class="industry-quote__rule" aria-hidden="true"></span><a href="https://info.koddi.com/hubfs/All%20Commerce%20Media%20Playbook.pdf" target="_blank" rel="noopener"><span class="industry-quote__logo"><img src="logos/koddi.png" alt="Koddi, The Commerce Media Playbook, Forrester Criteria"></span></a></p>
+</div>
       </div>
       <div class="slide-content"></div>
     </div>
@@ -2197,8 +2511,11 @@
     <div class="body">
       <div class="slide-header">
 <span class="eyebrow">What buyers now expect</span>
+<div class="industry-quote">
+<span class="industry-quote__mark" aria-hidden="true">“</span>
 <h2>Advertisers want partners with <em class="mark">integrated</em>, end-to-end capabilities — not a single performance channel.</h2>
-<p class="source"><a href="https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/commerce-media-at-an-inflection-point-how-to-win-with-a-full-stack-approach" target="_blank" rel="noopener">McKinsey, Commerce Media At An Inflection Point</a></p>
+<p class="source industry-quote__source"><span class="industry-quote__rule" aria-hidden="true"></span><a href="https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/commerce-media-at-an-inflection-point-how-to-win-with-a-full-stack-approach" target="_blank" rel="noopener"><span class="industry-quote__logo"><img src="logos/mckinsey.svg" alt="McKinsey, Commerce Media At An Inflection Point"></span></a></p>
+</div>
       </div>
       <div class="slide-content"></div>
     </div>
@@ -2253,8 +2570,11 @@
     <div class="body">
       <div class="slide-header">
 <span class="eyebrow">Our position</span>
+<div class="industry-quote">
+<span class="industry-quote__mark" aria-hidden="true">“</span>
 <h2>The retail media playbook is no longer enough. The next phase will be defined by differentiation — and CX is the most <em class="mark">durable</em> advantage of all.</h2>
-<p class="source"><a href="https://www.thedrum.com/news/retail-media-s-next-phase-will-be-won-by-differentiation-not-scale" target="_blank" rel="noopener">The Drum, Retail Media’s Next Phase Will Be Won By Differentiation</a></p>
+<p class="source industry-quote__source"><span class="industry-quote__rule" aria-hidden="true"></span><a href="https://www.thedrum.com/news/retail-media-s-next-phase-will-be-won-by-differentiation-not-scale" target="_blank" rel="noopener"><span class="industry-quote__logo"><img src="logos/the-drum.svg" alt="The Drum, Retail Media’s Next Phase Will Be Won By Differentiation"></span></a></p>
+</div>
       </div>
       <div class="slide-content"></div>
     </div>
@@ -2407,7 +2727,7 @@
     <aside class="notes">Read two quotes, not four. The Claude line if the room is cold.</aside>
   </section>
 
-  <section class="slide paper s-compare s-ls" data-label="Hallways">
+  <section class="slide paper s-compare s-ls" data-label="Hallways" data-visual-frozen="true">
     <div class="body">
       <div class="slide-header">
 <span class="eyebrow">The advertiser journey</span>
@@ -2416,7 +2736,7 @@
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
-<div class="paths-set" role="img" aria-label="Today: disconnected hallways. Future: one Ad Center journey.">
+<div class="paths-set journey-contrast" role="img" aria-label="Today: disconnected hallways. Future: one Ad Center journey.">
       <div class="paths is-broken">
           <div class="lab">Today · Translate the org chart</div>
           <div class="flow">
@@ -2453,13 +2773,20 @@
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
-<div class="anatomy" role="img" aria-label="Seller Center and Ad Center sit above five media hallways. Shared capabilities sit underneath, reached differently from each hallway.">
+<div class="anatomy platform-topo" role="img" aria-label="Seller Center and Ad Center sit above five media hallways. Shared capabilities sit underneath, reached differently from each hallway.">
         <div>
           <div class="lab">Front doors</div>
           <div class="doors">
             <div class="cell"><h3>Seller Center</h3><p>Marketplace sellers start here, then route into enterprise workflows.</p></div>
             <div class="cell"><h3>Ad Center</h3><p>Main self-service platform, spanning several product generations at once.</p></div>
           </div>
+        </div>
+        <div class="topo-fan" aria-hidden="true">
+          <span class="fan-v fan-sc"></span>
+          <span class="fan-d fan-sc-disp"></span>
+          <span class="fan-d fan-ac-dsp"></span>
+          <span class="fan-v fan-ac"></span>
+          <span class="fan-d fan-ac-ins"></span>
         </div>
         <div>
           <div class="lab">Media hallways</div>
@@ -2664,7 +2991,7 @@
     <aside class="notes">Each shift moves a decision from inside a product roadmap to across the platform.</aside>
   </section>
 
-  <section class="slide paper s-compare s-ls" data-label="Philosophy">
+  <section class="slide paper s-compare s-ls s-split-matrix" data-label="Philosophy">
     <div class="body">
       <div class="slide-header">
 <span class="eyebrow">Product philosophy</span>
@@ -2673,30 +3000,27 @@
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
-<div class="spectrum" role="img" aria-label="A continuum from judgment to speed, not two equal columns.">
-          <div>
-          <div class="kicker">Needs judgment</div>
-          <h3>Time on the plan</h3>
-          <ul>
-          <li>Annual budget allocation</li>
-          <li>Portfolio planning</li>
-          <li>Cross-channel planning</li>
-          <li>Campaign objectives</li>
-          <li>Audience strategy</li>
-          <li>Retail calendar planning</li>
-          </ul>
-          </div>
-          <div>
-          <div class="kicker">Needs fast, efficient execution</div>
-          <h3>Speed without ceremony</h3>
-          <ul>
-          <li>Campaign launch</li>
-          <li>Bid changes</li>
-          <li>Creative development</li>
-          <li>Bulk editing</li>
-          <li>Asset management</li>
-          <li>Campaign optimizations</li>
-          </ul>
+<div class="spectrum" role="img" aria-label="Jobs plotted from judgment and time on the plan toward speed without ceremony. The useful work sits on that diagonal, not in a universal best experience.">
+          <div class="spectrum-field">
+            <span class="ax ax-n">Needs judgment</span>
+            <span class="ax ax-s">Needs fast, efficient execution</span>
+            <span class="ax ax-w">Time on the plan</span>
+            <span class="ax ax-e">Speed without ceremony</span>
+            <div class="spectrum-cross" aria-hidden="true"><b class="n"></b><b class="s"></b><b class="w"></b><b class="e"></b></div>
+            <ul class="spectrum-points">
+              <li style="--x:12%; --y:14%; --dot:12px;">Annual budget allocation</li>
+              <li style="--x:40%; --y:18%; --dot:10px;">Portfolio planning</li>
+              <li style="--x:16%; --y:28%; --dot:8px;">Campaign objectives</li>
+              <li style="--x:42%; --y:32%; --dot:10px;">Cross-channel planning</li>
+              <li style="--x:14%; --y:40%; --dot:8px;">Audience strategy</li>
+              <li style="--x:44%; --y:24%; --dot:8px;">Retail calendar planning</li>
+              <li style="--x:58%; --y:58%; --dot:10px;">Creative development</li>
+              <li class="is-speed" style="--x:88%; --y:62%; --dot:10px;">Campaign launch</li>
+              <li style="--x:56%; --y:70%; --dot:8px;">Asset management</li>
+              <li style="--x:62%; --y:78%; --dot:8px;">Campaign optimizations</li>
+              <li style="--x:58%; --y:86%; --dot:10px;">Bulk editing</li>
+              <li class="is-speed" style="--x:88%; --y:88%; --dot:12px;">Bid changes</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -4110,7 +4434,7 @@
   }
 
   function enterTargets() {
-    return "h1, h2, .sub, .lede, .pill, .eyebrow, .chap-no, .row, .card, .metric, .step, .item, .person, .node, .anatomy .cell, .principles article, .ev, .spine article, .burden .layer, .paths .stop, .equation .box, .trust-sys .pair, .stack .exp div, .inherit .kids span, .chain article, .hero-metric .hero, .hero-metric .metric, .root-split article, .say .from, .spectrum > div, .axes article, .loop article, .nest .band, .life article, .formula .box, .ask-row .item, .now-reuse article, .fromto .pair, .pull, .quote-grid q, .screen, .org .person, .chip-groups > div, .cols > div, .seq-block, .chips, .ask > div, blockquote, .figure, .tbl, .assertion";
+    return "h1, h2, .sub, .lede, .pill, .eyebrow, .chap-no, .row, .card, .metric, .step, .item, .person, .node, .anatomy .cell, .principles article, .ev, .spine article, .burden .layer, .paths .stop, .equation .box, .trust-sys .pair, .stack .exp div, .inherit .kids span, .chain article, .hero-metric .hero, .hero-metric .metric, .root-split article, .say .from, .spectrum-field, .axes article, .loop article, .nest .band, .life article, .formula .box, .ask-row .item, .now-reuse article, .fromto .pair, .pull, .quote-grid q, .screen, .org .person, .chip-groups > div, .cols > div, .seq-block, .chips, .ask > div, blockquote, .figure, .tbl, .assertion";
   }
   function settleEnter(slide) {
     if (!slide || typeof gsap === "undefined") return;
@@ -4129,7 +4453,7 @@
     const tl = gsap.timeline({ defaults: { ease: "expo.out", duration: 0.72 } });
     enterTl = tl;
     const rows = Array.from(slide.querySelectorAll(".row"));
-    const cards = Array.from(slide.querySelectorAll(".card, .metric, .step, .item, .person, .node, .anatomy .cell, .principles article, .ev, .spine article, .burden .layer, .paths .stop, .equation .box, .trust-sys .pair, .stack .exp div, .inherit .kids span, .chain article, .hero-metric .hero, .hero-metric .metric, .root-split article, .axes article, .loop article, .nest .band, .life article, .formula .box, .now-reuse article, .fromto .pair, .pull, .quote-grid q, .screen, .org .person, .chip-groups > div, .cols > div, .seq-block, .chips, .tbl, .assertion"));
+    const cards = Array.from(slide.querySelectorAll(".card, .metric, .step, .item, .person, .node, .anatomy .cell, .principles article, .ev, .spine article, .burden .layer, .paths .stop, .equation .box, .trust-sys .pair, .stack .exp div, .inherit .kids span, .chain article, .hero-metric .hero, .hero-metric .metric, .root-split article, .spectrum-field, .axes article, .loop article, .nest .band, .life article, .formula .box, .now-reuse article, .fromto .pair, .pull, .quote-grid q, .screen, .org .person, .chip-groups > div, .cols > div, .seq-block, .chips, .tbl, .assertion"));
     const asks = Array.from(slide.querySelectorAll(".ask > div"));
     const quote = slide.querySelector("blockquote");
     const pill = slide.querySelector(".pill, .eyebrow, .chap-no");

@@ -27,7 +27,7 @@
     document.querySelectorAll(".slide.s-ls").forEach((slide) => {
       const label = slide.getAttribute("data-label") || "(untitled)";
       slide.querySelectorAll(
-        ".principles article, .cols > div, .spectrum > div, .evidence .ev, .paths .stop, .spine article, .chain article, .axes article, .loop article, .ask-row .copy, .compare > div, .root-split .kids article, .equation .box, .formula .box, .now-reuse article, .life article, .nest .band, .timeline .step, .anatomy .cell, .burden .layer, .stack .exp > div, .hero-metric .hero, .hero-metric .metric"
+        ".principles article, .cols > div, .spectrum-points li, .evidence .ev, .paths .stop, .spine article, .chain article, .axes article, .loop article, .ask-row .copy, .compare > div, .root-split .kids article, .equation .box, .formula .box, .now-reuse article, .life article, .nest .band, .timeline .step, .anatomy .cell, .burden .layer, .stack .exp > div, .hero-metric .hero, .hero-metric .metric"
       ).forEach((card, i) => {
         const title = card.querySelector("h3");
         const body = card.querySelector("p, ul");

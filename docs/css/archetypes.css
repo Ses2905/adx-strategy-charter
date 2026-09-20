@@ -62,6 +62,83 @@
   letter-spacing: -0.03em;
 }
 
+/* Industry pull-quote. Markup opt-in; unused .s-quote slides stay unchanged. */
+.s-quote:has(.industry-quote) .slide-header {
+  justify-content: flex-start;
+}
+
+.s-quote:has(.industry-quote) .eyebrow {
+  margin-bottom: 0;
+}
+
+.s-quote .industry-quote {
+  width: 100%;
+  max-width: 1520px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.s-quote .industry-quote__mark {
+  display: block;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: 160px;
+  line-height: 0.72;
+  color: var(--true);
+  margin: 0 0 4px;
+}
+
+.s-quote .industry-quote h2 {
+  font-family: var(--italic);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 64px;
+  line-height: 1.24;
+  letter-spacing: -0.03em;
+  max-width: none;
+  text-wrap: pretty;
+}
+
+.s-quote .slide-header .industry-quote .industry-quote__source {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 48px 0 0;
+  color: var(--ink);
+}
+
+.s-quote .industry-quote__rule {
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--ink);
+  flex-shrink: 0;
+}
+
+.s-quote .industry-quote__source a {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.s-quote .industry-quote__logo {
+  display: flex;
+  align-items: center;
+  max-width: 240px;
+  max-height: 64px;
+}
+
+.s-quote .industry-quote__logo img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 240px;
+  max-height: 64px;
+  object-fit: contain;
+  object-position: left center;
+}
+
 .s-close .slide-header {
   justify-content: flex-start;
 }
