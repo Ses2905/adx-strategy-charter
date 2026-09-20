@@ -1425,8 +1425,9 @@
   .platform-blueprint {
     display: flex;
     flex-direction: column;
-    gap: 32px;
-    width: 100%;
+    gap: 48px;
+    width: 68%;
+    max-width: 1180px;
     min-width: 0;
   }
   .platform-blueprint .lab {
@@ -1458,61 +1459,91 @@
     font-size: 15px;
     line-height: 1.35;
     color: var(--muted);
-    margin: 4px 0 0;
+    margin: 8px 0 0;
+  }
+  .platform-blueprint__key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .platform-blueprint__key li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    line-height: 1.3;
+    color: var(--ink);
+    min-width: 0;
+  }
+  .platform-blueprint__key i {
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: var(--true);
+    flex-shrink: 0;
   }
   .platform-blueprint__cols {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    grid-template-rows: auto auto repeat(7, auto);
-    grid-auto-flow: column;
     column-gap: 24px;
     width: 100%;
     min-width: 0;
   }
-  .platform-blueprint__col,
-  .platform-blueprint__caps {
-    display: contents;
+  .platform-blueprint__col {
+    min-width: 0;
   }
   .platform-blueprint__col h3 {
     font-size: 18px;
     font-weight: 500;
-    margin: 0 0 6px;
+    margin: 0 0 8px;
     min-width: 0;
   }
   .platform-blueprint__col > p {
     font-size: 15px;
     line-height: 1.35;
     color: var(--muted);
-    margin: 0 0 16px;
+    margin: 0 0 12px;
     min-width: 0;
   }
-  .platform-blueprint__caps li {
+  .platform-blueprint__sig {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
     list-style: none;
     margin: 0;
-    padding: 8px 0;
+    padding: 12px 0 0;
     border-top: 1px solid var(--line);
-    font-size: 15px;
-    line-height: 1.3;
-    color: var(--ink);
-    min-width: 0;
   }
-  .platform-blueprint__caps li:last-child {
-    border-bottom: 1px solid var(--line);
+  .platform-blueprint__sig li {
+    width: 8px;
+    height: 8px;
+    background: var(--true);
+    flex: 0 0 8px;
   }
 
   /* Slide 26 — Fit. Two tension spectra. Does not restyle shared .axes. */
   .tension {
     display: flex;
     flex-direction: column;
-    gap: 48px;
-    width: 100%;
+    gap: 80px;
+    width: 72%;
+    max-width: 1240px;
     min-width: 0;
   }
   .tension__axis {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    min-width: 0;
+  }
+  .tension__ends {
     display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.9fr) minmax(0, 1.05fr);
-    gap: 8px 40px;
-    align-items: start;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 64px;
     width: 100%;
     min-width: 0;
   }
@@ -1534,7 +1565,7 @@
     font-size: 26px;
     letter-spacing: -0.03em;
     line-height: 1.2;
-    margin: 0 0 8px;
+    margin: 0 0 12px;
   }
   .tension__pole p {
     font-size: 16px;
@@ -1546,36 +1577,33 @@
     text-align: end;
   }
   .tension__rail {
-    align-self: start;
     position: relative;
-    height: 1px;
-    margin-top: 32px;
-    background: var(--true);
+    height: 8px;
+    background: linear-gradient(var(--true), var(--true)) no-repeat center / 100% 1px;
   }
   .tension__rail::before,
   .tension__rail::after {
     content: "";
     position: absolute;
-    top: 50%;
+    top: 0;
     width: 8px;
     height: 8px;
     border: 1px solid var(--true);
     background: var(--paper);
-    transform: translate(-50%, -50%);
   }
   .tension__rail::before { left: 0; }
-  .tension__rail::after { left: 100%; }
+  .tension__rail::after { right: 0; }
 
   /* Slide 63 — Adaptive model. Four simultaneous dimensions, not four peers. */
   .adapt-model {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 80px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 0.82fr) minmax(300px, 1.15fr) minmax(0, 0.82fr);
     grid-template-rows: auto auto auto;
-    column-gap: 48px;
-    row-gap: 28px;
+    column-gap: 40px;
+    row-gap: 40px;
     width: 100%;
     min-width: 0;
-    align-items: center;
+    align-items: start;
   }
   .adapt-model__dim {
     min-width: 0;
@@ -1592,7 +1620,7 @@
   .adapt-model__dim h3 {
     font-family: var(--display);
     font-weight: 300;
-    font-size: 26px;
+    font-size: 28px;
     letter-spacing: -0.03em;
     line-height: 1.2;
     margin: 0 0 8px;
@@ -1602,75 +1630,57 @@
     line-height: 1.4;
     color: var(--muted);
     margin: 0;
+    max-width: 22em;
   }
   .adapt-model__who {
-    grid-column: 1 / -1;
-    justify-self: center;
-    text-align: center;
-  }
-  .adapt-model__who p,
-  .adapt-model__now p {
-    max-width: 36em;
-    margin-inline: auto;
+    grid-column: 2;
+    grid-row: 1;
   }
   .adapt-model__how {
     grid-column: 1;
     grid-row: 2;
     justify-self: end;
-    text-align: end;
-  }
-  .adapt-model__how p,
-  .adapt-model__why p {
-    max-width: 28em;
+    width: min(100%, 22em);
+    padding-top: 24px;
   }
   .adapt-model__why {
     grid-column: 3;
     grid-row: 2;
     justify-self: start;
+    width: min(100%, 22em);
+    padding-top: 24px;
   }
   .adapt-model__now {
-    grid-column: 1 / -1;
+    grid-column: 2;
     grid-row: 3;
-    justify-self: center;
-    text-align: center;
   }
   .adapt-model__core {
     grid-column: 2;
     grid-row: 2;
     position: relative;
-    width: 80px;
-    height: 80px;
-    justify-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+    padding: 24px 16px 16px;
+    text-align: center;
   }
-  .adapt-model__core::before,
   .adapt-model__core::after {
     content: "";
     position: absolute;
-    background: var(--true);
-  }
-  .adapt-model__core::before {
-    left: 50%;
-    top: 0;
+    left: 24px;
+    right: 24px;
     bottom: 0;
-    width: 1px;
-    transform: translateX(-50%);
-  }
-  .adapt-model__core::after {
-    top: 50%;
-    left: 0;
-    right: 0;
     height: 1px;
-    transform: translateY(-50%);
+    background: var(--true);
   }
   .adapt-model__core b {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--true);
-    transform: translate(-50%, -50%);
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 36px;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: var(--ink);
   }
 
   .equation {
@@ -1772,80 +1782,94 @@
     width: 100%;
   }
 
-  /* Slide 17 — Advertiser Journey. Scoped. Does not change shared .paths. */
-  .slide[data-label="Hallways"] .journey-contrast {
-    width: 100%;
-    max-width: none;
+  /* PATH grammar — Hallways (re-frozen) + Sequence. Does not change shared .paths. */
+  .slide[data-label="Hallways"] .journey-contrast,
+  .slide[data-label="Sequence"] .path-contrast {
+    width: 72%;
+    max-width: 1240px;
     min-width: 0;
+    gap: 80px;
   }
-  .slide[data-label="Hallways"] .journey-contrast .paths .flow {
+  .slide[data-label="Hallways"] .journey-contrast .paths,
+  .slide[data-label="Sequence"] .path-contrast .paths {
+    gap: 16px;
+  }
+  .slide[data-label="Hallways"] .journey-contrast .paths .flow,
+  .slide[data-label="Sequence"] .path-contrast .paths .flow {
     position: relative;
     align-items: start;
   }
-  .slide[data-label="Hallways"] .journey-contrast .stop {
+  .slide[data-label="Hallways"] .journey-contrast .stop,
+  .slide[data-label="Sequence"] .path-contrast .stop,
+  .slide[data-label="Rock 04"] .paths.is-one .stop {
     display: block;
+    position: relative;
     border-top: 0;
     padding: 0;
+    padding-inline-end: 0;
     min-width: 0;
   }
   .slide[data-label="Hallways"] .journey-contrast .stop::before,
-  .slide[data-label="Hallways"] .journey-contrast .stop::after {
+  .slide[data-label="Hallways"] .journey-contrast .stop::after,
+  .slide[data-label="Sequence"] .path-contrast .stop::before,
+  .slide[data-label="Sequence"] .path-contrast .stop::after,
+  .slide[data-label="Rock 04"] .paths.is-one .stop::before,
+  .slide[data-label="Rock 04"] .paths.is-one .stop::after {
     display: none;
   }
-  .slide[data-label="Hallways"] .journey-contrast .stop h3 {
+  .slide[data-label="Hallways"] .journey-contrast .stop h3,
+  .slide[data-label="Sequence"] .path-contrast .stop h3,
+  .slide[data-label="Rock 04"] .paths.is-one .stop h3 {
     font-size: 18px;
     font-weight: 500;
-    margin: 0 0 6px;
+    margin: 0 0 8px;
   }
-  .slide[data-label="Hallways"] .journey-contrast .stop p {
+  .slide[data-label="Hallways"] .journey-contrast .stop p,
+  .slide[data-label="Sequence"] .path-contrast .stop p,
+  .slide[data-label="Rock 04"] .paths.is-one .stop p {
     font-size: 15px;
     line-height: 1.35;
     color: var(--muted);
     margin: 0;
   }
 
-  .slide[data-label="Hallways"] .journey-contrast .is-broken .flow {
-    gap: 0 40px;
+  .slide[data-label="Hallways"] .journey-contrast .is-broken .flow,
+  .slide[data-label="Sequence"] .path-contrast .is-broken .flow {
+    gap: 0 32px;
     min-height: 0;
   }
-  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop {
-    position: relative;
-  }
-  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(1) { margin-top: 0; }
-  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(2) { margin-top: 28px; }
-  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(3) { margin-top: 8px; }
-  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(4) { margin-top: 36px; }
-  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(5) { margin-top: 16px; }
-  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop::before {
+  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop::before,
+  .slide[data-label="Sequence"] .path-contrast .is-broken .stop::before {
     content: "";
     display: block;
     width: 8px;
     height: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 16px;
     border: 1px solid var(--muted);
     background: var(--paper);
   }
-  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:not(:last-child)::after {
+  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:not(:last-child)::after,
+  .slide[data-label="Sequence"] .path-contrast .is-broken .stop:not(:last-child)::after {
     content: "";
     display: block;
     position: absolute;
     top: 3px;
-    left: 10px;
-    width: calc(100% + 14px);
+    left: 24px;
+    width: calc(100% - 48px);
     height: 1px;
     background: var(--muted);
-    transform-origin: 0 50%;
   }
-  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(1)::after { transform: rotate(6deg); }
-  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(2)::after { transform: rotate(-5deg); }
-  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(3)::after { transform: rotate(7deg); }
-  .slide[data-label="Hallways"] .journey-contrast .is-broken .stop:nth-child(4)::after { transform: rotate(-5deg); }
 
-  .slide[data-label="Hallways"] .journey-contrast .is-one .flow {
-    gap: 0 24px;
+  .slide[data-label="Hallways"] .journey-contrast .is-one .flow,
+  .slide[data-label="Sequence"] .path-contrast .is-one .flow,
+  .slide[data-label="Rock 04"] .paths.is-one .flow {
+    gap: 0 32px;
     padding-top: 0;
+    position: relative;
   }
-  .slide[data-label="Hallways"] .journey-contrast .is-one .flow::before {
+  .slide[data-label="Hallways"] .journey-contrast .is-one .flow::before,
+  .slide[data-label="Sequence"] .path-contrast .is-one .flow::before,
+  .slide[data-label="Rock 04"] .paths.is-one .flow::before {
     content: "";
     display: block;
     position: absolute;
@@ -1855,7 +1879,9 @@
     height: 2px;
     background: var(--true);
   }
-  .slide[data-label="Hallways"] .journey-contrast .is-one .stop::before {
+  .slide[data-label="Hallways"] .journey-contrast .is-one .stop::before,
+  .slide[data-label="Sequence"] .path-contrast .is-one .stop::before,
+  .slide[data-label="Rock 04"] .paths.is-one .stop::before {
     content: "";
     display: block;
     position: relative;
@@ -1866,8 +1892,233 @@
     border-radius: 50%;
     background: var(--true);
   }
-  .slide[data-label="Hallways"] .journey-contrast .is-one .stop {
+  .slide[data-label="Hallways"] .journey-contrast .is-one .stop,
+  .slide[data-label="Sequence"] .path-contrast .is-one .stop,
+  .slide[data-label="Rock 04"] .paths.is-one .stop {
     border-top: 0;
+  }
+
+  /* One-to-many inheritance — Leverage, Foundation, Rock 01. Local. */
+  .inherit-branch {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 70%;
+    max-width: 1200px;
+    min-width: 0;
+  }
+  .inherit-branch .lab {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--true);
+    margin: 0 0 12px;
+  }
+  .inherit-branch .lab + .lab,
+  .inherit-branch .cap + .lab {
+    margin-top: 32px;
+  }
+  .inherit-branch .cap {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 32px;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--true);
+  }
+  .inherit-branch .cap h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 28px;
+    letter-spacing: -0.03em;
+    margin: 0 0 8px;
+  }
+  .inherit-branch .cap p {
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--muted);
+    margin: 0;
+    font-weight: 400;
+  }
+  .inherit-branch .kids {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    gap: 0 24px;
+    width: 100%;
+    min-width: 0;
+  }
+  .inherit-branch .kids span,
+  .inherit-branch .kids article {
+    position: relative;
+    display: block;
+    padding-top: 24px;
+    border-top: 0;
+    min-width: 0;
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 500;
+  }
+  .inherit-branch .kids span::before,
+  .inherit-branch .kids article::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 16px;
+    background: var(--true);
+  }
+  .inherit-branch .kids h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 8px;
+  }
+  .inherit-branch .kids p {
+    font-size: 15px;
+    line-height: 1.35;
+    color: var(--muted);
+    margin: 0;
+    font-weight: 400;
+  }
+
+  /* Rubric — criteria into dispositions. Local. */
+  .route {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    width: 70%;
+    max-width: 1200px;
+    min-width: 0;
+  }
+  .route__in,
+  .route__out {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 48px;
+    width: 100%;
+    min-width: 0;
+  }
+  .route article {
+    min-width: 0;
+  }
+  .route h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 8px;
+  }
+  .route p {
+    font-size: 15px;
+    line-height: 1.35;
+    color: var(--muted);
+    margin: 0;
+  }
+  .route__rail {
+    position: relative;
+    height: 8px;
+    background: linear-gradient(var(--true), var(--true)) no-repeat center / 100% 1px;
+  }
+  .route__rail::before,
+  .route__rail::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--true);
+    background: var(--paper);
+  }
+  .route__rail::before { left: 0; }
+  .route__rail::after { right: 0; }
+  .route__out article {
+    padding-top: 12px;
+    border-top: 1px solid var(--true);
+  }
+
+  /* Charter — vertical domains, horizontal connective layer. Local. */
+  .crosscut {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    width: 72%;
+    max-width: 1240px;
+    min-width: 0;
+  }
+  .crosscut .kicker {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--true);
+    margin: 0 0 8px;
+  }
+  .crosscut__lanes h3,
+  .crosscut__layer h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 26px;
+    letter-spacing: -0.03em;
+    margin: 0 0 16px;
+  }
+  .crosscut__cols {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0 16px;
+    width: 100%;
+    min-width: 0;
+  }
+  .crosscut__cols span {
+    display: block;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    font-size: 16px;
+    font-weight: 500;
+    min-width: 0;
+  }
+  .crosscut__layer {
+    padding-top: 16px;
+    border-top: 1px solid var(--true);
+  }
+  .crosscut__layer ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 32px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .crosscut__layer li {
+    font-size: 16px;
+    line-height: 1.35;
+    color: var(--muted);
+  }
+
+  /* Rock 02 — loop with a visible return. Local. */
+  .slide[data-label="Rock 02"] .loop {
+    width: 72%;
+    max-width: 1240px;
+    min-width: 0;
+    row-gap: 16px;
+  }
+  .slide[data-label="Rock 02"] .loop::before {
+    top: 4px;
+    height: 1px;
+  }
+  .slide[data-label="Rock 02"] .loop .dot {
+    top: 0;
+    width: 10px;
+    height: 10px;
+    border: 0;
+    background: var(--true);
+  }
+  .slide[data-label="Rock 02"] .loop__back {
+    grid-column: 1 / -1;
+    height: 24px;
+    border-left: 1px solid var(--true);
+    border-right: 1px solid var(--true);
+    border-bottom: 1px solid var(--true);
   }
 
   .forecast .imply {
@@ -2422,6 +2673,36 @@
 <link rel="stylesheet" href="css/debug.css" />
 <link rel="stylesheet" href="theme/optional-editorial-blue.css" />
 <link rel="stylesheet" href="css/chrome-stack.css?v=9" />
+<style>
+  /* Calibration v2 occupancy. After kit re-assert; does not edit frozen geometry. */
+  .slide.s-ls .slide-content-inner > .platform-blueprint {
+    width: 68%;
+    max-width: 1180px;
+  }
+  .slide.s-ls .slide-content-inner > .tension {
+    width: 70%;
+    max-width: 1200px;
+  }
+  .slide.s-ls[data-label="Hallways"] .slide-content-inner > .paths-set.journey-contrast,
+  .slide.s-ls[data-label="Sequence"] .slide-content-inner > .paths-set.path-contrast {
+    width: 72%;
+    max-width: 1240px;
+    gap: 80px;
+  }
+  .slide.s-ls[data-label="Leverage"] .slide-content-inner > .inherit-branch,
+  .slide.s-ls[data-label="Foundation"] .slide-content-inner > .inherit-branch,
+  .slide.s-ls[data-label="Rock 01"] .slide-content-inner > .inherit-branch,
+  .slide.s-ls[data-label="Rubric"] .slide-content-inner > .route {
+    width: 70%;
+    max-width: 1200px;
+  }
+  .slide.s-ls[data-label="Charter"] .slide-content-inner > .crosscut,
+  .slide.s-ls[data-label="Rock 02"] .slide-content-inner > .loop,
+  .slide.s-ls[data-label="Rock 04"] .slide-content-inner > .paths {
+    width: 72%;
+    max-width: 1240px;
+  }
+</style>
 </head>
 <body>
 <div class="viewport">
@@ -2915,7 +3196,7 @@
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
-<div class="platform-blueprint" role="img" aria-label="Two front doors sit above five media hallways. The same capability types are duplicated under each hallway.">
+<div class="platform-blueprint" role="img" aria-label="Two front doors sit above five media hallways. The same capability types are reached independently from each hallway.">
         <div>
           <div class="lab">Front doors</div>
           <div class="platform-blueprint__doors">
@@ -2924,41 +3205,53 @@
           </div>
         </div>
         <div>
-          <div class="lab">Five hallways · same capability types, named again in each</div>
+          <div class="lab">Capability types · shown once</div>
+          <ol class="platform-blueprint__key">
+            <li><i aria-hidden="true"></i>Identity</li>
+            <li><i aria-hidden="true"></i>Creative</li>
+            <li><i aria-hidden="true"></i>Audience</li>
+            <li><i aria-hidden="true"></i>Catalog</li>
+            <li><i aria-hidden="true"></i>Planning</li>
+            <li><i aria-hidden="true"></i>Measurement</li>
+            <li><i aria-hidden="true"></i>Reporting</li>
+          </ol>
+        </div>
+        <div>
+          <div class="lab">Five hallways · each reproduces the same types</div>
           <div class="platform-blueprint__cols">
             <div class="platform-blueprint__col">
               <h3>Sponsored</h3>
               <p>Separate object model and tables</p>
-              <ul class="platform-blueprint__caps">
-                <li>Identity</li><li>Creative</li><li>Audience</li><li>Catalog</li><li>Planning</li><li>Measurement</li><li>Reporting</li>
+              <ul class="platform-blueprint__sig" aria-label="Identity, Creative, Audience, Catalog, Planning, Measurement, Reporting">
+                <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
               </ul>
             </div>
             <div class="platform-blueprint__col">
               <h3>Display</h3>
               <p>Separate navigation and Living Design foundation</p>
-              <ul class="platform-blueprint__caps">
-                <li>Identity</li><li>Creative</li><li>Audience</li><li>Catalog</li><li>Planning</li><li>Measurement</li><li>Reporting</li>
+              <ul class="platform-blueprint__sig" aria-label="Identity, Creative, Audience, Catalog, Planning, Measurement, Reporting">
+                <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
               </ul>
             </div>
             <div class="platform-blueprint__col">
               <h3>Walmart DSP</h3>
               <p>Separate identity, access, and reporting</p>
-              <ul class="platform-blueprint__caps">
-                <li>Identity</li><li>Creative</li><li>Audience</li><li>Catalog</li><li>Planning</li><li>Measurement</li><li>Reporting</li>
+              <ul class="platform-blueprint__sig" aria-label="Identity, Creative, Audience, Catalog, Planning, Measurement, Reporting">
+                <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
               </ul>
             </div>
             <div class="platform-blueprint__col">
               <h3>Offsite</h3>
               <p>Reconciled by hand</p>
-              <ul class="platform-blueprint__caps">
-                <li>Identity</li><li>Creative</li><li>Audience</li><li>Catalog</li><li>Planning</li><li>Measurement</li><li>Reporting</li>
+              <ul class="platform-blueprint__sig" aria-label="Identity, Creative, Audience, Catalog, Planning, Measurement, Reporting">
+                <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
               </ul>
             </div>
             <div class="platform-blueprint__col">
               <h3>In-Store</h3>
               <p>Distinct creative and planning</p>
-              <ul class="platform-blueprint__caps">
-                <li>Identity</li><li>Creative</li><li>Audience</li><li>Catalog</li><li>Planning</li><li>Measurement</li><li>Reporting</li>
+              <ul class="platform-blueprint__sig" aria-label="Identity, Creative, Audience, Catalog, Planning, Measurement, Reporting">
+                <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
               </ul>
             </div>
           </div>
@@ -3202,30 +3495,34 @@
 <div class="slide-content-inner">
 <div class="tension" role="img" aria-label="Two independent tensions: guidance versus control, and shared standards versus expert flexibility.">
         <div class="tension__axis">
+          <div class="tension__ends">
           <article class="tension__pole">
             <span class="ord">Guidance</span>
             <h3>Show the next step</h3>
             <p>Guided workflows for launch, learning, and moments when the cost of a wrong decision is high.</p>
           </article>
-          <div class="tension__rail" aria-hidden="true"></div>
           <article class="tension__pole is-end">
             <span class="ord">Control</span>
             <h3>Stay out of the way</h3>
             <p>Bulk operations, expert editing, and portfolio tools for people who already know the job.</p>
           </article>
+          </div>
+          <div class="tension__rail" aria-hidden="true"></div>
         </div>
         <div class="tension__axis">
+          <div class="tension__ends">
           <article class="tension__pole">
             <span class="ord">Standardization</span>
             <h3>One system to learn</h3>
             <p>Shared language, components, and metrics so work transfers from hallway to hallway.</p>
           </article>
-          <div class="tension__rail" aria-hidden="true"></div>
           <article class="tension__pole is-end">
             <span class="ord">Expert flexibility</span>
             <h3>Depth where it earns it</h3>
             <p>Channel-specific controls remain available without becoming a second platform to relearn.</p>
           </article>
+          </div>
+          <div class="tension__rail" aria-hidden="true"></div>
         </div>
       </div>
       </div>
@@ -3280,7 +3577,7 @@
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
-<div class="paths-set" role="img" aria-label="Old: channel, build, reconcile. New: foundation, configure, scale.">
+<div class="paths-set path-contrast" role="img" aria-label="Old: channel, build, reconcile. New: foundation, configure, scale.">
         <div class="paths is-broken">
           <div class="lab">Current · Channel → build → reconcile</div>
           <div class="flow n4">
@@ -3315,7 +3612,7 @@
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
-<div class="inherit" role="img" aria-label="One investment in shared foundations accelerates every downstream experience.">
+<div class="inherit inherit-branch" role="img" aria-label="One investment in shared foundations accelerates every downstream experience.">
         <div class="cap">Today, every launch starts near zero.</div>
         <div class="kids">
           <span>Future: work starts from an established system</span>
@@ -3399,11 +3696,28 @@
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
-<div class="fromto">
-        <div class="pair"><div class="from">Pain, leverage, foundation</div><div class="arrw">→</div><div class="to">Score 01–03 · how strongly it solves a validated pain; whether hallways reuse it; whether it advances IA or Living Design</div></div>
-        <div class="pair"><div class="from">Effort, readiness, rework</div><div class="arrw">→</div><div class="to">Score 04–06 · time or steps cut; UI, API, and AI support; whether it will be rebuilt when the platform unifies</div></div>
-        <div class="pair"><div class="from">High pain, high leverage, low rework</div><div class="arrw">→</div><div class="to">Accelerate. Move it now.</div></div>
-        <div class="pair"><div class="from">Valuable but unfinished</div><div class="arrw">→</div><div class="to">Reshape if it can strengthen foundations. Sequence if it depends on them. Defer if impact is low.</div></div>
+<div class="route" role="img" aria-label="Six criteria produce a score. The score resolves to accelerate, reshape, sequence, or defer.">
+        <div class="route__in">
+          <article>
+            <h3>Pain, leverage, foundation</h3>
+            <p>Score 01–03 · how strongly it solves a validated pain; whether hallways reuse it; whether it advances IA or Living Design</p>
+          </article>
+          <article>
+            <h3>Effort, readiness, rework</h3>
+            <p>Score 04–06 · time or steps cut; UI, API, and AI support; whether it will be rebuilt when the platform unifies</p>
+          </article>
+        </div>
+        <div class="route__rail" aria-hidden="true"></div>
+        <div class="route__out">
+          <article>
+            <h3>High pain, high leverage, low rework</h3>
+            <p>Accelerate. Move it now.</p>
+          </article>
+          <article>
+            <h3>Valuable but unfinished</h3>
+            <p>Reshape if it can strengthen foundations. Sequence if it depends on them. Defer if impact is low.</p>
+          </article>
+        </div>
       </div>
       </div>
       </div>
@@ -3457,16 +3771,14 @@
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
-<div class="now-reuse" role="img" aria-label="Immediate improvement versus reusable capability created.">
-        <div class="now">
-          <div class="lab">Immediate improvement</div>
-          <article>
-            <h3>Sponsored Search in Ad Center</h3>
-            <p>Creation, management + editing with fewer steps. This is the funded hallway.</p>
-          </article>
+<div class="inherit-branch" role="img" aria-label="Immediate improvement versus reusable capability created.">
+        <div class="lab">Immediate improvement</div>
+        <div class="cap">
+          <h3>Sponsored Search in Ad Center</h3>
+          <p>Creation, management + editing with fewer steps. This is the funded hallway.</p>
         </div>
-        <div>
-          <div class="lab">Reusable capability created</div>
+        <div class="lab">Reusable capability created</div>
+        <div class="kids">
           <article>
             <h3>Onsite Display on the same patterns</h3>
             <p>Not a second rebuild. Apply the Sponsored workflow once it exists.</p>
@@ -3531,6 +3843,7 @@
           <h3>Return</h3>
           <p>Intervene before lapse. Restart without a new setup.</p>
         </article>
+        <div class="loop__back" aria-hidden="true"></div>
       </div>
       </div>
       </div>
@@ -3886,19 +4199,19 @@
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
-<div class="compare" role="img" aria-label="Channel teams own the domain. Advertiser Experience owns the connective layer.">
-        <div>
+<div class="crosscut" role="img" aria-label="Channel teams own the domain. Advertiser Experience owns the connective layer.">
+        <div class="crosscut__lanes">
           <div class="kicker">Channel teams</div>
           <h3>Own the domain</h3>
-          <ul>
-          <li>Sponsored</li>
-          <li>Display</li>
-          <li>DSP</li>
-          <li>Seller Center</li>
-          <li>Offsite / In-Store</li>
-          </ul>
+          <div class="crosscut__cols">
+            <span>Sponsored</span>
+            <span>Display</span>
+            <span>DSP</span>
+            <span>Seller Center</span>
+            <span>Offsite / In-Store</span>
+          </div>
         </div>
-        <div>
+        <div class="crosscut__layer">
           <div class="kicker">Advertiser Experience</div>
           <h3>The connective layer</h3>
           <ul>
@@ -3967,7 +4280,7 @@
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
-<div class="inherit" role="img" aria-label="One shared capability inherited by every hallway.">
+<div class="inherit inherit-branch" role="img" aria-label="One shared capability inherited by every hallway.">
         <div class="cap">One shared capability.</div>
         <div class="kids">
           <span>Sponsored</span>
@@ -4248,7 +4561,7 @@
             <h3>Service model</h3>
             <p>Self-serve, managed service, hybrid, 3P API, partner integration. Autonomy versus collaboration.</p>
           </article>
-          <div class="adapt-model__core" aria-hidden="true"><b></b></div>
+          <div class="adapt-model__core"><b>Adaptive<br>experience</b></div>
           <article class="adapt-model__dim adapt-model__why">
             <span class="ord">Why</span>
             <h3>Goal + job</h3>

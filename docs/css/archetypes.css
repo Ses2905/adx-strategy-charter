@@ -125,18 +125,34 @@
 .s-quote .industry-quote__logo {
   display: flex;
   align-items: center;
-  max-width: 240px;
-  max-height: 64px;
+  max-width: 168px;
+  max-height: 36px;
 }
 
 .s-quote .industry-quote__logo img {
   display: block;
   width: auto;
   height: auto;
-  max-width: 240px;
-  max-height: 64px;
+  max-width: 168px;
+  max-height: 36px;
   object-fit: contain;
   object-position: left center;
+}
+
+/* Optical size, not identical px. Script vs long vs wide wordmarks. */
+.s-quote .industry-quote__logo img[src*="koddi"] {
+  max-width: 112px;
+  max-height: 36px;
+}
+
+.s-quote .industry-quote__logo img[src*="mckinsey"] {
+  max-width: 148px;
+  max-height: 22px;
+}
+
+.s-quote .industry-quote__logo img[src*="the-drum"] {
+  max-width: 132px;
+  max-height: 20px;
 }
 
 .s-close .slide-header {
