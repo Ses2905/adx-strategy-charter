@@ -1,0 +1,109 @@
+/* Scoped local edits from Editor Mode (?edit=1 → APPLY APPROVED CHANGES).
+   Per-slide / per-component overrides only.
+   Do not put master rails, safe areas, shell grid, type scale, or mode geometry here.
+   Never merge this file into presentation-system.css, layout-system.css, or tokens.css. */
+
+/* Slide 03 Argument — Option C split. Local only. */
+.slide[data-label="Argument"] {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  column-gap: var(--ls-40);
+}
+
+.slide[data-label="Argument"] .slide-header {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: none;
+}
+
+.slide[data-label="Argument"] .slide-header .eyebrow,
+.slide[data-label="Argument"] .slide-header h2,
+.slide[data-label="Argument"] .slide-header .lede {
+  margin-inline: 0;
+  padding-inline: 0;
+  min-width: 0;
+}
+
+.slide[data-label="Argument"] .slide-header h2 {
+  width: 100%;
+  max-width: none;
+}
+
+.slide[data-label="Argument"] .slide-header .lede {
+  width: 100%;
+}
+
+.slide[data-label="Argument"] .slide-content {
+  grid-column: 2;
+  grid-row: 2 / 5;
+  width: 100%;
+  max-width: none;
+  justify-self: stretch;
+  align-self: start;
+}
+
+.slide[data-label="Argument"] .arg-path {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--ls-24);
+  position: relative;
+  padding-inline-start: 28px;
+  height: auto;
+}
+
+.slide[data-label="Argument"] .arg-path::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 5px;
+  top: 10px;
+  bottom: 10px;
+  width: 1px;
+  background: var(--true);
+}
+
+.slide[data-label="Argument"] .arg-path article {
+  position: relative;
+  min-width: 0;
+}
+
+.slide[data-label="Argument"] .arg-path .ord {
+  position: absolute;
+  inset-inline-start: -28px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--true);
+  color: transparent;
+  overflow: hidden;
+}
+
+.slide[data-label="Argument"] .arg-path .kicker {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--true);
+  margin-bottom: var(--ls-8);
+}
+
+.slide[data-label="Argument"] .arg-path h3 {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: 28px;
+  letter-spacing: -0.03em;
+  margin: 0 0 var(--ls-8);
+}
+
+.slide[data-label="Argument"] .arg-path p {
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.slide[data-label="Argument"] aside.notes {
+  grid-column: 1 / -1;
+}

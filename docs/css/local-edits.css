@@ -2,3 +2,270 @@
    Per-slide / per-component overrides only.
    Do not put master rails, safe areas, shell grid, type scale, or mode geometry here.
    Never merge this file into presentation-system.css, layout-system.css, or tokens.css. */
+
+/* Slide 03 Argument — Option C split. Local only. */
+.slide[data-label="Argument"] {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  column-gap: var(--ls-40);
+}
+
+.slide[data-label="Argument"] .slide-header {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: none;
+}
+
+.slide[data-label="Argument"] .slide-header .eyebrow,
+.slide[data-label="Argument"] .slide-header h2,
+.slide[data-label="Argument"] .slide-header .lede {
+  margin-inline: 0;
+  padding-inline: 0;
+  min-width: 0;
+}
+
+.slide[data-label="Argument"] .slide-header h2 {
+  width: 100%;
+  max-width: none;
+}
+
+.slide[data-label="Argument"] .slide-header .lede {
+  width: 100%;
+}
+
+.slide[data-label="Argument"] .slide-content {
+  grid-column: 2;
+  grid-row: 2 / 5;
+  width: 100%;
+  max-width: none;
+  justify-self: stretch;
+  align-self: start;
+}
+
+.slide[data-label="Argument"] .arg-path {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--ls-24);
+  position: relative;
+  padding-inline-start: 28px;
+  height: auto;
+}
+
+.slide[data-label="Argument"] .arg-path::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 5px;
+  top: 10px;
+  bottom: 10px;
+  width: 1px;
+  background: var(--true);
+}
+
+.slide[data-label="Argument"] .arg-path article {
+  position: relative;
+  min-width: 0;
+}
+
+.slide[data-label="Argument"] .arg-path .ord {
+  position: absolute;
+  inset-inline-start: -28px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--true);
+  color: transparent;
+  overflow: hidden;
+}
+
+.slide[data-label="Argument"] .arg-path .kicker {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--true);
+  margin-bottom: var(--ls-8);
+}
+
+.slide[data-label="Argument"] .arg-path h3 {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: 28px;
+  letter-spacing: -0.03em;
+  margin: 0 0 var(--ls-8);
+}
+
+.slide[data-label="Argument"] .arg-path p {
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.slide[data-label="Argument"] aside.notes {
+  grid-column: 1 / -1;
+}
+
+/* ---- Approved Editor Mode rules (2026-09-20 export). Argument ALIGN still pending: Option C layout kept above; approved Argument max-width rules follow and are more specific. ---- */
+
+/* SLIDE 4 · Shift · lede · max-width */
+.slide[data-label="Shift"] div.body > div.slide-header:nth-of-type(1) > p.lede {
+  max-width: 1072px;
+}
+
+/* SLIDE 5 · Forecast · body · max-width */
+.slide[data-label="Forecast"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.forecast > p.imply {
+  max-width: 1520px;
+}
+
+/* SLIDE 5 · Forecast · caption · max-width */
+.slide[data-label="Forecast"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.forecast > div.source {
+  max-width: 1184px;
+}
+
+/* SLIDE 5 · Forecast · caption · max-width */
+.slide[data-label="Forecast"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.forecast > div.source {
+  max-width: 55ch;
+}
+
+/* SLIDE 8 · Scorecard · body · max-width */
+.slide[data-label="Scorecard"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.ls-group > p.tbl-foot {
+  max-width: 1600px;
+}
+
+/* SLIDE 3 · Argument · headline · max-width */
+.slide[data-label="Argument"] div.body > div.slide-header:nth-of-type(1) > h2 {
+  max-width: 65ch;
+}
+
+/* SLIDE 3 · Argument · headline · max-width */
+.slide[data-label="Argument"] div.body > div.slide-header:nth-of-type(1) > h2 {
+  max-width: 424px;
+}
+
+/* SLIDE 3 · Argument · lede · max-width */
+.slide[data-label="Argument"] div.body > div.slide-header:nth-of-type(1) > p.lede {
+  max-width: 456px;
+}
+
+/* SLIDE 6 · Maturity · body · max-width */
+.slide[data-label="Maturity"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.spine > article:nth-of-type(3) > p {
+  max-width: 65ch;
+}
+
+/* SLIDE 6 · Maturity · body · max-width */
+.slide[data-label="Maturity"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.spine > article:nth-of-type(3) > p {
+  max-width: 344px;
+}
+
+/* SLIDE 7 · Maturity gap · headline · max-width */
+.slide[data-label="Maturity\ gap"] div.body > div.slide-header:nth-of-type(1) > div.industry-quote > h2 {
+  max-width: 1344px;
+}
+
+/* SLIDE 12 · Playbook · headline · max-width */
+.slide[data-label="Playbook"] div.body > div.slide-header:nth-of-type(1) > div.industry-quote > h2 {
+  max-width: 76ch;
+}
+
+/* SLIDE 12 · Playbook · headline · max-width */
+.slide[data-label="Playbook"] div.body > div.slide-header:nth-of-type(1) > div.industry-quote > h2 {
+  max-width: 1384px;
+}
+
+/* SLIDE 13 · Right to win · body · max-width */
+.slide[data-label="Right\ to\ win"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.chain > article:nth-of-type(4) > p {
+  max-width: 76ch;
+}
+
+/* SLIDE 13 · Right to win · body · max-width */
+.slide[data-label="Right\ to\ win"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.chain > article:nth-of-type(4) > p {
+  max-width: 280px;
+}
+
+/* SLIDE 19 · Hallways · element · padding */
+.slide[data-label="Hallways"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.paths-set.journey-contrast {
+  padding: 0px;
+}
+
+/* SLIDE 20 · Reality · element · padding */
+.slide[data-label="Reality"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.platform-blueprint {
+  padding: 0px;
+}
+
+/* SLIDE 20 · Reality · element · gap */
+.slide[data-label="Reality"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.platform-blueprint {
+  gap: 80px;
+}
+
+/* SLIDE 24 · Vision · headline · max-width */
+.slide[data-label="Vision"] div.body > div.slide-header:nth-of-type(1) > h2 {
+  max-width: 1136px;
+}
+
+/* SLIDE 24 · Vision · headline · max-width */
+.slide[data-label="Vision"] div.body > div.slide-header:nth-of-type(1) > h2 {
+  max-width: 90ch;
+}
+
+/* SLIDE 28 · Fit · element · padding */
+.slide[data-label="Fit"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.tension {
+  padding: 0px;
+}
+
+/* SLIDE 28 · Fit · headline · max-width */
+.slide[data-label="Fit"] div.body > div.slide-header:nth-of-type(1) > h2 {
+  max-width: 1424px;
+}
+
+/* SLIDE 32 · Sequence · element · padding */
+.slide[data-label="Sequence"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.paths-set.path-contrast {
+  padding: 0px;
+}
+
+/* SLIDE 32 · Sequence · element · gap */
+.slide[data-label="Sequence"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.paths-set.path-contrast > div.paths.is-broken:nth-of-type(1) {
+  gap: 80px;
+}
+
+/* SLIDE 32 · Sequence · element · padding */
+.slide[data-label="Sequence"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.paths-set.path-contrast > div.paths.is-one:nth-of-type(2) {
+  padding: 0px;
+}
+
+/* SLIDE 32 · Sequence · element · gap */
+.slide[data-label="Sequence"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.paths-set.path-contrast > div.paths.is-one:nth-of-type(2) {
+  gap: 80px;
+}
+
+/* SLIDE 34 · Phases · body · max-width */
+.slide[data-label="Phases"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.spine.n4 > article:nth-of-type(4) > p {
+  max-width: 65ch;
+}
+
+/* SLIDE 34 · Phases · body · max-width */
+.slide[data-label="Phases"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.spine.n4 > article:nth-of-type(4) > p {
+  max-width: 336px;
+}
+
+/* SLIDE 34 · Phases · body · max-width */
+.slide[data-label="Phases"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.spine.n4 > article:nth-of-type(3) > p {
+  max-width: 280px;
+}
+
+/* SLIDE 34 · Phases · label · max-width */
+.slide[data-label="Phases"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.spine.n4 > article:nth-of-type(4) > h3 {
+  max-width: 336px;
+}
+
+/* SLIDE 36 · Rubric · element · gap */
+.slide[data-label="Rubric"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.route {
+  gap: 80px;
+}
+
+/* SLIDE 44 · Delivery · element · gap */
+.slide[data-label="Delivery"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.deliv {
+  gap: 80px;
+}
