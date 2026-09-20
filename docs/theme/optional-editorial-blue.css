@@ -25,34 +25,51 @@
   --cover-title: var(--measure-cover-title);
 }
 
-/* House chip / pill — brand layer only. Kit core eyebrow stays generic. */
-.navy .pill,
-.navy .eyebrow {
-  color: var(--true);
-  background: #D7EEF9;
-}
+/* Eyebrow system — brand layer only.
+   .eyebrow IS the Feature tonal pill. Cover .pill / .eyebrow--feature
+   and section-divider .chap-no share this ruleset so they stay identical
+   (no double padding, not a full-width bar).
+   23px header gap replaces 16px so title Y stays put after pill height 27→20.
+   Quote slides keep the archetypes zero-margin pin; do not force 23px there. */
 
-.slide.navy .chap-no {
-  color: var(--everyday);
-}
-
-.pill {
+.eyebrow,
+.eyebrow--feature,
+.pill,
+.chap-no {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 400;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   line-height: 1;
   text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--true);
   background: #D7EEF9;
-  padding: 8px 14px;
+  padding: 5px 11px;
   border-radius: 999px;
   width: fit-content;
   max-width: var(--title);
-  margin: 0;
+}
+
+.slide-header .eyebrow,
+.slide-header .pill,
+.slide-header .eyebrow--feature,
+.slide-header .chap-no,
+.slide.s-ls .slide-header .eyebrow,
+.slide.s-ls .slide-header .pill,
+.slide.s-ls .slide-header .eyebrow--feature,
+.slide.s-ls .slide-header .chap-no {
+  margin: 0 0 23px;
+}
+
+.slide.navy .eyebrow,
+.slide.navy .eyebrow--feature,
+.slide.navy .pill,
+.slide.navy .chap-no {
+  color: var(--true);
+  background: #D7EEF9;
 }

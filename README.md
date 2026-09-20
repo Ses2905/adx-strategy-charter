@@ -4,7 +4,7 @@ Live URL: **https://ses2905.github.io/adx-strategy-charter/**
 
 This GitHub Pages site hosts the working HTML Advertiser Experience strategy deck (cover slide first; arrow keys or space to advance).
 
-It is not a live preview of every local save. The site updates only when an aligned version is copied into `docs/` and pushed.
+It is not a live preview of every keystroke. After an **aligned** working-deck revision (visual refinements, eyebrow/quote treatments, calibration slides, copy-locked polish), republish as the **default close-out**. Do not wait for a full freeze. Do not publish mid-exploration or rejected experiments.
 
 ## What’s on the site
 
@@ -22,9 +22,9 @@ Included:
 - `fonts/` and `logos/`
 - GSAP from the same jsDelivr pin the working deck uses
 
-## Republish after the next aligned version
+## Republish (standard after aligned revisions)
 
-From a clone of this repo, after the working deck is aligned:
+From a clone of this repo, after the working deck revision is aligned:
 
 ```bash
 ./scripts/publish-deck.sh

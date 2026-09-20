@@ -337,8 +337,9 @@
     align-items: flex-start;
     width: 100%;
   }
-  .slide-header .eyebrow { margin: 0 0 12px; }
-  .slide-header .pill { margin: 0 0 16px; }
+  .slide-header .eyebrow,
+  .slide-header .pill,
+  .slide-header .eyebrow--feature { margin: 0 0 23px; }
   .slide-header h1,
   .slide-header h2 { margin: 0; }
   .slide-header h1 + .sub,
@@ -458,44 +459,31 @@
     text-wrap: pretty;
   }
 
-  .eyebrow {
-    display: block;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.18em;
-    line-height: 1.2;
-    text-transform: uppercase;
-    color: var(--true);
-    background: none;
-    padding: 0;
-    border-radius: 0;
-    width: fit-content;
-    max-width: var(--title);
-    margin: 0;
-  }
+  .eyebrow,
+  .eyebrow--feature,
   .pill {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 400;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.18em;
     line-height: 1;
     text-align: center;
     text-transform: uppercase;
     white-space: nowrap;
     color: var(--true);
     background: #D7EEF9;
-    padding: 8px 14px;
+    padding: 5px 11px;
     border-radius: 999px;
     width: fit-content;
     max-width: var(--title);
     margin: 0;
   }
-  .navy .pill,
-  .navy .eyebrow {
+  .slide.navy .eyebrow,
+  .slide.navy .pill,
+  .slide.navy .eyebrow--feature {
     color: var(--true);
     background: #D7EEF9;
   }
@@ -1433,102 +1421,256 @@
   }
   .anatomy .shared p { font-size: 16px; line-height: 1.4; color: var(--muted); max-width: 48em; }
 
-  /* Slide 18 — Platform structure. Scoped. Does not change shared .anatomy or Slide 17. */
-  .platform-topo {
-    width: 100%;
-    max-width: none;
-    min-width: 0;
+  /* Slide 18 — Platform structure blueprint. Local. No connectors, no unified bar. */
+  .platform-blueprint {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 32px;
+    width: 100%;
+    min-width: 0;
   }
-  .platform-topo .cell {
-    border-top: 0;
-    padding-top: 0;
-  }
-  .platform-topo .doors .cell {
-    border-top: 0;
-  }
-  .platform-topo .cell::before {
-    content: "";
-    display: block;
-    width: 8px;
-    height: 8px;
-    margin-bottom: 10px;
-    border: 1px solid var(--muted);
-    background: var(--paper);
-  }
-  .platform-topo .lab {
+  .platform-blueprint .lab {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--true);
     margin-bottom: 12px;
   }
-  .platform-topo .doors,
-  .platform-topo .halls {
+  .platform-blueprint__doors {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    column-gap: 2%;
-  }
-  .platform-topo .doors .cell:nth-child(1) { grid-column: 1 / 3; }
-  .platform-topo .doors .cell:nth-child(2) { grid-column: 4 / 6; }
-  .platform-topo .topo-fan {
-    position: relative;
-    display: block;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 48px;
     width: 100%;
-    height: 56px;
-    overflow: visible;
-    container-type: inline-size;
-  }
-  .platform-topo .fan-v,
-  .platform-topo .fan-d {
-    position: absolute;
-    top: 0;
-    background: var(--muted);
-    pointer-events: none;
-  }
-  .platform-topo .fan-v {
-    width: 1px;
-    height: 56px;
-  }
-  .platform-topo .fan-d {
-    height: 1px;
-    width: hypot(20.4cqi, 56px);
-    transform-origin: 0 50%;
-  }
-  .platform-topo .fan-sc { left: 4px; }
-  .platform-topo .fan-ac { left: calc(61.2cqi + 4px); }
-  .platform-topo .fan-sc-disp {
-    left: 4px;
-    transform: rotate(atan(56px / 20.4cqi));
-  }
-  .platform-topo .fan-ac-dsp {
-    left: calc(61.2cqi + 4px);
-    transform: rotate(calc(180deg - atan(56px / 20.4cqi)));
-  }
-  .platform-topo .fan-ac-ins {
-    left: calc(61.2cqi + 4px);
-    transform: rotate(atan(56px / 20.4cqi));
-  }
-  .platform-topo .halls {
-    align-items: stretch;
-  }
-  .platform-topo .halls .cell {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
     min-width: 0;
   }
-  .platform-topo .halls .cell::after {
-    content: "";
-    display: block;
-    width: 1px;
-    height: 40px;
-    margin-top: 14px;
-    margin-bottom: 8px;
-    background: var(--muted);
-    flex: 0 0 auto;
+  .platform-blueprint__door {
+    min-width: 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--true);
   }
-  .platform-topo .shared {
+  .platform-blueprint__door h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+  }
+  .platform-blueprint__door p {
+    font-size: 15px;
+    line-height: 1.35;
+    color: var(--muted);
+    margin: 4px 0 0;
+  }
+  .platform-blueprint__cols {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-rows: auto auto repeat(7, auto);
+    grid-auto-flow: column;
+    column-gap: 24px;
+    width: 100%;
+    min-width: 0;
+  }
+  .platform-blueprint__col,
+  .platform-blueprint__caps {
+    display: contents;
+  }
+  .platform-blueprint__col h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 6px;
+    min-width: 0;
+  }
+  .platform-blueprint__col > p {
+    font-size: 15px;
+    line-height: 1.35;
+    color: var(--muted);
+    margin: 0 0 16px;
+    min-width: 0;
+  }
+  .platform-blueprint__caps li {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
     border-top: 1px solid var(--line);
-    padding-top: 16px;
+    font-size: 15px;
+    line-height: 1.3;
+    color: var(--ink);
+    min-width: 0;
+  }
+  .platform-blueprint__caps li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* Slide 26 — Fit. Two tension spectra. Does not restyle shared .axes. */
+  .tension {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    width: 100%;
+    min-width: 0;
+  }
+  .tension__axis {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.9fr) minmax(0, 1.05fr);
+    gap: 8px 40px;
+    align-items: start;
+    width: 100%;
+    min-width: 0;
+  }
+  .tension__pole {
+    min-width: 0;
+  }
+  .tension__pole .ord {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--true);
+    margin-bottom: 8px;
+  }
+  .tension__pole h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 26px;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin: 0 0 8px;
+  }
+  .tension__pole p {
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--muted);
+    margin: 0;
+  }
+  .tension__pole.is-end {
+    text-align: end;
+  }
+  .tension__rail {
+    align-self: start;
+    position: relative;
+    height: 1px;
+    margin-top: 32px;
+    background: var(--true);
+  }
+  .tension__rail::before,
+  .tension__rail::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--true);
+    background: var(--paper);
+    transform: translate(-50%, -50%);
+  }
+  .tension__rail::before { left: 0; }
+  .tension__rail::after { left: 100%; }
+
+  /* Slide 63 — Adaptive model. Four simultaneous dimensions, not four peers. */
+  .adapt-model {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 80px minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    column-gap: 48px;
+    row-gap: 28px;
+    width: 100%;
+    min-width: 0;
+    align-items: center;
+  }
+  .adapt-model__dim {
+    min-width: 0;
+  }
+  .adapt-model__dim .ord {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--true);
+    margin-bottom: 8px;
+  }
+  .adapt-model__dim h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 26px;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin: 0 0 8px;
+  }
+  .adapt-model__dim p {
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--muted);
+    margin: 0;
+  }
+  .adapt-model__who {
+    grid-column: 1 / -1;
+    justify-self: center;
+    text-align: center;
+  }
+  .adapt-model__who p,
+  .adapt-model__now p {
+    max-width: 36em;
+    margin-inline: auto;
+  }
+  .adapt-model__how {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: end;
+    text-align: end;
+  }
+  .adapt-model__how p,
+  .adapt-model__why p {
+    max-width: 28em;
+  }
+  .adapt-model__why {
+    grid-column: 3;
+    grid-row: 2;
+    justify-self: start;
+  }
+  .adapt-model__now {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    justify-self: center;
+    text-align: center;
+  }
+  .adapt-model__core {
+    grid-column: 2;
+    grid-row: 2;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    justify-self: center;
+  }
+  .adapt-model__core::before,
+  .adapt-model__core::after {
+    content: "";
+    position: absolute;
+    background: var(--true);
+  }
+  .adapt-model__core::before {
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    transform: translateX(-50%);
+  }
+  .adapt-model__core::after {
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    transform: translateY(-50%);
+  }
+  .adapt-model__core b {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--true);
+    transform: translate(-50%, -50%);
   }
 
   .equation {
@@ -2302,7 +2444,7 @@
     <section class="slide navy s-cover active" data-label="Cover">
     <div class="body">
       <div class="slide-header">
-<span class="pill">Advertiser Experience Strategy</span>
+<span class="pill eyebrow--feature">Advertiser Experience Strategy</span>
 <h1>One <em class="mark">connected</em> experience advertisers can actually use.</h1>
 <p class="sub">Building the next competitive advantage for Walmart Ads.</p>
       </div>
@@ -2773,34 +2915,53 @@
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
-<div class="anatomy platform-topo" role="img" aria-label="Seller Center and Ad Center sit above five media hallways. Shared capabilities sit underneath, reached differently from each hallway.">
+<div class="platform-blueprint" role="img" aria-label="Two front doors sit above five media hallways. The same capability types are duplicated under each hallway.">
         <div>
           <div class="lab">Front doors</div>
-          <div class="doors">
-            <div class="cell"><h3>Seller Center</h3><p>Marketplace sellers start here, then route into enterprise workflows.</p></div>
-            <div class="cell"><h3>Ad Center</h3><p>Main self-service platform, spanning several product generations at once.</p></div>
+          <div class="platform-blueprint__doors">
+            <div class="platform-blueprint__door"><h3>Seller Center</h3><p>Marketplace sellers start here, then route into enterprise workflows.</p></div>
+            <div class="platform-blueprint__door"><h3>Ad Center</h3><p>Main self-service platform, spanning several product generations at once.</p></div>
           </div>
-        </div>
-        <div class="topo-fan" aria-hidden="true">
-          <span class="fan-v fan-sc"></span>
-          <span class="fan-d fan-sc-disp"></span>
-          <span class="fan-d fan-ac-dsp"></span>
-          <span class="fan-v fan-ac"></span>
-          <span class="fan-d fan-ac-ins"></span>
         </div>
         <div>
-          <div class="lab">Media hallways</div>
-          <div class="halls">
-            <div class="cell"><h3>Sponsored</h3><p>Separate object model and tables</p></div>
-            <div class="cell"><h3>Display</h3><p>Separate navigation and Living Design foundation</p></div>
-            <div class="cell"><h3>Walmart DSP</h3><p>Separate identity, access, and reporting</p></div>
-            <div class="cell"><h3>Offsite</h3><p>Reconciled by hand</p></div>
-            <div class="cell"><h3>In-Store</h3><p>Distinct creative and planning</p></div>
+          <div class="lab">Five hallways · same capability types, named again in each</div>
+          <div class="platform-blueprint__cols">
+            <div class="platform-blueprint__col">
+              <h3>Sponsored</h3>
+              <p>Separate object model and tables</p>
+              <ul class="platform-blueprint__caps">
+                <li>Identity</li><li>Creative</li><li>Audience</li><li>Catalog</li><li>Planning</li><li>Measurement</li><li>Reporting</li>
+              </ul>
+            </div>
+            <div class="platform-blueprint__col">
+              <h3>Display</h3>
+              <p>Separate navigation and Living Design foundation</p>
+              <ul class="platform-blueprint__caps">
+                <li>Identity</li><li>Creative</li><li>Audience</li><li>Catalog</li><li>Planning</li><li>Measurement</li><li>Reporting</li>
+              </ul>
+            </div>
+            <div class="platform-blueprint__col">
+              <h3>Walmart DSP</h3>
+              <p>Separate identity, access, and reporting</p>
+              <ul class="platform-blueprint__caps">
+                <li>Identity</li><li>Creative</li><li>Audience</li><li>Catalog</li><li>Planning</li><li>Measurement</li><li>Reporting</li>
+              </ul>
+            </div>
+            <div class="platform-blueprint__col">
+              <h3>Offsite</h3>
+              <p>Reconciled by hand</p>
+              <ul class="platform-blueprint__caps">
+                <li>Identity</li><li>Creative</li><li>Audience</li><li>Catalog</li><li>Planning</li><li>Measurement</li><li>Reporting</li>
+              </ul>
+            </div>
+            <div class="platform-blueprint__col">
+              <h3>In-Store</h3>
+              <p>Distinct creative and planning</p>
+              <ul class="platform-blueprint__caps">
+                <li>Identity</li><li>Creative</li><li>Audience</li><li>Catalog</li><li>Planning</li><li>Measurement</li><li>Reporting</li>
+              </ul>
+            </div>
           </div>
-        </div>
-        <div class="shared">
-          <h3>Shared capabilities, reached differently</h3>
-          <p>Identity, creative, audience, catalog, planning, measurement, reporting. Named and duplicated per hallway.</p>
         </div>
       </div>
       </div>
@@ -3039,27 +3200,33 @@
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
-<div class="axes" role="img" aria-label="Two axes: guidance versus control, and shared standards versus expert flexibility.">
-        <article>
-          <span class="ord">Guidance</span>
-          <h3>Show the next step</h3>
-          <p>Guided workflows for launch, learning, and moments when the cost of a wrong decision is high.</p>
-        </article>
-        <article>
-          <span class="ord">Control</span>
-          <h3>Stay out of the way</h3>
-          <p>Bulk operations, expert editing, and portfolio tools for people who already know the job.</p>
-        </article>
-        <article>
-          <span class="ord">Standardization</span>
-          <h3>One system to learn</h3>
-          <p>Shared language, components, and metrics so work transfers from hallway to hallway.</p>
-        </article>
-        <article>
-          <span class="ord">Expert flexibility</span>
-          <h3>Depth where it earns it</h3>
-          <p>Channel-specific controls remain available without becoming a second platform to relearn.</p>
-        </article>
+<div class="tension" role="img" aria-label="Two independent tensions: guidance versus control, and shared standards versus expert flexibility.">
+        <div class="tension__axis">
+          <article class="tension__pole">
+            <span class="ord">Guidance</span>
+            <h3>Show the next step</h3>
+            <p>Guided workflows for launch, learning, and moments when the cost of a wrong decision is high.</p>
+          </article>
+          <div class="tension__rail" aria-hidden="true"></div>
+          <article class="tension__pole is-end">
+            <span class="ord">Control</span>
+            <h3>Stay out of the way</h3>
+            <p>Bulk operations, expert editing, and portfolio tools for people who already know the job.</p>
+          </article>
+        </div>
+        <div class="tension__axis">
+          <article class="tension__pole">
+            <span class="ord">Standardization</span>
+            <h3>One system to learn</h3>
+            <p>Shared language, components, and metrics so work transfers from hallway to hallway.</p>
+          </article>
+          <div class="tension__rail" aria-hidden="true"></div>
+          <article class="tension__pole is-end">
+            <span class="ord">Expert flexibility</span>
+            <h3>Depth where it earns it</h3>
+            <p>Channel-specific controls remain available without becoming a second platform to relearn.</p>
+          </article>
+        </div>
       </div>
       </div>
       </div>
@@ -4003,7 +4170,7 @@
   <section class="slide navy s-close" data-label="Thank you">
     <div class="body">
       <div class="slide-header">
-<span class="pill">Closing</span>
+<span class="pill eyebrow--feature">Closing</span>
 <h1>Unify Walmart Ads <em class="mark">first</em>.</h1>
 <p class="sub">Unify the core, then extend.</p>
       </div>
@@ -4070,25 +4237,28 @@
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
-<div class="stack" role="img" aria-label="The platform adapts across who, how, why, and now.">
-          <div class="exp n4">
-            <div>
-              <h3>Who</h3>
-              <p>Customer + role. Enterprise, mid-market, agency, 3P seller, non-endemic, internal — and media buyer, analyst, executive, account manager.</p>
-            </div>
-            <div>
-              <h3>How</h3>
-              <p>Service model. Self-serve, managed service, hybrid, 3P API, partner integration. Autonomy versus collaboration.</p>
-            </div>
-            <div>
-              <h3>Why</h3>
-              <p>Goal + job. Launch a product, increase ROAS, grow share, acquire customers — then plan, activate, measure, optimize, report.</p>
-            </div>
-            <div>
-              <h3>Now</h3>
-              <p>Context + next. New user, holiday, budget exhausted, declining performance. Recommend the next best action from real behavior.</p>
-            </div>
-          </div>
+<div class="adapt-model" role="img" aria-label="The platform adapts across four simultaneous dimensions: who, how, why, and now.">
+          <article class="adapt-model__dim adapt-model__who">
+            <span class="ord">Who</span>
+            <h3>Customer + role</h3>
+            <p>Enterprise, mid-market, agency, 3P seller, non-endemic, internal — and media buyer, analyst, executive, account manager.</p>
+          </article>
+          <article class="adapt-model__dim adapt-model__how">
+            <span class="ord">How</span>
+            <h3>Service model</h3>
+            <p>Self-serve, managed service, hybrid, 3P API, partner integration. Autonomy versus collaboration.</p>
+          </article>
+          <div class="adapt-model__core" aria-hidden="true"><b></b></div>
+          <article class="adapt-model__dim adapt-model__why">
+            <span class="ord">Why</span>
+            <h3>Goal + job</h3>
+            <p>Launch a product, increase ROAS, grow share, acquire customers — then plan, activate, measure, optimize, report.</p>
+          </article>
+          <article class="adapt-model__dim adapt-model__now">
+            <span class="ord">Now</span>
+            <h3>Context + next</h3>
+            <p>New user, holiday, budget exhausted, declining performance. Recommend the next best action from real behavior.</p>
+          </article>
         </div>
       </div>
       </div>
@@ -4434,7 +4604,7 @@
   }
 
   function enterTargets() {
-    return "h1, h2, .sub, .lede, .pill, .eyebrow, .chap-no, .row, .card, .metric, .step, .item, .person, .node, .anatomy .cell, .principles article, .ev, .spine article, .burden .layer, .paths .stop, .equation .box, .trust-sys .pair, .stack .exp div, .inherit .kids span, .chain article, .hero-metric .hero, .hero-metric .metric, .root-split article, .say .from, .spectrum-field, .axes article, .loop article, .nest .band, .life article, .formula .box, .ask-row .item, .now-reuse article, .fromto .pair, .pull, .quote-grid q, .screen, .org .person, .chip-groups > div, .cols > div, .seq-block, .chips, .ask > div, blockquote, .figure, .tbl, .assertion";
+    return "h1, h2, .sub, .lede, .pill, .eyebrow, .chap-no, .row, .card, .metric, .step, .item, .person, .node, .anatomy .cell, .principles article, .ev, .spine article, .burden .layer, .paths .stop, .equation .box, .trust-sys .pair, .stack .exp div, .inherit .kids span, .chain article, .hero-metric .hero, .hero-metric .metric, .root-split article, .say .from, .spectrum-field, .axes article, .loop article, .nest .band, .life article, .formula .box, .ask-row .item, .now-reuse article, .fromto .pair, .pull, .quote-grid q, .screen, .org .person, .chip-groups > div, .cols > div, .seq-block, .chips, .ask > div, blockquote, .figure, .tbl, .assertion, .platform-blueprint__door, .platform-blueprint__col, .tension__axis, .adapt-model__dim, .adapt-model__core";
   }
   function settleEnter(slide) {
     if (!slide || typeof gsap === "undefined") return;
@@ -4453,7 +4623,7 @@
     const tl = gsap.timeline({ defaults: { ease: "expo.out", duration: 0.72 } });
     enterTl = tl;
     const rows = Array.from(slide.querySelectorAll(".row"));
-    const cards = Array.from(slide.querySelectorAll(".card, .metric, .step, .item, .person, .node, .anatomy .cell, .principles article, .ev, .spine article, .burden .layer, .paths .stop, .equation .box, .trust-sys .pair, .stack .exp div, .inherit .kids span, .chain article, .hero-metric .hero, .hero-metric .metric, .root-split article, .spectrum-field, .axes article, .loop article, .nest .band, .life article, .formula .box, .now-reuse article, .fromto .pair, .pull, .quote-grid q, .screen, .org .person, .chip-groups > div, .cols > div, .seq-block, .chips, .tbl, .assertion"));
+    const cards = Array.from(slide.querySelectorAll(".card, .metric, .step, .item, .person, .node, .anatomy .cell, .principles article, .ev, .spine article, .burden .layer, .paths .stop, .equation .box, .trust-sys .pair, .stack .exp div, .inherit .kids span, .chain article, .hero-metric .hero, .hero-metric .metric, .root-split article, .spectrum-field, .axes article, .loop article, .nest .band, .life article, .formula .box, .now-reuse article, .fromto .pair, .pull, .quote-grid q, .screen, .org .person, .chip-groups > div, .cols > div, .seq-block, .chips, .tbl, .assertion, .platform-blueprint__door, .platform-blueprint__col, .tension__axis, .adapt-model__dim, .adapt-model__core"));
     const asks = Array.from(slide.querySelectorAll(".ask > div"));
     const quote = slide.querySelector("blockquote");
     const pill = slide.querySelector(".pill, .eyebrow, .chap-no");
