@@ -1968,38 +1968,12 @@
 <link rel="stylesheet" href="css/deck-families.css" />
 <link rel="stylesheet" href="css/debug.css" />
 <link rel="stylesheet" href="theme/optional-editorial-blue.css" />
+<link rel="stylesheet" href="css/chrome-stack.css?v=9" />
 </head>
 <body>
 <div class="viewport">
 <div class="stage" id="stage" data-theme="navy">
 
-
-  <nav class="toc" id="toc" aria-label="Sections">
-    <span class="toc-line"></span>
-    <span class="toc-fill" id="tocFill"></span>
-  </nav>
-
-  <footer class="pager">
-    <div class="brand">
-      <img class="spark" id="spark" src="logos/spark-white.svg" alt="Walmart Spark">
-      <span class="meta">Advertiser Experience · working</span>
-    </div>
-    <div class="keys" id="keys" aria-label="Presenter keys">
-      <span>J jump</span>
-      <span>N notes</span>
-      <span>G grid</span>
-      <span class="build-cue" id="buildCue" hidden></span>
-    </div>
-    <div class="pager-controls">
-      <button class="arr" id="prev" type="button" aria-label="Previous">‹</button>
-      <button class="pagenum" id="pagenum" type="button" aria-live="polite" aria-label="Jump to slide. Press J." title="Jump to slide (J)">01 / 68</button>
-      <label class="goto" id="goto" hidden>
-        <span class="goto-k">Go</span>
-        <input id="gotoNum" name="slide-number" type="text" inputmode="numeric" maxlength="2" autocomplete="off" spellcheck="false" aria-label="Slide number">
-      </label>
-      <button class="arr" id="next" type="button" aria-label="Next">›</button>
-    </div>
-  </footer>
 
   <div class="grid-overlay" aria-hidden="true">
     <b class="v" style="left:80px"></b>
@@ -3932,6 +3906,35 @@
     <aside class="notes">Use future horizon; timing to be validated until discovery supports a defensible range.</aside>
   </section>
 
+  <div class="chrome-layer" id="chromeLayer">
+  <nav class="toc" id="toc" aria-label="Sections">
+    <span class="toc-line"></span>
+    <span class="toc-fill" id="tocFill"></span>
+  </nav>
+
+  <footer class="pager">
+    <div class="brand">
+      <img class="spark" id="spark" src="logos/spark-white.svg" alt="Walmart Spark">
+      <span class="meta">Advertiser Experience · working</span>
+    </div>
+    <div class="keys" id="keys" aria-label="Presenter keys">
+      <span>J jump</span>
+      <span>N notes</span>
+      <span>G grid</span>
+      <span class="build-cue" id="buildCue" hidden></span>
+    </div>
+    <div class="pager-controls">
+      <button class="arr" id="prev" type="button" aria-label="Previous">‹</button>
+      <button class="pagenum" id="pagenum" type="button" aria-live="polite" aria-label="Jump to slide. Press J." title="Jump to slide (J)">01 / 68</button>
+      <label class="goto" id="goto" hidden>
+        <span class="goto-k">Go</span>
+        <input id="gotoNum" name="slide-number" type="text" inputmode="numeric" maxlength="2" autocomplete="off" spellcheck="false" aria-label="Slide number">
+      </label>
+      <button class="arr" id="next" type="button" aria-label="Next">›</button>
+    </div>
+  </footer>
+  </div>
+
 </div>
 </div>
 <script>
@@ -3944,6 +3947,9 @@
   const gotoBox = document.getElementById("goto");
   const gotoNum = document.getElementById("gotoNum");
   const pagerEl = document.querySelector(".pager");
+  slides.forEach((s) => stage.appendChild(s));
+  const chromeLayer = document.getElementById("chromeLayer");
+  if (chromeLayer) stage.appendChild(chromeLayer);
   function openGoto() {
     pagerEl.classList.add("is-goto");
     gotoBox.hidden = false;
@@ -3988,7 +3994,7 @@
     { id: "09", label: "Closing", start: 56, end: 59 },
     { id: "10", label: "Appendix", start: 60, end: 67 }
   ];
-  const LIVE_END = 59;
+  const LIVE_END = slides.length - 1;
   SECTIONS.forEach((sec) => {
     const btn = document.createElement("button");
     btn.type = "button";

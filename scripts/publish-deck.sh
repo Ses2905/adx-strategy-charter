@@ -113,6 +113,8 @@ copy_dir_if_present js
 copy_dir_if_present theme
 copy_dir_if_present fonts
 copy_dir_if_present logos
+# Never publish QA captures or notes.
+rm -rf "$TMP/_qa" "$TMP/COMPARE.txt" "$TMP/SOURCE-OF-TRUTH.md"
 
 touch "$TMP/.nojekyll"
 
@@ -135,7 +137,7 @@ source: $SRC
 working_default: editorial-blue-kit-v1 (http://127.0.0.1:8795/)
 archive_backup: editorial-blue (http://127.0.0.1:8793/) — revert only, do not edit
 included: index.html, review.css/js, layout-system.js, css/, js/, theme/, fonts/, logos/
-not_included: layout-test, presentation-starter-kit, experiments, COMPARE.txt
+not_included: layout-test, presentation-starter-kit, experiments, COMPARE.txt, _qa
 EOF
 
 if [[ "$DRY_RUN" -eq 1 ]]; then

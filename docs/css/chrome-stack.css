@@ -1,0 +1,28 @@
+/* Extra </div>s in slide markup close #stage early; JS reparents
+   leaked slides back into #stage, then this layer sits above them. */
+.slide,
+.slide.active {
+  z-index: 0;
+  isolation: isolate;
+  pointer-events: auto;
+}
+.chrome-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 9999;
+  isolation: isolate;
+  pointer-events: none;
+}
+.chrome-layer .pager,
+.chrome-layer .toc {
+  position: absolute !important;
+  z-index: 1;
+  pointer-events: auto;
+}
+.chrome-layer .pager *,
+.chrome-layer .toc button {
+  pointer-events: auto;
+}
+.chrome-layer .toc .toc-l {
+  pointer-events: none;
+}

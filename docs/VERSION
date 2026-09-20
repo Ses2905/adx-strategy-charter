@@ -1,6 +1,6 @@
-published: 2026-09-19 22:15
+published: 2026-09-19 22:39
 source: /Users/sarahscherer/.claude/plugins/marketplaces/local-desktop-app-uploads/html-presentation-toolkit/previews/editorial-blue-kit-v1
 working_default: editorial-blue-kit-v1 (http://127.0.0.1:8795/)
 archive_backup: editorial-blue (http://127.0.0.1:8793/) — revert only, do not edit
 included: index.html, review.css/js, layout-system.js, css/, js/, theme/, fonts/, logos/
-not_included: layout-test, presentation-starter-kit, experiments, COMPARE.txt
+not_included: layout-test, presentation-starter-kit, experiments, COMPARE.txt, _qa
