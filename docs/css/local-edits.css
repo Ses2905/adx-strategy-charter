@@ -1,0 +1,4 @@
+/* Scoped local edits from Editor Mode (?edit=1 → APPLY APPROVED CHANGES).
+   Per-slide / per-component overrides only.
+   Do not put master rails, safe areas, shell grid, type scale, or mode geometry here.
+   Never merge this file into presentation-system.css, layout-system.css, or tokens.css. */

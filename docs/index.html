@@ -2662,6 +2662,201 @@
   [dir="rtl"] .trust-sys .arrw {
     transform: scaleX(-1);
   }
+
+  /* Recovery pass — local families only. Does not edit frozen layout/presentation CSS. */
+  .spine.n5 { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 24px; }
+  .slide[data-label="Workstreams"] .spine h3 { font-size: 20px; }
+  .slide[data-label="Workstreams"] .spine .ord { font-size: 32px; }
+  .slide[data-label="Workstreams"] .spine p { font-size: 14px; }
+
+  .forecast-line { width: 100%; max-width: 1520px; }
+  .forecast-line svg { display: block; width: 100%; height: auto; }
+  .forecast-line .axis { stroke: var(--line); stroke-width: 1; fill: none; }
+  .forecast-line .line { fill: none; stroke: var(--true); stroke-width: 1.5; }
+  .forecast-line .pt { fill: var(--paper); stroke: var(--true); stroke-width: 1; }
+  .forecast-line .lbl,
+  .forecast-line .yr {
+    font-family: var(--mono);
+    font-size: 13px;
+    fill: var(--true);
+    font-variant-numeric: tabular-nums;
+  }
+  .forecast-line .yr { fill: var(--ink); letter-spacing: 0.06em; }
+
+  .tbl .ph,
+  .ph {
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  .tbl tr.is-gap td:first-child { color: var(--true); font-weight: 500; }
+  .tbl-foot {
+    margin-top: 20px;
+    padding-top: 14px;
+    border-top: 1px solid var(--true);
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--muted);
+    max-width: 52em;
+  }
+
+  .deliv {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 40px;
+    max-width: 1520px;
+    width: 100%;
+  }
+  .deliv article {
+    padding: 16px 0 28px;
+    border-top: 1px solid var(--line);
+  }
+  .deliv .when {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--true);
+    margin-bottom: 8px;
+  }
+  .deliv h3 { font-size: 18px; font-weight: 500; margin: 0 0 6px; }
+  .deliv .n {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 32px;
+    letter-spacing: -0.04em;
+    color: var(--true);
+    margin-top: 16px;
+  }
+  .deliv p { font-size: 14px; line-height: 1.35; color: var(--muted); }
+
+  .init-template { max-width: 1520px; width: 100%; }
+  .init-template__head {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 24px 48px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--true);
+    margin-bottom: 20px;
+  }
+  .init-template__head h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 28px;
+    letter-spacing: -0.03em;
+  }
+  .init-template__meta {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px 24px;
+  }
+  .init-template__meta span {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--true);
+    margin-bottom: 4px;
+  }
+  .init-template__pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 48px;
+    margin-bottom: 20px;
+  }
+  .init-template__pair section { padding-top: 12px; border-top: 1px solid var(--line); }
+  .init-template__pair h4,
+  .init-template__grid h4 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--true);
+    margin-bottom: 8px;
+  }
+  .init-template__pair p,
+  .init-template__grid p { font-size: 15px; line-height: 1.35; color: var(--muted); }
+  .init-template__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px 24px;
+  }
+  .init-template__grid article {
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+
+  .slide[data-label="Team"] .org {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    max-width: 1520px;
+  }
+  .slide[data-label="Team"] .org .lead {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 16px;
+    align-items: center;
+    grid-column: auto;
+    padding: 0 0 20px;
+    margin: 0;
+    border-bottom: 1px solid var(--true);
+  }
+  .slide[data-label="Team"] .org-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px 32px;
+  }
+  .slide[data-label="Team"] .person {
+    border-top: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 12px;
+    align-items: center;
+  }
+  .slide[data-label="Team"] .avatar {
+    width: 56px;
+    height: 56px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--paper);
+  }
+  .slide[data-label="Team"] .org .lead .avatar { width: 64px; height: 64px; }
+  .slide[data-label="Team"] .org .lead h3 { font-size: 28px; }
+
+  .slide[data-label="Opportunity"] .spine article {
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .slide[data-label="Opportunity"] .spine article:last-child { border-top-color: var(--true); }
+
+  .pri-def {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 12px;
+  }
+  .pri-def article { padding-left: 16px; border-left: 1px solid var(--true); }
+  .pri-def h3 { font-size: 18px; font-weight: 500; margin: 0 0 6px; }
+  .pri-def p { font-size: 15px; line-height: 1.35; color: var(--muted); }
+
+  .tbl ul { list-style: none; }
+  .tbl ul li {
+    font-size: 15px;
+    line-height: 1.35;
+    padding: 8px 0;
+    border-top: 1px solid var(--line);
+  }
+  .tbl ul li:first-child { border-top: none; padding-top: 0; }
+  .tbl-k { font-weight: 500; margin-bottom: 8px; }
+
+  .slide[data-label="Persona"] .tbl { font-size: 14px; }
+  .slide[data-label="Scorecard"] .tbl,
+  .slide[data-label="Goals"] .tbl,
+  .slide[data-label="Coverage"] .tbl { font-size: 14px; }
   @media (prefers-reduced-motion: reduce) {
     .slide, .toc button .toc-l { transition: none; }
   }
@@ -2702,7 +2897,132 @@
     width: 72%;
     max-width: 1240px;
   }
+  .slide.s-ls[data-label="Workstreams"] .spine.n5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0 24px;
+    width: 100%;
+    max-width: 1520px;
+  }
+  .slide.s-ls[data-label="Scorecard"] .ls-group,
+  .slide.s-ls[data-label="Goals"] .tbl,
+  .slide.s-ls[data-label="Coverage"] .tbl {
+    width: 100%;
+    max-width: 1520px;
+  }
+  .tbl-foot {
+    display: block;
+    width: 100%;
+    max-width: 52em;
+  }
+
+  /* Recovered Dense table family — local only. Does not restyle KEEP .tbl. */
+  .slide.s-ls.s-dense[data-label="Scorecard"] .tbl th,
+  .slide.s-ls.s-dense[data-label="Persona"] .tbl th,
+  .slide.s-ls.s-dense[data-label="Goals"] .tbl th,
+  .slide.s-ls.s-dense[data-label="Brand map"] .tbl th,
+  .slide.s-ls.s-dense[data-label="Risks"] .tbl th,
+  .slide.s-ls.s-dense[data-label="Coverage"] .tbl th,
+  .slide.s-ls.s-dense[data-label="Segments"] .tbl th,
+  .slide.s-ls.s-dense[data-label="Agency map"] .tbl th,
+  .slide.s-ls.s-dense[data-label="Sellers"] .tbl th,
+  .slide.s-ls.s-dense[data-label="Checklist"] .tbl th {
+    padding-block: var(--space-12) var(--space-16);
+  }
+  .slide.s-ls.s-dense[data-label="Scorecard"] .tbl td,
+  .slide.s-ls.s-dense[data-label="Persona"] .tbl td,
+  .slide.s-ls.s-dense[data-label="Goals"] .tbl td,
+  .slide.s-ls.s-dense[data-label="Risks"] .tbl td,
+  .slide.s-ls.s-dense[data-label="Coverage"] .tbl td,
+  .slide.s-ls.s-dense[data-label="Segments"] .tbl td,
+  .slide.s-ls.s-dense[data-label="Sellers"] .tbl td {
+    padding-block: var(--space-12);
+  }
+  .slide.s-ls.s-dense[data-label="Brand map"] .tbl td,
+  .slide.s-ls.s-dense[data-label="Agency map"] .tbl td,
+  .slide.s-ls.s-dense[data-label="Checklist"] .tbl td {
+    padding-block: var(--space-16);
+  }
+  .slide.s-ls.s-dense[data-label="Scorecard"] .tbl-foot {
+    margin-top: var(--space-24);
+    padding-top: var(--space-16);
+  }
+  .slide.s-ls.s-dense[data-label="Persona"] .tbl td:first-child .ph {
+    display: block;
+    margin-top: var(--space-8);
+  }
+  .slide.s-ls.s-dense[data-label="Checklist"] .tbl ul li {
+    padding-block: var(--space-12);
+  }
+
+  /* Recovered Dense non-table internals */
+  .slide.s-ls.s-dense[data-label="Initiative"] .init-template__head {
+    padding-bottom: var(--space-16);
+    margin-bottom: var(--space-24);
+  }
+  .slide.s-ls.s-dense[data-label="Initiative"] .init-template__pair {
+    margin-bottom: var(--space-24);
+    gap: 0 var(--space-48);
+  }
+  .slide.s-ls.s-dense[data-label="Initiative"] .init-template__pair section,
+  .slide.s-ls.s-dense[data-label="Initiative"] .init-template__grid article {
+    padding-top: var(--space-16);
+  }
+  .slide.s-ls.s-dense[data-label="Initiative"] .init-template__grid {
+    gap: var(--space-24);
+  }
+  .slide.s-ls.s-dense[data-label="Priority framework"] .now-reuse {
+    gap: 0 var(--space-64);
+  }
+  .slide.s-ls.s-dense[data-label="Priority framework"] .fromto .pair {
+    padding-block: var(--space-16);
+  }
+  .slide.s-ls.s-dense[data-label="Priority framework"] .pri-def {
+    gap: var(--space-32);
+    padding-top: var(--space-16);
+  }
+
+  /* Recovered Shallow group — number → name → desc as one unit. Do not stretch. */
+  .slide.s-ls.s-ls-shallow[data-label="Workstreams"] .spine .ord,
+  .slide.s-ls.s-ls-shallow[data-label="Opportunity"] .spine .ord {
+    margin-bottom: var(--space-8);
+  }
+  .slide.s-ls.s-ls-shallow[data-label="Workstreams"] .spine h3,
+  .slide.s-ls.s-ls-shallow[data-label="Opportunity"] .spine h3 {
+    margin: 0 0 var(--space-8);
+  }
+  .slide.s-ls.s-ls-shallow[data-label="Right to win"] .chain .n {
+    margin: 0 0 var(--space-8);
+  }
+  .slide.s-ls.s-ls-shallow[data-label="Right to win"] .chain h3 {
+    margin: 0 0 var(--space-8);
+  }
+  .slide.s-ls.s-ls-shallow[data-label="Delivery"] .deliv {
+    gap: 0 var(--space-40);
+  }
+  .slide.s-ls.s-ls-shallow[data-label="Delivery"] .deliv article {
+    padding: var(--space-16) 0 var(--space-24);
+  }
+  .slide.s-ls.s-ls-shallow[data-label="Delivery"] .deliv .when {
+    margin-bottom: var(--space-8);
+  }
+  .slide.s-ls.s-ls-shallow[data-label="Delivery"] .deliv h3 {
+    margin: 0 0 var(--space-8);
+  }
+  .slide.s-ls.s-ls-shallow[data-label="Delivery"] .deliv .n {
+    margin-top: var(--space-24);
+  }
+  .slide.s-ls.s-ls-shallow[data-label="Team"] .org {
+    gap: var(--space-32);
+  }
+  .slide.s-ls.s-ls-shallow[data-label="Team"] .org-grid {
+    gap: var(--space-32);
+  }
+  .slide.s-ls.s-ls-shallow[data-label="Team"] .person h3 {
+    margin: 0 0 var(--space-8);
+  }
 </style>
+<link rel="stylesheet" href="editor.css" />
+<link rel="stylesheet" href="css/local-edits.css" />
 </head>
 <body>
 <div class="viewport">
@@ -2822,40 +3142,35 @@
       <div class="slide-content">
 <div class="slide-content-inner">
 <div class="forecast">
-<div class="bars">
-        <div class="bar-row">
-          <div class="yr">2026</div>
-          <div class="bar-track"><div class="bar-fill b5" style="width:59%"></div></div>
-          <div class="val">$83.7B</div>
-        </div>
-        <div class="bar-row">
-          <div class="yr">2027</div>
-          <div class="bar-track"><div class="bar-fill b4" style="width:70%"></div></div>
-          <div class="val">$99.8B</div>
-        </div>
-        <div class="bar-row">
-          <div class="yr">2028</div>
-          <div class="bar-track"><div class="bar-fill b3" style="width:81%"></div></div>
-          <div class="val">$115.6B</div>
-        </div>
-        <div class="bar-row">
-          <div class="yr">2029</div>
-          <div class="bar-track"><div class="bar-fill b2" style="width:91%"></div></div>
-          <div class="val">$129.1B</div>
-        </div>
-        <div class="bar-row">
-          <div class="yr">2030</div>
-          <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
-          <div class="val">$142.1B</div>
-        </div>
-      </div>
+<figure class="forecast-line">
+        <svg viewBox="0 0 1120 360" role="img" aria-label="U.S. commerce-media spend from $83.7 billion in 2026 to $142.1 billion in 2030, plus 70 percent versus 2026.">
+          <line class="axis" x1="80" y1="280" x2="1040" y2="280"></line>
+          <line class="axis" x1="80" y1="80" x2="80" y2="280"></line>
+          <polyline class="line" points="80,268 320,216 560,165 800,122 1040,80"></polyline>
+          <circle class="pt" cx="80" cy="268" r="5"></circle>
+          <circle class="pt" cx="320" cy="216" r="5"></circle>
+          <circle class="pt" cx="560" cy="165" r="5"></circle>
+          <circle class="pt" cx="800" cy="122" r="5"></circle>
+          <circle class="pt" cx="1040" cy="80" r="5"></circle>
+          <text class="lbl" x="80" y="252" text-anchor="middle">$83.7B</text>
+          <text class="lbl" x="320" y="200" text-anchor="middle">$99.8B</text>
+          <text class="lbl" x="560" y="149" text-anchor="middle">$115.6B</text>
+          <text class="lbl" x="800" y="106" text-anchor="middle">$129.1B</text>
+          <text class="lbl" x="1040" y="64" text-anchor="middle">$142.1B</text>
+          <text class="yr" x="80" y="308" text-anchor="middle">2026</text>
+          <text class="yr" x="320" y="308" text-anchor="middle">2027</text>
+          <text class="yr" x="560" y="308" text-anchor="middle">2028</text>
+          <text class="yr" x="800" y="308" text-anchor="middle">2029</text>
+          <text class="yr" x="1040" y="308" text-anchor="middle">2030</text>
+        </svg>
+      </figure>
 <p class="imply">As capabilities become table stakes, competition crosses from expansion to experience.</p>
 <div class="source"><a href="https://www.emarketer.com/" target="_blank" rel="noopener">eMarketer Forecast, US Commerce Media Ad Spending, June 2026</a></div>
       </div>
       </div>
       </div>
     </div>
-    <aside class="notes">Walk 2026 to 2030 on the bars. Stop on 2030. Do not restate the lede — the crossing from expansion to experience is the point.</aside>
+    <aside class="notes">Walk 2026 to 2030 on the line. Stop on 2030. Do not restate the lede — the crossing from expansion to experience is the point.</aside>
   </section>
 
   <section class="slide paper s-ls s-ls-shallow" data-label="Maturity">
@@ -2903,6 +3218,44 @@
       <div class="slide-content"></div>
     </div>
     <aside class="notes">13% vs 42%. Pause. That’s the industry. Then we look at us.</aside>
+  </section>
+
+  <section class="slide paper s-table s-ls s-dense" data-label="Scorecard">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Competitive benchmark</span>
+<h2>Capability is converging across networks. Experience is where the gap <em class="mark">sits</em>.</h2>
+<p class="lede">Walmart cells use what this deck already knows. Competitor cells stay open until we complete our own assessment.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="ls-group">
+<table class="tbl">
+        <thead>
+          <tr>
+            <th scope="col">Dimension</th>
+            <th scope="col">Walmart Ads</th>
+            <th scope="col">Network A</th>
+            <th scope="col">Network B</th>
+            <th scope="col">Network C</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Onsite search + display</td><td>Full coverage</td><td class="ph">[Assess]</td><td class="ph">[Assess]</td><td class="ph">[Assess]</td></tr>
+          <tr><td>Offsite + programmatic</td><td>DSP + offsite media</td><td class="ph">[Assess]</td><td class="ph">[Assess]</td><td class="ph">[Assess]</td></tr>
+          <tr><td>In-store + omnichannel</td><td>Structural advantage</td><td class="ph">[Assess]</td><td class="ph">[Assess]</td><td class="ph">[Assess]</td></tr>
+          <tr><td>Closed-loop measurement</td><td>First-party at scale</td><td class="ph">[Assess]</td><td class="ph">[Assess]</td><td class="ph">[Assess]</td></tr>
+          <tr><td>API + bulk tooling</td><td>Partial parity</td><td class="ph">[Assess]</td><td class="ph">[Assess]</td><td class="ph">[Assess]</td></tr>
+          <tr class="is-gap"><td>One connected experience</td><td>Fragmented across hallways</td><td class="ph">[Assess]</td><td class="ph">[Assess]</td><td class="ph">[Assess]</td></tr>
+          <tr class="is-gap"><td>Advertiser advocacy</td><td>NPS −27 (historical)</td><td class="ph">[Assess]</td><td class="ph">[Assess]</td><td class="ph">[Assess]</td></tr>
+        </tbody>
+      </table>
+<p class="tbl-foot">We match or lead on assets and inventory. Connected experience and advertiser advocacy are the open gap — and the two rows advertisers use to decide where budget goes.</p>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Do not fill competitor cells live. The story is capability parity versus the experience gap we already know.</aside>
   </section>
 
   <section class="slide paper s-chips s-ls" data-label="Reality">
@@ -3002,6 +3355,47 @@
       <div class="slide-content"></div>
     </div>
     <aside class="notes">Let The Drum say it. Don’t add “next competitive” — Cover already did.</aside>
+  </section>
+
+  <section class="slide paper s-ls s-ls-shallow" data-label="Right to win">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Right to win</span>
+<h2>Experience is the layer that converts assets into <em class="mark">advantage</em>.</h2>
+<p class="lede">No competitor combines first-party commerce data and omnichannel reach at Walmart’s scale. The advertiser experience is the connective layer that turns those assets into adoption, deeper investment, and durable share.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="chain" role="img" aria-label="Market forces, Walmart assets, platform experience, and competitive advantage.">
+        <article>
+          <span class="dot" aria-hidden="true"></span>
+          <div class="n">01</div>
+          <h3>Market forces</h3>
+          <p>Capabilities are becoming easier to replicate. Advertisers consolidate spend toward platforms that make buying simpler.</p>
+        </article>
+        <article>
+          <span class="dot" aria-hidden="true"></span>
+          <div class="n">02</div>
+          <h3>Walmart assets</h3>
+          <p>First-party commerce data, omnichannel reach, closed-loop measurement, Marketplace, DSP + Marty.</p>
+        </article>
+        <article>
+          <span class="dot" aria-hidden="true"></span>
+          <div class="n">03</div>
+          <h3>Platform experience</h3>
+          <p>One journey to buy. Shared foundations. Simplicity and trust. Intelligence that explains itself.</p>
+        </article>
+        <article>
+          <span class="dot" aria-hidden="true"></span>
+          <div class="n">04</div>
+          <h3>Competitive advantage</h3>
+          <p>Broader adoption, deeper investment, durable share — the category standard.</p>
+        </article>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">This is the mechanism. The Bet later is the equation. Do not close here.</aside>
   </section>
 
   <section class="slide navy s-chapter" data-label="Today">
@@ -3531,6 +3925,75 @@
     <aside class="notes">One row: omnichannel is for coordinating investment, not running one campaign.</aside>
   </section>
 
+  <section class="slide paper s-table s-ls s-dense" data-label="Persona">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Persona dimensions</span>
+<h2>Advertisers can’t be reduced to a single <em class="mark">persona</em>.</h2>
+<p class="lede">Seven dimensions the platform should adapt to — the vocabulary behind the Adaptive experience model.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<table class="tbl">
+        <thead>
+          <tr>
+            <th scope="col">Dimension</th>
+            <th scope="col">Why it matters</th>
+            <th scope="col">Example signals</th>
+            <th scope="col">Adaptive experience</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Customer segment<br><span class="ph">Who is the customer?</span></td>
+            <td>Different segments have different business models, budgets, goals, and success metrics.</td>
+            <td>Enterprise · Mid-market · Agency · 3P seller · Non-endemic · Internal</td>
+            <td>A 3P seller needs a simpler, more guided experience than an enterprise brand.</td>
+          </tr>
+          <tr>
+            <td>Service model<br><span class="ph">How do they activate?</span></td>
+            <td>Self-serve, managed, hybrid, and API customers require fundamentally different experiences.</td>
+            <td>Self-serve · Managed service · Hybrid · 3P API · Partner integration</td>
+            <td>Self-serve customers need autonomy; managed-service customers need collaboration.</td>
+          </tr>
+          <tr>
+            <td>User role<br><span class="ph">Who is using the platform?</span></td>
+            <td>Buyers, executives, analysts, and administrators have different responsibilities and information needs.</td>
+            <td>Media buyer · Commerce manager · Analyst · Executive · Account manager</td>
+            <td>Executives need strategic insight; media buyers need execution tools.</td>
+          </tr>
+          <tr>
+            <td>Business objective<br><span class="ph">What is their goal?</span></td>
+            <td>Customers come to grow sales, launch products, improve ROAS, or acquire customers — not to use features.</td>
+            <td>Launch a product · Increase ROAS · Grow share · Acquire customers</td>
+            <td>Launching a product requires a different experience than improving ROAS.</td>
+          </tr>
+          <tr>
+            <td>Jobs to be done<br><span class="ph">What is the current task?</span></td>
+            <td>The platform should recognize the task at hand and guide the most efficient workflow.</td>
+            <td>Plan · Activate · Measure · Optimize · Report</td>
+            <td>Planning, launching, measuring, and optimizing require different workflows.</td>
+          </tr>
+          <tr>
+            <td>Context<br><span class="ph">What is happening in real time?</span></td>
+            <td>Experience level, urgency, seasonality, and account health determine the right guidance at the right time.</td>
+            <td>New user · Holiday · Budget exhausted · Performance declining</td>
+            <td>A first-time user should have a different experience than a power user preparing for Black Friday.</td>
+          </tr>
+          <tr>
+            <td>Behavior + intent<br><span class="ph">What will they need next?</span></td>
+            <td>Historical behavior, workflow patterns, and performance let the platform recommend the next best action.</td>
+            <td>Recommend budget · Surface performance · Automate optimizations</td>
+            <td>After a Sponsored Search launch, recommend complementary activations.</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">This is the vocabulary. Adaptive in the appendix is the idea — four dimensions converging at once.</aside>
+  </section>
+
   <section class="slide paper s-table s-ls" data-label="Trust">
     <div class="body">
       <div class="slide-header">
@@ -3917,7 +4380,7 @@
     <aside class="notes">Foundations first, then workstreams. Don’t preview Express pod yet.</aside>
   </section>
 
-  <section class="slide paper s-set s-ls" data-label="Workstreams">
+  <section class="slide paper s-set s-ls s-ls-shallow" data-label="Workstreams">
     <div class="body">
       <div class="slide-header">
 <span class="eyebrow">Current work</span>
@@ -3926,32 +4389,96 @@
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
-<div class="ask-row" role="img" aria-label="Five connected workstreams, in order.">
-        <div class="item">
-          <div class="num">01</div>
-          <div class="copy"><h3>Platform foundations</h3><p>Global IA, terminology, Living Design, All Campaigns entry point.</p></div>
-        </div>
-        <div class="item">
-          <div class="num">02</div>
-          <div class="copy"><h3>Campaign workflows</h3><p>Sponsored and Display modernization, cross-channel management.</p></div>
-        </div>
-        <div class="item">
-          <div class="num">03</div>
-          <div class="copy"><h3>Seller lifecycle</h3><p>Quick Start, native launch, one-click optimization, return.</p></div>
-        </div>
-        <div class="item">
-          <div class="num">04</div>
-          <div class="copy"><h3>Shared capabilities</h3><p>Notifications, creative, audiences, reporting — once, then inherited.</p></div>
-        </div>
-        <div class="item">
-          <div class="num">05</div>
-          <div class="copy"><h3>Intelligence</h3><p>Recommendation framework, personalized guidance, Marty.</p></div>
-        </div>
+<div class="spine n5" role="img" aria-label="Five connected workstreams.">
+        <article>
+          <span class="ord">01</span>
+          <h3>Platform foundations</h3>
+          <p>Global IA, terminology, Living Design, All Campaigns entry point.</p>
+        </article>
+        <article>
+          <span class="ord">02</span>
+          <h3>Campaign workflows</h3>
+          <p>Sponsored and Display modernization, cross-channel management.</p>
+        </article>
+        <article>
+          <span class="ord">03</span>
+          <h3>Seller lifecycle</h3>
+          <p>Quick Start, native launch, one-click optimization, return.</p>
+        </article>
+        <article>
+          <span class="ord">04</span>
+          <h3>Shared capabilities</h3>
+          <p>Notifications, creative, audiences, reporting — once, then inherited.</p>
+        </article>
+        <article>
+          <span class="ord">05</span>
+          <h3>Intelligence</h3>
+          <p>Recommendation framework, personalized guidance, Marty.</p>
+        </article>
       </div>
       </div>
       </div>
     </div>
     <aside class="notes">The roadmap is moving from a collection of front-end requests toward five connected workstreams.</aside>
+  </section>
+
+  <section class="slide paper s-ls s-ls-shallow" data-label="Delivery">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Proof of delivery</span>
+<h2>What the team has already <em class="mark">delivered</em>.</h2>
+<p class="lede">Placeholder — named initiatives and measured outcomes still need to be filled from the record. Do not present invented results.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="deliv" role="img" aria-label="Six placeholder delivery records.">
+        <article>
+          <div class="when ph">[Shipped Q?]</div>
+          <h3 class="ph">[Initiative name]</h3>
+          <p class="ph">[What changed for advertisers, in one line.]</p>
+          <div class="n ph">[00]</div>
+          <p class="ph">[Measured outcome or adoption]</p>
+        </article>
+        <article>
+          <div class="when ph">[Shipped Q?]</div>
+          <h3 class="ph">[Initiative name]</h3>
+          <p class="ph">[What changed for advertisers, in one line.]</p>
+          <div class="n ph">[00]</div>
+          <p class="ph">[Measured outcome or adoption]</p>
+        </article>
+        <article>
+          <div class="when ph">[Shipped Q?]</div>
+          <h3 class="ph">[Initiative name]</h3>
+          <p class="ph">[What changed for advertisers, in one line.]</p>
+          <div class="n ph">[00]</div>
+          <p class="ph">[Measured outcome or adoption]</p>
+        </article>
+        <article>
+          <div class="when ph">[Shipped Q?]</div>
+          <h3 class="ph">[Initiative name]</h3>
+          <p class="ph">[What changed for advertisers, in one line.]</p>
+          <div class="n ph">[00]</div>
+          <p class="ph">[Measured outcome or adoption]</p>
+        </article>
+        <article>
+          <div class="when ph">[Shipped Q?]</div>
+          <h3 class="ph">[Initiative name]</h3>
+          <p class="ph">[What changed for advertisers, in one line.]</p>
+          <div class="n ph">[00]</div>
+          <p class="ph">[Measured outcome or adoption]</p>
+        </article>
+        <article>
+          <div class="when ph">[Shipped Q?]</div>
+          <h3 class="ph">[Initiative name]</h3>
+          <p class="ph">[What changed for advertisers, in one line.]</p>
+          <div class="n ph">[00]</div>
+          <p class="ph">[Measured outcome or adoption]</p>
+        </article>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Empty on purpose. Fill from shipped work before any leadership review.</aside>
   </section>
 
   <section class="slide paper s-timeline s-ls" data-label="Express pod">
@@ -4026,6 +4553,70 @@
       </div>
     </div>
     <aside class="notes">Four dispositions for in-flight work, applied wherever flexibility still exists.</aside>
+  </section>
+
+  <section class="slide paper s-ls s-dense" data-label="Initiative">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Initiative template</span>
+<h2>One template for every platform-experience <em class="mark">initiative</em>.</h2>
+<p class="lede">If the left half cannot be filled from an audit, it is not yet a platform-experience initiative.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="init-template">
+        <div class="init-template__head">
+          <div>
+            <h3 class="ph">[Initiative name] — the one-line outcome in a full sentence</h3>
+          </div>
+          <div class="init-template__meta">
+            <div><span>Priority</span><p class="ph">[01 Simplify]</p></div>
+            <div><span>Owner</span><p class="ph">[DRI]</p></div>
+            <div><span>Phase</span><p class="ph">[Establish]</p></div>
+            <div><span>Pain addressed</span><p class="ph">[Fragmented]</p></div>
+          </div>
+        </div>
+        <div class="init-template__pair">
+          <section>
+            <h4>The case — what the audit found</h4>
+            <p class="ph">Current state · entry point — [audit screenshot / current workflow]</p>
+            <p class="ph">Current state · the friction — [annotated pain point]</p>
+            <p class="ph">Findings — [cite the research input · ticket volume or VOC · platform audit]</p>
+          </section>
+          <section>
+            <h4>The proposal — what we want to build</h4>
+            <p class="ph">Proposed direction — [concept or wireframe]</p>
+            <p class="ph">Pattern or component — [reusable pattern / Living Design spec]</p>
+            <p class="ph">Scope — in: [workflow or surfaces] · out: [explicitly deferred]</p>
+          </section>
+        </div>
+        <div class="init-template__grid">
+          <article>
+            <h4>What it costs today</h4>
+            <p class="ph">[00] steps or minutes per task</p>
+            <p class="ph">[00] tickets or abandonment rate</p>
+          </article>
+          <article>
+            <h4>Engineering shape</h4>
+            <p class="ph">Services / APIs / [dependency]</p>
+            <p class="ph">Reuses [existing component] · leaves behind [reusable asset]</p>
+          </article>
+          <article>
+            <h4>Success measures</h4>
+            <p class="ph">Task time, task success, effort, abandonment — with today’s baseline</p>
+          </article>
+          <article>
+            <h4>Dependencies + sequencing</h4>
+            <p class="ph">[Unresolved decision, partner team, sequencing constraint]</p>
+            <p class="ph">Effort · [T-shirt · quarter · what must land first]</p>
+            <p class="ph">Rubric · [Accelerate / Reshape / Sequence / Defer]</p>
+          </article>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Walk the blank. The point is the audit half — if we cannot fill it, we should not build it.</aside>
   </section>
 
   <section class="slide paper s-thesis" data-label="Ambition">
@@ -4164,7 +4755,7 @@
     <aside class="notes">Operating model, not org chart. Charter and engagement model are the meat.</aside>
   </section>
 
-  <section class="slide paper s-people s-ls" data-label="Team">
+  <section class="slide paper s-people s-ls s-ls-shallow" data-label="Team">
     <div class="body">
       <div class="slide-header">
 <span class="eyebrow">Advertiser Experience</span>
@@ -4174,15 +4765,23 @@
       <div class="slide-content">
 <div class="slide-content-inner">
 <div class="org">
-        <div class="person lead"><h3>Sarah Scherer</h3><p>Product Director</p></div>
-        <div class="person"><h3>Elysia Chen</h3><p>Advertiser Experience</p></div>
-        <div class="person"><h3>Pratibha Kumar</h3><p>Advertiser Experience</p></div>
-        <div class="person"><h3>Shaily Saigal</h3><p>Advertiser Experience</p></div>
-        <div class="person"><h3>Soumya Mohan</h3><p>Advertiser Experience</p></div>
-        <div class="person"><h3>Brian Chan</h3><p>Advertiser Experience</p></div>
-        <div class="person"><h3>Daania Kalam</h3><p>Advertiser Experience</p></div>
-        <div class="person"><h3>Max Baum</h3><p>Advertiser Experience</p></div>
-        <div class="person"><h3>Niharika Gupta</h3><p>Advertiser Experience</p></div>
+        <div class="person lead">
+          <div class="avatar" aria-hidden="true"></div>
+          <div>
+            <h3>Sarah Scherer</h3>
+            <p>Product Director</p>
+          </div>
+        </div>
+        <div class="org-grid">
+          <div class="person"><div class="avatar" aria-hidden="true"></div><div><h3>Elysia Chen</h3><p>Advertiser Experience</p></div></div>
+          <div class="person"><div class="avatar" aria-hidden="true"></div><div><h3>Pratibha Kumar</h3><p>Advertiser Experience</p></div></div>
+          <div class="person"><div class="avatar" aria-hidden="true"></div><div><h3>Shaily Saigal</h3><p>Advertiser Experience</p></div></div>
+          <div class="person"><div class="avatar" aria-hidden="true"></div><div><h3>Soumya Mohan</h3><p>Advertiser Experience</p></div></div>
+          <div class="person"><div class="avatar" aria-hidden="true"></div><div><h3>Brian Chan</h3><p>Advertiser Experience</p></div></div>
+          <div class="person"><div class="avatar" aria-hidden="true"></div><div><h3>Daania Kalam</h3><p>Advertiser Experience</p></div></div>
+          <div class="person"><div class="avatar" aria-hidden="true"></div><div><h3>Max Baum</h3><p>Advertiser Experience</p></div></div>
+          <div class="person"><div class="avatar" aria-hidden="true"></div><div><h3>Niharika Gupta</h3><p>Advertiser Experience</p></div></div>
+        </div>
       </div>
       </div>
       </div>
@@ -4350,6 +4949,41 @@
     <aside class="notes">Three outcome families: are advertisers succeeding, is the business growing, and are teams moving faster?</aside>
   </section>
 
+  <section class="slide paper s-table s-ls s-dense" data-label="Goals">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Baselines + targets</span>
+<h2>Most success measures are not instrumented <em class="mark">today</em>.</h2>
+<p class="lede">Two baselines are established. The rest need instrumentation, which is why protected capacity for measurement is part of the ask.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<table class="tbl">
+        <thead>
+          <tr>
+            <th scope="col">Measure</th>
+            <th scope="col">Baseline today</th>
+            <th scope="col">FY28 target</th>
+            <th scope="col">Instrumentation status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Advertiser NPS</td><td>−27</td><td class="ph">[target]</td><td>Established · Pendo, 1,350 responses</td></tr>
+          <tr><td>Experience rating</td><td>2 / 5</td><td class="ph">[target]</td><td>Established · Pendo</td></tr>
+          <tr><td>Time to complete core tasks</td><td>Not measured</td><td class="ph">[target]</td><td>Needs task-level instrumentation</td></tr>
+          <tr><td>Task success rate</td><td>Not measured</td><td class="ph">[target]</td><td>Needs funnel definition per workflow</td></tr>
+          <tr><td>Workflow abandonment</td><td>Not measured</td><td class="ph">[target]</td><td>Needs event instrumentation</td></tr>
+          <tr><td>Support reliance</td><td class="ph">[baseline]</td><td class="ph">[target]</td><td>Derivable from ticket data</td></tr>
+          <tr><td>Shared component adoption</td><td>Not measured</td><td class="ph">[target]</td><td>Needs design-system telemetry</td></tr>
+          <tr><td>Time to launch front-end change</td><td>Not measured</td><td class="ph">[target]</td><td>Needs delivery-cycle tracking</td></tr>
+        </tbody>
+      </table>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">NPS −27 and 2/5 are the only established baselines. Do not invent FY28 targets in the room.</aside>
+  </section>
+
   <section class="slide navy s-chapter" data-label="Conditions">
     <div class="body">
       <div class="slide-header">
@@ -4398,6 +5032,57 @@
       </div>
     </div>
     <aside class="notes">The strategy now needs operating commitments — not another round of broad agreement without capacity, ownership, or follow-through.</aside>
+  </section>
+
+  <section class="slide paper s-table s-ls s-dense" data-label="Risks">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Risks to this plan</span>
+<h2>What could go wrong with this plan, and how we would <em class="mark">handle</em> it.</h2>
+<p class="lede">Risk 01 is the one that actually kills it. It is a measurement-agreement problem, not a delivery problem.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<table class="tbl">
+        <thead>
+          <tr>
+            <th scope="col">Risk</th>
+            <th scope="col">Mitigation</th>
+            <th scope="col">Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>01 · Enabling work is less visible than feature volume, and the strategy is reversed before it compounds</td>
+            <td>Agree up front that early quarters are judged on foundation milestones as well as feature volume. Set and publish a measured reuse target once instrumentation lands.</td>
+            <td class="ph">[owner]</td>
+          </tr>
+          <tr>
+            <td>02 · Channel teams treat shared patterns as optional and keep local variants</td>
+            <td>Reuse standard applied in roadmap review; exceptions require a documented converge plan, not a new foundation.</td>
+            <td class="ph">[owner]</td>
+          </tr>
+          <tr>
+            <td>03 · No dedicated front-end engineering, so the platform priority stalls</td>
+            <td>Scope foundations to what partner teams can absorb, or dedicated capacity is a named trade-off at steering.</td>
+            <td class="ph">[owner]</td>
+          </tr>
+          <tr>
+            <td>04 · Measurement stays uninstrumented, so improvement can’t be proven</td>
+            <td>Instrumentation is a funded deliverable with baselines set before the workflow changes they measure ship.</td>
+            <td class="ph">[owner]</td>
+          </tr>
+          <tr>
+            <td>05 · Foundations are built around today’s core U.S. assumptions and need rebuilding for Sam’s Club or international</td>
+            <td>Ecosystem-readiness guardrail in the rubric; configuration boundaries defined before shared services are finalized.</td>
+            <td class="ph">[owner]</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Owners stay blank until named. Do not invent a DRI in the room.</aside>
   </section>
 
   <section class="slide navy s-chapter" data-label="Close">
@@ -4525,20 +5210,58 @@
         <tbody>
           <tr><td><a href="https://www.emarketer.com/" target="_blank" rel="noopener">eMarketer Forecast, US Commerce Media Ad Spending, June 2026</a></td><td>p.05</td></tr>
           <tr><td><a href="https://info.koddi.com/hubfs/All%20Commerce%20Media%20Playbook.pdf" target="_blank" rel="noopener">Koddi, The Commerce Media Playbook (Forrester maturity criteria)</a></td><td>p.07</td></tr>
-          <tr><td><a href="https://skai.io/reports-and-whitepapers/2025-state-of-retail-media-report/" target="_blank" rel="noopener">Skai, 2025 State Of Retail Media Report</a></td><td>p.08</td></tr>
-          <tr><td><a href="https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/commerce-media-at-an-inflection-point-how-to-win-with-a-full-stack-approach" target="_blank" rel="noopener">McKinsey, Commerce Media at an Inflection Point</a></td><td>p.09</td></tr>
-          <tr><td><a href="https://koddi.com/resources/programmatic-retail-media-report/" target="_blank" rel="noopener">Koddi, The State Of Programmatic Retail Media 2025</a> · RMN NPS, 34 networks</td><td>p.10</td></tr>
-          <tr><td><a href="https://www.thedrum.com/news/retail-media-s-next-phase-will-be-won-by-differentiation-not-scale" target="_blank" rel="noopener">The Drum, Retail Media’s Next Phase Won by Differentiation</a></td><td>p.11</td></tr>
-          <tr><td>UXR + VOC synthesis: 23 sources, 18 studies, 28,000+ tickets, 20 interviews</td><td>p.13</td></tr>
-          <tr><td>Pendo Feedback: 1,825 records, February 2025–August 2026</td><td>p.15–16</td></tr>
-          <tr><td>Ad Center platform audit: terminology, taxonomy + Living Design</td><td>p.19–20</td></tr>
-          <tr><td><a href="https://hbr.org/2025/09/the-importance-of-trust-and-transparency-in-retail-media-networks" target="_blank" rel="noopener">Harvard Business Review, Trust and Transparency in RMNs, 2025</a></td><td>p.27</td></tr>
+          <tr><td><a href="https://skai.io/reports-and-whitepapers/2025-state-of-retail-media-report/" target="_blank" rel="noopener">Skai, 2025 State Of Retail Media Report</a></td><td>p.11</td></tr>
+          <tr><td><a href="https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/commerce-media-at-an-inflection-point-how-to-win-with-a-full-stack-approach" target="_blank" rel="noopener">McKinsey, Commerce Media at an Inflection Point</a></td><td>p.10</td></tr>
+          <tr><td><a href="https://koddi.com/resources/programmatic-retail-media-report/" target="_blank" rel="noopener">Koddi, The State Of Programmatic Retail Media 2025</a> · RMN NPS, 34 networks</td><td>p.11</td></tr>
+          <tr><td><a href="https://www.thedrum.com/news/retail-media-s-next-phase-will-be-won-by-differentiation-not-scale" target="_blank" rel="noopener">The Drum, Retail Media’s Next Phase Won by Differentiation</a></td><td>p.12</td></tr>
+          <tr><td>UXR + VOC synthesis: 23 sources, 18 studies, 28,000+ tickets, 20 interviews</td><td>p.15</td></tr>
+          <tr><td>Pendo Feedback: 1,825 records, February 2025–August 2026</td><td>p.17–18</td></tr>
+          <tr><td>Ad Center platform audit: terminology, taxonomy + Living Design</td><td>p.21–22</td></tr>
+          <tr><td><a href="https://hbr.org/2025/09/the-importance-of-trust-and-transparency-in-retail-media-networks" target="_blank" rel="noopener">Harvard Business Review, Trust and Transparency in RMNs, 2025</a></td><td>p.30</td></tr>
         </tbody>
       </table>
       </div>
       </div>
     </div>
     <aside class="notes">Don’t read the table. Point at eMarketer and Pendo if someone asks “says who.”</aside>
+  </section>
+
+  <section class="slide paper s-table s-ls s-dense" data-label="Priority framework">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Priority framework</span>
+<h2>Add ecosystem readiness as a guardrail, not the primary <em class="mark">score</em>.</h2>
+<p class="lede">Current advertiser impact stays the dominant near-term criterion; the guardrail only prevents avoidable dead ends.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="now-reuse">
+        <div class="fromto">
+          <div class="pair"><div class="from">Reusable later?</div><div class="arrw">→</div><div class="to">Could it support Sam’s Club or international markets without a rebuild?</div></div>
+          <div class="pair"><div class="from">Walmart-specific trap?</div><div class="arrw">→</div><div class="to">Does a core-US assumption make broader integration harder?</div></div>
+          <div class="pair"><div class="from">Configurable?</div><div class="arrw">→</div><div class="to">Can it vary by market, channel, advertiser type, or service model?</div></div>
+          <div class="pair"><div class="from">Shared foundations?</div><div class="arrw">→</div><div class="to">Does it strengthen identity, workflow, component, API, data, or intelligence?</div></div>
+          <div class="pair"><div class="from">Rebuild risk?</div><div class="arrw">→</div><div class="to">Would this need to be rebuilt if the platform expands beyond core U.S.?</div></div>
+        </div>
+        <div class="pri-def">
+          <article>
+            <h3>Primary score</h3>
+            <p>Advertiser value, strategic alignment, reuse, confidence, and effort.</p>
+          </article>
+          <article>
+            <h3>Guardrail</h3>
+            <p>Future extensibility across business units and markets.</p>
+          </article>
+          <article>
+            <h3>Flag</h3>
+            <p>Likely rework or migration debt created by the solution.</p>
+          </article>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Appendix reference. In-body Guardrail slide stays the short version. Do not rescore live.</aside>
   </section>
 
   <section class="slide paper s-set s-ls s-ls-shallow" data-label="Adaptive">
@@ -4579,7 +5302,42 @@
     <aside class="notes">This is a framework, not four equal problems. Contrast with Themes: those were the pains.</aside>
   </section>
 
-  <section class="slide paper s-table s-ls" data-label="Segments">
+  <section class="slide paper s-table s-ls s-dense" data-label="Coverage">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Segment coverage</span>
+<h2>Which advertisers each priority actually <em class="mark">serves</em>.</h2>
+<p class="lede">Coverage relationships are not yet assessed. Cells stay open until the map is filled from research — this slide does not invent Direct or Indirect.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<table class="tbl">
+        <thead>
+          <tr>
+            <th scope="col">Segment</th>
+            <th scope="col">01 Simplify</th>
+            <th scope="col">02 Marketplace</th>
+            <th scope="col">03 Unified platform</th>
+            <th scope="col">04 Intelligence</th>
+            <th scope="col">FY28 read</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>3P sellers</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[read]</td></tr>
+          <tr><td>Mid-market</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[read]</td></tr>
+          <tr><td>Enterprise brand</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[read]</td></tr>
+          <tr><td>Agency</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[read]</td></tr>
+          <tr><td>Non-endemic</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[read]</td></tr>
+          <tr><td>Internal</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[coverage]</td><td class="ph">[read]</td></tr>
+        </tbody>
+      </table>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Do not fill Direct / Indirect from memory. The map is the question, not the answer.</aside>
+  </section>
+
+  <section class="slide paper s-table s-ls s-dense" data-label="Segments">
     <div class="body">
       <div class="slide-header">
 <span class="eyebrow">Customer segments</span>
@@ -4602,7 +5360,7 @@
     <aside class="notes">Enterprise vs seller is the split they’ll argue. Don’t flatten it.</aside>
   </section>
 
-  <section class="slide paper s-table s-ls" data-label="Brand map">
+  <section class="slide paper s-table s-ls s-dense" data-label="Brand map">
     <div class="body">
       <div class="slide-header">
 <span class="eyebrow">Customer segments</span>
@@ -4625,7 +5383,7 @@
     <aside class="notes">Every function touches the same platform with different needs.</aside>
   </section>
 
-  <section class="slide paper s-table s-ls" data-label="Agency map">
+  <section class="slide paper s-table s-ls s-dense" data-label="Agency map">
     <div class="body">
       <div class="slide-header">
 <span class="eyebrow">Customer segments</span>
@@ -4648,7 +5406,7 @@
     <aside class="notes">Automation, interoperability, and clean data are what earn agency allocation.</aside>
   </section>
 
-  <section class="slide paper s-table s-ls" data-label="Sellers">
+  <section class="slide paper s-table s-ls s-dense" data-label="Sellers">
     <div class="body">
       <div class="slide-header">
 <span class="eyebrow">Customer segments</span>
@@ -4672,7 +5430,7 @@
     <aside class="notes">Self-serve sellers are the largest population of advertiser accounts on Walmart — the segment where platform usability most directly determines whether spend grows.</aside>
   </section>
 
-  <section class="slide paper s-compare s-ls" data-label="Checklist">
+  <section class="slide paper s-table s-ls s-dense" data-label="Checklist">
     <div class="body">
       <div class="slide-header">
 <span class="eyebrow">Tracking checklist</span>
@@ -4681,32 +5439,40 @@
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
-<div class="compare">
-        <div>
-          <div class="kicker">Sam’s Club Connect</div>
-          <h3>Confirm before sequencing</h3>
-          <ul>
-          <li>Confirm Ad Center architecture + shared services</li>
-          <li>Document Sponsored capabilities + roadmap</li>
-          <li>Validate Artemis migration status + managed-service model</li>
-          <li>Assess identity, access, billing, reporting, + measurement</li>
-          <li>Identify integration value + advertiser overlap</li>
-          <li>Estimate migration complexity + sequencing options</li>
-          </ul>
-        </div>
-        <div>
-          <div class="kicker">Walmart International</div>
-          <h3>Waves, not a global timeline</h3>
-          <ul>
-          <li>Inventory active markets + advertising platforms</li>
-          <li>Map channel + self-service maturity by market</li>
-          <li>Document regulatory, privacy, data-residency, + localization</li>
-          <li>Identify shared-core reuse + market-specific gaps</li>
-          <li>Assess business value, readiness, + ownership by market</li>
-          <li>Develop candidate waves rather than a single global timeline</li>
-          </ul>
-        </div>
-      </div>
+<table class="tbl">
+        <thead>
+          <tr>
+            <th scope="col">Sam’s Club Connect</th>
+            <th scope="col">Walmart International</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <p class="tbl-k">Confirm before sequencing</p>
+              <ul>
+                <li>Confirm Ad Center architecture + shared services</li>
+                <li>Document Sponsored capabilities + roadmap</li>
+                <li>Validate Artemis migration status + managed-service model</li>
+                <li>Assess identity, access, billing, reporting, + measurement</li>
+                <li>Identify integration value + advertiser overlap</li>
+                <li>Estimate migration complexity + sequencing options</li>
+              </ul>
+            </td>
+            <td>
+              <p class="tbl-k">Waves, not a global timeline</p>
+              <ul>
+                <li>Inventory active markets + advertising platforms</li>
+                <li>Map channel + self-service maturity by market</li>
+                <li>Document regulatory, privacy, data-residency, + localization</li>
+                <li>Identify shared-core reuse + market-specific gaps</li>
+                <li>Assess business value, readiness, + ownership by market</li>
+                <li>Develop candidate waves rather than a single global timeline</li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       </div>
       </div>
     </div>
@@ -4732,7 +5498,7 @@
     </div>
     <div class="pager-controls">
       <button class="arr" id="prev" type="button" aria-label="Previous">‹</button>
-      <button class="pagenum" id="pagenum" type="button" aria-live="polite" aria-label="Jump to slide. Press J." title="Jump to slide (J)">01 / 68</button>
+      <button class="pagenum" id="pagenum" type="button" aria-live="polite" aria-label="Jump to slide. Press J." title="Jump to slide (J)">01 / 77</button>
       <label class="goto" id="goto" hidden>
         <span class="goto-k">Go</span>
         <input id="gotoNum" name="slide-number" type="text" inputmode="numeric" maxlength="2" autocomplete="off" spellcheck="false" aria-label="Slide number">
@@ -4790,16 +5556,16 @@
 
 
   const SECTIONS = [
-    { id: "01", label: "Market shift", start: 3, end: 10 },
-    { id: "02", label: "Where we are today", start: 11, end: 20 },
-    { id: "03", label: "Our vision", start: 21, end: 26 },
-    { id: "04", label: "Strategic reset", start: 27, end: 37 },
-    { id: "05", label: "Roadmap", start: 38, end: 46 },
-    { id: "06", label: "Operating model", start: 47, end: 51 },
-    { id: "07", label: "Measuring success", start: 52, end: 53 },
-    { id: "08", label: "What needs to be true", start: 54, end: 55 },
-    { id: "09", label: "Closing", start: 56, end: 59 },
-    { id: "10", label: "Appendix", start: 60, end: 67 }
+    { id: "01", label: "Market shift", start: 3, end: 12 },
+    { id: "02", label: "Where we are today", start: 13, end: 22 },
+    { id: "03", label: "Our vision", start: 23, end: 29 },
+    { id: "04", label: "Strategic reset", start: 30, end: 40 },
+    { id: "05", label: "Roadmap", start: 41, end: 51 },
+    { id: "06", label: "Operating model", start: 52, end: 56 },
+    { id: "07", label: "Measuring success", start: 57, end: 59 },
+    { id: "08", label: "What needs to be true", start: 60, end: 62 },
+    { id: "09", label: "Closing", start: 63, end: 66 },
+    { id: "10", label: "Appendix", start: 67, end: 76 }
   ];
   const LIVE_END = slides.length - 1;
   SECTIONS.forEach((sec) => {
@@ -4815,7 +5581,7 @@
 
 
   function fit() {
-    const dock = document.body.classList.contains("is-review") ? Math.min(400, window.innerWidth * 0.36) : 0;
+    const dock = (document.body.classList.contains("is-review") || (document.body.classList.contains("edit-mode") && !document.body.classList.contains("pe-collapsed"))) ? Math.min(400, window.innerWidth * 0.36) : 0;
     const scale = Math.min((window.innerWidth - dock) / 1920, window.innerHeight / 1080);
     const x = ((window.innerWidth - dock) - 1920 * scale) / 2;
     const y = (window.innerHeight - 1080 * scale) / 2;
@@ -5088,5 +5854,6 @@
 </script>
 <script src="review.js"></script>
 <script src="layout-system.js"></script>
+<script src="editor.js"></script>
 </body>
 </html>
