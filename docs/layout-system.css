@@ -1,0 +1,769 @@
+/* layout-system.css
+   Promoted layout architecture for STANDARD content slides (.s-ls).
+   Special archetypes (cover, chapter, quote, close, map) never receive .s-ls.
+
+   Vertical modes (keep this set small):
+     STANDARD  .s-ls              0.8fr / content / 1.2fr
+     SHALLOW   .s-ls.s-ls-shallow 0.55fr / content / 1.45fr
+     DENSE     .s-ls.s-dense      top-aligned (no optical weighting)
+
+   Shallow is assigned manually by semantic short-body pattern:
+     1. short spines / step sequences
+     2. compact lifecycle loops
+     3. title-only or label-heavy rows
+     4. compact single-row equations
+     5. short single-row frameworks with minimal body height
+   Do not auto-detect. Do not add per-slide Y offsets.
+   Debug: press L, or ?debug=layout — never in presentation mode. */
+
+/* ------------------------------------------------------------------ */
+/* Tokens                                                              */
+/* ------------------------------------------------------------------ */
+.slide.s-ls {
+  --ls-8: 8px;
+  --ls-12: 12px;
+  --ls-16: 16px;
+  --ls-24: 24px;
+  --ls-32: 32px;
+  --ls-40: 40px;
+  --ls-48: 48px;
+  --ls-64: 64px;
+  --ls-80: 80px;
+
+  --ls-frame: 100%;
+  --ls-header-gap: var(--ls-16);
+  --ls-lede-gap: var(--ls-16);
+  --ls-transition: var(--ls-40);
+  --ls-optical-before: 0.8fr;
+  --ls-optical-after: 1.2fr;
+
+  grid-template-rows:
+    var(--head-inset)
+    auto
+    var(--ls-transition)
+    minmax(0, 1fr)
+    var(--foot-safe);
+}
+
+/* Shallow: structurally short bodies only (short spine, compact loop,
+   title-only/label row, compact single-row equation or framework).
+   Tokens flow into .slide-content-inner. 40px transition row is
+   unchanged. Not a per-slide offset. */
+.slide.s-ls.s-ls-shallow {
+  --ls-optical-before: 0.55fr;
+  --ls-optical-after: 1.45fr;
+}
+
+/* ------------------------------------------------------------------ */
+/* Master frame — container width = alignment                          */
+/* .s-ls header text uses the same width. Special archetypes keep      */
+/* house --title / --lede measure (cover, chapter, quote, close).      */
+/* ------------------------------------------------------------------ */
+.slide.s-ls .slide-header,
+.slide.s-ls .slide-content {
+  width: var(--ls-frame);
+  max-width: none;
+  min-width: 0;
+  justify-self: stretch;
+}
+
+.slide.s-ls .slide-content > *,
+.slide.s-ls .slide-content-inner > * {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Header stack                                                        */
+/* ------------------------------------------------------------------ */
+.slide.s-ls .slide-header {
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.slide.s-ls .slide-header .eyebrow,
+.slide.s-ls .slide-header .pill {
+  margin: 0 0 var(--ls-header-gap);
+}
+
+.slide.s-ls .slide-header h1 + .sub,
+.slide.s-ls .slide-header h1 + .lede,
+.slide.s-ls .slide-header h2 + .sub,
+.slide.s-ls .slide-header h2 + .lede,
+.slide.s-ls .slide-header h2 + .source {
+  margin-top: var(--ls-lede-gap);
+}
+
+.slide.s-ls .slide-header .sub + .lede {
+  margin-top: var(--ls-12);
+}
+
+.slide.s-ls .slide-header h1,
+.slide.s-ls .slide-header h2 {
+  width: 100%;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.slide.s-ls .slide-header .lede,
+.slide.s-ls .slide-header .sub {
+  width: 100%;
+  max-width: none;
+  text-wrap: pretty;
+}
+
+/* ------------------------------------------------------------------ */
+/* Vertical system — 40px transition is its own grid row               */
+/* Optical B (0.8 / 1.2) lives on .slide-content-inner in row 4.       */
+/* Dense stays top-aligned and does not use optical weighting.         */
+/* ------------------------------------------------------------------ */
+.slide.s-ls .slide-content {
+  grid-row: 4;
+  min-height: 0;
+  height: 100%;
+  width: var(--ls-frame);
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+}
+
+.slide.s-ls .slide-content-inner {
+  min-height: 0;
+  height: 100%;
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-rows:
+    minmax(0, var(--ls-optical-before))
+    auto
+    minmax(0, var(--ls-optical-after));
+  align-items: stretch;
+  justify-items: stretch;
+  width: 100%;
+}
+
+.slide.s-ls .slide-content-inner > * {
+  grid-row: 2;
+}
+
+.slide.s-ls .ls-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ls-16);
+  width: 100%;
+  min-width: 0;
+}
+
+.slide.s-ls.s-dense .slide-content-inner,
+.slide.s-ls .slide-content.is-dense .slide-content-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  grid-template-rows: none;
+}
+
+.slide.s-ls.s-dense .slide-content-inner > *,
+.slide.s-ls .slide-content.is-dense .slide-content-inner > * {
+  grid-row: auto;
+}
+
+/* Shell does not space arbitrary body children. Components do. */
+.slide.s-ls .stack-sm { display: flex; flex-direction: column; gap: var(--ls-16); }
+.slide.s-ls .stack-md { display: flex; flex-direction: column; gap: var(--ls-24); }
+.slide.s-ls .stack-lg { display: flex; flex-direction: column; gap: var(--ls-40); }
+
+/* ------------------------------------------------------------------ */
+/* Text wrapping                                                       */
+/* ------------------------------------------------------------------ */
+.slide.s-ls .slide-header h1,
+.slide.s-ls .slide-header h2 {
+  text-wrap: balance;
+}
+
+.slide.s-ls .lede,
+.slide.s-ls .sub,
+.slide.s-ls p,
+.slide.s-ls li,
+.slide.s-ls q {
+  text-wrap: pretty;
+}
+
+/* ------------------------------------------------------------------ */
+/* Repeated components — Batch 1 families                              */
+/* Title zones are NOT 2lh. Apply only when sibling wrap actually      */
+/* misaligns body copy (none of the Batch 1 titles wrap).              */
+/* ------------------------------------------------------------------ */
+
+.slide.s-ls .principles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 var(--ls-48);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .principles article {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+  height: 100%;
+  padding-block: var(--ls-16);
+  padding-inline: 0;
+}
+
+.slide.s-ls .principles h3 {
+  margin: 0 0 var(--ls-8);
+  min-width: 0;
+  text-wrap: balance;
+}
+
+.slide.s-ls .principles p {
+  min-width: 0;
+  margin: 0;
+}
+
+.slide.s-ls .cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--ls-32);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .cols > div {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+}
+
+.slide.s-ls .cols h3 {
+  margin: 0 0 var(--ls-8);
+  min-width: 0;
+  text-wrap: balance;
+}
+
+.slide.s-ls .cols ul,
+.slide.s-ls .cols li {
+  min-width: 0;
+}
+
+.slide.s-ls .spectrum {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--ls-80);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+  position: relative;
+}
+
+.slide.s-ls .spectrum > div {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  min-width: 0;
+  padding-top: var(--ls-32);
+}
+
+.slide.s-ls .spectrum .kicker {
+  margin: 0 0 var(--ls-8);
+  min-width: 0;
+}
+
+.slide.s-ls .spectrum h3 {
+  margin: 0 0 var(--ls-12);
+  min-width: 0;
+  text-wrap: balance;
+}
+
+.slide.s-ls .spectrum ul {
+  min-width: 0;
+}
+
+.slide.s-ls .evidence {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: auto auto;
+  gap: var(--ls-24) var(--ls-32);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .evidence .ev {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  min-width: 0;
+}
+
+.slide.s-ls .evidence h3,
+.slide.s-ls .evidence p {
+  min-width: 0;
+}
+
+.slide.s-ls .evidence .themes {
+  grid-column: 1 / -1;
+  min-width: 0;
+  width: 100%;
+}
+
+.slide.s-ls .paths-set {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ls-40);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.slide.s-ls .paths-set .paths + .paths {
+  margin-top: 0;
+}
+
+.slide.s-ls .paths {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.slide.s-ls .paths .flow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0 var(--ls-16);
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .paths .flow.n4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.slide.s-ls .paths .stop {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+}
+
+.slide.s-ls .paths .stop h3 {
+  margin: 0 0 var(--ls-8);
+  min-width: 0;
+  text-wrap: balance;
+}
+
+.slide.s-ls .paths .stop p {
+  min-width: 0;
+  margin: 0;
+}
+
+.slide.s-ls .fromto {
+  display: grid;
+  grid-auto-rows: auto;
+  gap: 0;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.slide.s-ls .fromto .pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--ls-48) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--ls-16);
+  min-width: 0;
+  padding-block: var(--ls-12);
+}
+
+.slide.s-ls .fromto .from,
+.slide.s-ls .fromto .to,
+.slide.s-ls .fromto .arrw {
+  min-width: 0;
+}
+
+.slide.s-ls .quote-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: auto auto;
+  gap: var(--ls-16) var(--ls-48);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .quote-grid q {
+  min-width: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Repeated components — Batch 2 families                              */
+/* Structural max-width neutralized; text max-width stays in house CSS */
+/* ------------------------------------------------------------------ */
+
+.slide.s-ls .spine {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 var(--ls-48);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .spine.n4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.slide.s-ls .spine article {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  min-width: 0;
+}
+
+.slide.s-ls .spine h3,
+.slide.s-ls .spine p {
+  min-width: 0;
+}
+
+.slide.s-ls .forecast,
+.slide.s-ls .bars {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.slide.s-ls .chain {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0 var(--ls-40);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .chain article {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  min-width: 0;
+}
+
+.slide.s-ls .axes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ls-40) var(--ls-64);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .axes article {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  min-width: 0;
+}
+
+.slide.s-ls .trust-sys {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--ls-80);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.slide.s-ls .trust-sys .pair {
+  min-width: 0;
+}
+
+.slide.s-ls .loop {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0 var(--ls-24);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .loop article {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  min-width: 0;
+}
+
+.slide.s-ls .ask-row {
+  display: grid;
+  grid-template-columns: 4.8em minmax(0, 1fr);
+  gap: var(--ls-16) var(--ls-24);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.slide.s-ls .ask-row .copy,
+.slide.s-ls .ask-row .num {
+  min-width: 0;
+}
+
+.slide.s-ls .compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ls-48);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .compare > div {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  min-width: 0;
+}
+
+.slide.s-ls .tbl {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.slide.s-ls .list {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Repeated components — Batch 3 families                              */
+/* Neutralize structural max-width. Internal composition stays house.  */
+/* ------------------------------------------------------------------ */
+
+.slide.s-ls .burden,
+.slide.s-ls .root-split,
+.slide.s-ls .hero-metric,
+.slide.s-ls .anatomy,
+.slide.s-ls .say,
+.slide.s-ls .equation,
+.slide.s-ls .inherit,
+.slide.s-ls .now-reuse,
+.slide.s-ls .stack,
+.slide.s-ls .timeline,
+.slide.s-ls .nest,
+.slide.s-ls .org,
+.slide.s-ls .life,
+.slide.s-ls .formula,
+.slide.s-ls .shared-note {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.slide.s-ls .hero-metric .hero,
+.slide.s-ls .hero-metric .metric,
+.slide.s-ls .root-split .root,
+.slide.s-ls .root-split .kids,
+.slide.s-ls .anatomy .cell,
+.slide.s-ls .equation .box,
+.slide.s-ls .formula .box,
+.slide.s-ls .now-reuse article,
+.slide.s-ls .stack .exp,
+.slide.s-ls .timeline .step,
+.slide.s-ls .nest .band,
+.slide.s-ls .org .person,
+.slide.s-ls .life article {
+  min-width: 0;
+}
+
+/* Assertion is a display-text measure, not a structural container. */
+.slide.s-ls .assertion {
+  max-width: 18em;
+}
+
+/* ------------------------------------------------------------------ */
+/* Debug — migrated standard slides only                               */
+/* ------------------------------------------------------------------ */
+body.debug-layout .slide.s-ls {
+  background-image:
+    linear-gradient(rgba(0, 83, 226, 0.10), rgba(0, 83, 226, 0.10)),
+    linear-gradient(rgba(0, 83, 226, 0.10), rgba(0, 83, 226, 0.10)),
+    linear-gradient(rgba(77, 189, 245, 0.16), rgba(77, 189, 245, 0.16)),
+    linear-gradient(rgba(77, 189, 245, 0.16), rgba(77, 189, 245, 0.16));
+  background-size:
+    var(--rail) 100%,
+    var(--rail) 100%,
+    100% var(--head-inset),
+    100% var(--foot-safe);
+  background-position:
+    left top,
+    right top,
+    left top,
+    left bottom;
+  background-repeat: no-repeat;
+}
+
+body.debug-layout .slide.s-ls .slide-header {
+  position: relative;
+  box-shadow:
+    inset 1px 0 0 0 rgba(0, 83, 226, 0.55),
+    inset -1px 0 0 0 rgba(0, 83, 226, 0.55),
+    inset 0 -1px 0 0 rgba(0, 83, 226, 0.35);
+}
+
+body.debug-layout .slide.s-ls .slide-header::after {
+  content: "header · master frame";
+  position: absolute;
+  inset-inline-end: 0;
+  top: 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--true);
+  background: var(--paper);
+  padding: 2px 6px;
+  pointer-events: none;
+}
+
+body.debug-layout .slide.s-ls .slide-header::before {
+  content: "40px transition";
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  height: var(--ls-transition);
+  background: rgba(77, 189, 245, 0.14);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--true);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-inline: 6px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+body.debug-layout .slide.s-ls .slide-content {
+  position: relative;
+  background-color: rgba(0, 83, 226, 0.035);
+  box-shadow:
+    inset 1px 0 0 0 rgba(0, 83, 226, 0.55),
+    inset -1px 0 0 0 rgba(0, 83, 226, 0.55);
+}
+
+body.debug-layout .slide.s-ls .slide-content::before {
+  content: "content zone · optical B 0.8 / 1.2";
+  position: absolute;
+  inset-inline-end: 0;
+  top: 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--true);
+  background: var(--paper);
+  padding: 2px 6px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+body.debug-layout .slide.s-ls.s-ls-shallow .slide-content::before {
+  content: "content zone · optical shallow 0.55 / 1.45";
+}
+
+body.debug-layout .slide.s-ls.s-dense .slide-content::before {
+  content: "content zone · dense / top-aligned";
+}
+
+body.debug-layout .slide.s-ls .principles article,
+body.debug-layout .slide.s-ls .cols > div,
+body.debug-layout .slide.s-ls .spectrum > div,
+body.debug-layout .slide.s-ls .evidence .ev,
+body.debug-layout .slide.s-ls .paths .stop,
+body.debug-layout .slide.s-ls .quote-grid q,
+body.debug-layout .slide.s-ls .fromto .pair,
+body.debug-layout .slide.s-ls .spine article,
+body.debug-layout .slide.s-ls .chain article,
+body.debug-layout .slide.s-ls .axes article,
+body.debug-layout .slide.s-ls .loop article,
+body.debug-layout .slide.s-ls .compare > div,
+body.debug-layout .slide.s-ls .trust-sys .pair,
+body.debug-layout .slide.s-ls .ask-row .copy,
+body.debug-layout .slide.s-ls .root-split .kids article,
+body.debug-layout .slide.s-ls .equation .box,
+body.debug-layout .slide.s-ls .formula .box,
+body.debug-layout .slide.s-ls .now-reuse article,
+body.debug-layout .slide.s-ls .life article,
+body.debug-layout .slide.s-ls .nest .band,
+body.debug-layout .slide.s-ls .timeline .step,
+body.debug-layout .slide.s-ls .anatomy .cell,
+body.debug-layout .slide.s-ls .burden .layer,
+body.debug-layout .slide.s-ls .stack .exp > div,
+body.debug-layout .slide.s-ls .hero-metric .hero,
+body.debug-layout .slide.s-ls .hero-metric .metric {
+  outline: 1px dashed rgba(0, 83, 226, 0.35);
+  outline-offset: -1px;
+}
+
+body.debug-layout .slide.s-ls article.ls-over-capacity,
+body.debug-layout .slide.s-ls .cols > div.ls-over-capacity,
+body.debug-layout .slide.s-ls .evidence .ev.ls-over-capacity,
+body.debug-layout .slide.s-ls .paths .stop.ls-over-capacity,
+body.debug-layout .slide.s-ls .quote-grid q.ls-over-capacity,
+body.debug-layout .slide.s-ls .spine article.ls-over-capacity,
+body.debug-layout .slide.s-ls .chain article.ls-over-capacity,
+body.debug-layout .slide.s-ls .axes article.ls-over-capacity,
+body.debug-layout .slide.s-ls .loop article.ls-over-capacity,
+body.debug-layout .slide.s-ls .compare > div.ls-over-capacity,
+body.debug-layout .slide.s-ls .ask-row .copy.ls-over-capacity,
+body.debug-layout .slide.s-ls .root-split .kids article.ls-over-capacity,
+body.debug-layout .slide.s-ls .equation .box.ls-over-capacity,
+body.debug-layout .slide.s-ls .formula .box.ls-over-capacity,
+body.debug-layout .slide.s-ls .now-reuse article.ls-over-capacity,
+body.debug-layout .slide.s-ls .life article.ls-over-capacity,
+body.debug-layout .slide.s-ls .nest .band.ls-over-capacity,
+body.debug-layout .slide.s-ls .timeline .step.ls-over-capacity,
+body.debug-layout .slide.s-ls .anatomy .cell.ls-over-capacity,
+body.debug-layout .slide.s-ls .burden .layer.ls-over-capacity,
+body.debug-layout .slide.s-ls .stack .exp > div.ls-over-capacity,
+body.debug-layout .slide.s-ls .hero-metric .hero.ls-over-capacity,
+body.debug-layout .slide.s-ls .hero-metric .metric.ls-over-capacity {
+  outline: 2px solid var(--true);
+  outline-offset: 4px;
+}
+
+.ls-debug-hint {
+  display: none;
+  position: absolute;
+  z-index: 34;
+  inset-inline-start: var(--rail);
+  top: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--true);
+  background: var(--paper);
+  padding: 4px 8px;
+  pointer-events: none;
+}
+
+body.debug-layout .ls-debug-hint {
+  display: block;
+}
+
+.stage[data-theme="navy"] .ls-debug-hint {
+  color: #fff;
+  background: var(--navy);
+}

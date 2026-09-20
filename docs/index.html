@@ -1,0 +1,4266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Advertiser Experience Strategy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<link rel="stylesheet" href="review.css" />
+<style>
+  @font-face {
+    font-family: "Everyday Sans Headline";
+    src: url("fonts/EverydaySansHeadline-Light-Web.woff") format("woff");
+    font-weight: 300; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: "Everyday Sans";
+    src: url("fonts/EverydaySans-LightItalic-Web.woff") format("woff");
+    font-weight: 300; font-style: italic; font-display: swap;
+  }
+  @font-face {
+    font-family: "Everyday Sans UI";
+    src: url("fonts/EverydaySansUI-Regular-Web.woff") format("woff");
+    font-weight: 400; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: "Everyday Sans UI";
+    src: url("fonts/EverydaySansUI-RegularItalic-Web.woff") format("woff");
+    font-weight: 400; font-style: italic; font-display: swap;
+  }
+  @font-face {
+    font-family: "Everyday Sans UI";
+    src: url("fonts/EverydaySansUI-Medium-Web.woff") format("woff");
+    font-weight: 500; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: "Everyday Sans Mono";
+    src: url("fonts/EverydaySansMono-Regular-Web.woff") format("woff");
+    font-weight: 400; font-style: normal; font-display: swap;
+  }
+
+  :root {
+    --navy: #001E60;
+    --true: #0053E2;
+    --everyday: #4DBDF5;
+    --sky: #A9DDF7;
+    --paper: #F5F6F8;
+    --paper-2: #F5F6F8;
+    --ink: #001E60;
+    --muted: #3D4A63;
+    --quiet: #3D4A63;
+    --line: #E4E8EF;
+    --rail: 80px;
+    --rail-y: 48px;
+    --mast: 44px;
+    --foot: 72px;
+    --nav: 48px;
+    --copy: 960px;
+    --title: 1360px;
+    --lede: 980px;
+    --head-inset: 148px; /* shared top safe area for all non-full-bleed slides */
+    --gutter: 48px;
+    --foot-safe: 72px;
+    --display: "Everyday Sans Headline", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --ui: "Everyday Sans UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --italic: "Everyday Sans", "Everyday Sans UI", Georgia, serif;
+    --mono: "Everyday Sans Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: #070B14; }
+  body {
+    font-family: var(--ui);
+    color: var(--ink);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .viewport { position: fixed; inset: 0; }
+  .stage {
+    position: absolute;
+    top: 0; left: 0;
+    width: 1920px;
+    height: 1080px;
+    transform-origin: top left;
+    overflow: hidden;
+    background: var(--paper);
+  }
+
+  .pager {
+    position: absolute;
+    z-index: 6;
+    inset-inline-start: var(--rail);
+    inset-inline-end: calc(var(--rail) + var(--nav));
+    bottom: var(--rail-y);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .pager .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+  .spark { width: 20px; height: 20px; display: block; flex-shrink: 0; }
+  .pager .meta { font-size: 11px; color: var(--muted); }
+  .stage[data-theme="navy"] .pager .meta { color: #FFFFFF; }
+  .pager-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+  .arr {
+    width: 40px; height: 40px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--true);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    padding-bottom: 2px;
+  }
+  .stage[data-theme="navy"] .arr {
+    border-color: rgba(255,255,255,0.45);
+    color: #fff;
+  }
+  .arr:hover { background: rgba(0, 83, 226, 0.08); }
+  .stage[data-theme="navy"] .arr:hover { background: rgba(255,255,255,0.08); }
+  .arr:disabled { opacity: 0.35; cursor: default; }
+
+  .pagenum {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    min-width: 4.8em;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    font-variant-numeric: tabular-nums;
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+  .pagenum:hover { color: var(--true); }
+  .stage[data-theme="navy"] .pagenum { color: rgba(255,255,255,0.82); }
+  .stage[data-theme="navy"] .pagenum:hover { color: #fff; }
+  .pager.is-goto .pagenum { display: none; }
+  .goto {
+    display: none;
+    align-items: center;
+    gap: 8px;
+  }
+  .pager.is-goto .goto { display: flex; }
+  .goto-k {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .stage[data-theme="navy"] .goto-k { color: #F5F6F8; }
+  .pager .keys {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-inline-start: 28px;
+    margin-inline-end: auto;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    min-width: 0;
+  }
+  .stage[data-theme="navy"] .pager .keys { color: #F5F6F8; }
+  .pager .keys .build-cue { color: var(--true); }
+  .stage[data-theme="navy"] .pager .keys .build-cue { color: var(--everyday); }
+  .pager .keys [hidden] { display: none !important; }
+  .goto input {
+    width: 2.6em;
+    height: 28px;
+    border: 1px solid var(--line);
+    background: transparent;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-align: center;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+  .stage[data-theme="navy"] .goto input {
+    border-color: rgba(255,255,255,0.45);
+    color: #fff;
+  }
+  .goto input:focus { outline: 2px solid var(--true); outline-offset: 1px; }
+
+  .toc {
+    position: absolute;
+    z-index: 7;
+    top: var(--rail-y);
+    bottom: calc(var(--rail-y) + 40px);
+    inset-inline-end: 28px;
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .toc-line {
+    position: absolute;
+    top: 8px; bottom: 8px;
+    width: 1px;
+    background: var(--line);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .stage[data-theme="navy"] .toc-line { background: rgba(255,255,255,0.28); }
+  .toc-fill {
+    position: absolute;
+    top: 8px;
+    width: 1px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--true);
+    height: 0;
+  }
+  .stage[data-theme="navy"] .toc-fill { background: var(--everyday); }
+  .toc button {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    width: 40px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .toc i {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 1px solid #8B93A3;
+    display: block;
+  }
+  .stage[data-theme="navy"] .toc i {
+    background: var(--navy);
+    border-color: rgba(255,255,255,0.55);
+  }
+  .toc button.is-done i {
+    background: var(--true);
+    border-color: var(--true);
+  }
+  .stage[data-theme="navy"] .toc button.is-done i {
+    background: var(--everyday);
+    border-color: var(--everyday);
+  }
+  .toc button.is-current i {
+    width: 11px; height: 11px;
+    background: var(--true);
+    border-color: var(--true);
+  }
+  .stage[data-theme="navy"] .toc button.is-current i {
+    background: var(--everyday);
+    border-color: var(--everyday);
+  }
+  .toc button .toc-l {
+    position: absolute;
+    inset-inline-end: 28px;
+    white-space: nowrap;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0;
+    transform: translateX(6px);
+    pointer-events: none;
+    transition: opacity 160ms ease, transform 160ms ease;
+  }
+  .stage[data-theme="navy"] .toc button .toc-l { color: rgba(255,255,255,0.82); }
+  .toc:hover button .toc-l,
+  .toc button:focus .toc-l,
+  .toc:focus-within button .toc-l {
+    opacity: 1;
+    transform: none;
+  }
+  .toc button.is-current .toc-l { color: var(--true); }
+  .stage[data-theme="navy"] .toc button.is-current .toc-l { color: var(--everyday); }
+
+
+  .slide {
+    position: absolute; inset: 0;
+    padding: 0 var(--rail);
+    display: grid;
+    grid-template-rows: var(--head-inset) auto minmax(0, 1fr) var(--foot-safe);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .slide.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .slide.navy { background: var(--navy); color: #fff; }
+  .slide.paper { background: var(--paper); color: var(--ink); }
+  .slide > .body { display: contents; }
+
+  .slide-header {
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .slide-header .eyebrow { margin: 0 0 12px; }
+  .slide-header .pill { margin: 0 0 16px; }
+  .slide-header h1,
+  .slide-header h2 { margin: 0; }
+  .slide-header h1 + .sub,
+  .slide-header h1 + .lede,
+  .slide-header h2 + .sub,
+  .slide-header h2 + .lede { margin-top: 16px; }
+  .slide-header h2 + .source { margin-top: 16px; }
+  .slide-header .sub + .lede { margin-top: 10px; }
+
+  .slide-content {
+    grid-row: 3;
+    min-height: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 16px;
+    width: 100%;
+    padding: 24px 0 4px;
+  }
+  .slide-content:empty { display: none; padding: 0; gap: 0; }
+
+  .s-cover {
+    --cover-title: 1200px;
+    grid-template-rows: var(--head-inset) minmax(0, 1fr) var(--foot-safe);
+  }
+  .s-cover .slide-header {
+    grid-row: 2;
+    height: 100%;
+    min-height: 0;
+    justify-content: center;
+  }
+  .s-cover .slide-content { display: none; }
+  .s-close .slide-header {
+    justify-content: flex-start;
+  }
+  .s-close .slide-content {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 24px;
+  }
+  .s-map .slide-header { display: flex; }
+
+  .s-quote {
+    grid-template-rows: var(--head-inset) minmax(0, 1fr) var(--foot-safe);
+  }
+  .s-quote .slide-header {
+    grid-row: 2;
+    justify-content: center;
+    height: 100%;
+  }
+  .s-quote .slide-content { display: none; }
+  .s-quote h2 {
+    font-family: var(--italic);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 44px;
+    max-width: min(1320px, 100%);
+    line-height: 1.28;
+    letter-spacing: -0.03em;
+  }
+  .s-quote .slide-header h2 + .source { margin-top: 20px; }
+
+  .s-map .slide-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 96px;
+    align-content: start;
+    max-width: 1520px;
+  }
+
+  h1, h2 {
+    font-family: var(--display);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    line-height: 1.26;
+    text-wrap: wrap;
+    overflow-wrap: normal;
+    hyphens: none;
+  }
+  h1, h2 {
+    max-width: min(var(--title), 100%);
+  }
+  .sub, .lede {
+    max-width: min(var(--lede), 100%);
+  }
+  blockquote { max-width: min(1200px, 100%); }
+  .figure, .source { max-width: 100%; }
+  h1 { font-size: 64px; }
+  h2 { font-size: 48px; color: var(--ink); }
+  .title-narrow, .copy-narrow { --title: 1040px; --lede: 760px; }
+  .title-wide, .copy-wide { --title: 1520px; --lede: 1200px; }
+  em.mark {
+    font-family: var(--italic);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--true);
+  }
+  .navy em.mark { color: var(--everyday); }
+
+  .sub {
+    font-family: var(--ui);
+    font-weight: 400;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--muted);
+    line-height: 1.45;
+    text-wrap: pretty;
+  }
+  .navy .sub { color: rgba(255,255,255,0.88); }
+
+  .lede {
+    font-size: 18px;
+    line-height: 1.45;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  .eyebrow {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: var(--true);
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    width: fit-content;
+    max-width: var(--title);
+    margin: 0;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    line-height: 1;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--true);
+    background: #D7EEF9;
+    padding: 8px 14px;
+    border-radius: 999px;
+    width: fit-content;
+    max-width: var(--title);
+    margin: 0;
+  }
+  .navy .pill,
+  .navy .eyebrow {
+    color: var(--true);
+    background: #D7EEF9;
+  }
+
+  .s-cover h1,
+  .s-close h1 { font-size: 72px; }
+  .s-cover h1 {
+    max-width: min(var(--cover-title, 1200px), 100%);
+    text-wrap: balance;
+  }
+  .s-cover .sub,
+  .s-close .sub { font-size: 25px; }
+  .row {
+    display: grid;
+    grid-template-columns: 2.4em 1fr;
+    gap: 16px;
+    padding: 16px 0;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    text-align: start;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    border-radius: 0;
+  }
+  .row + .row { border-top: 1px solid var(--line); }
+  .s-map .row:first-child { border-top: 1px solid var(--line); }
+  .row:hover h3, .row:hover .ttl { color: var(--true); }
+  .row.is-ready:hover { background: rgba(0, 83, 226, 0.04); }
+  .row:not(.is-ready) { cursor: default; }
+  .row.is-ready {
+    cursor: pointer;
+    position: relative;
+    padding-inline-end: 28px;
+  }
+  .row.is-ready::after {
+    content: "→";
+    position: absolute;
+    inset-inline-end: 0;
+    top: 16px;
+    color: var(--true);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .num { font-family: var(--mono); font-size: 12px; color: var(--true); padding-top: 4px; }
+  .row h3, .row .ttl { font-family: var(--ui); font-weight: 500; font-size: 18px; }
+  .row p { font-size: 15px; color: var(--muted); margin-top: 4px; line-height: 1.35; }
+
+  .figure {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 148px;
+    letter-spacing: -0.06em;
+    line-height: 0.9;
+    color: var(--true);
+  }
+  .source {
+    font-family: var(--ui);
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  blockquote {
+    font-family: var(--italic);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 44px;
+    line-height: 1.35;
+    letter-spacing: -0.03em;
+    text-wrap: pretty;
+  }
+
+  .s-set .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 var(--gutter);
+    max-width: 1520px;
+    width: 100%;
+  }
+  .s-themes .grid {
+    max-width: 1520px;
+    gap: 0 48px;
+  }
+  .s-themes .card,
+  .s-themes .card:nth-child(n+3) {
+    border-top: 1px solid var(--line);
+    padding: 14px 0 18px;
+  }
+  .s-themes .card h3 {
+    font-size: 22px;
+    margin: 6px 0 8px;
+  }
+  .card { padding: 22px 0; padding-top: 16px; border-top: 1px solid var(--line); }
+  .card:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .card h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 36px;
+    letter-spacing: -0.03em;
+    line-height: 1.26;
+    margin: 8px 0 10px;
+  }
+  .card p { font-size: 16px; line-height: 1.35; color: var(--muted); max-width: 34em; }
+  .ord {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--true);
+  }
+
+  .ask {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+    max-width: 1520px;
+    width: 100%;
+  }
+  .ask > div {
+    padding-top: 14px;
+    border-top: 1px solid var(--everyday);
+  }
+  .k {
+    font-family: var(--ui);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--everyday);
+    margin-bottom: 8px;
+  }
+  .ask p { font-size: 16px; line-height: 1.32; color: rgba(255,255,255,0.88); }
+
+  .grid-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    pointer-events: none;
+  }
+  .stage.show-grid .grid-overlay { display: block; }
+  .grid-overlay b {
+    position: absolute;
+    background: rgba(77, 189, 245, 0.55);
+  }
+  .grid-overlay .v { top: 0; bottom: 0; width: 1px; }
+  .grid-overlay .h { left: 0; right: 0; height: 1px; }
+  .grid-hint {
+    position: absolute;
+    z-index: 31;
+    inset-inline-start: var(--rail);
+    top: 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--true);
+    background: var(--paper);
+    padding: 4px 8px;
+    display: none;
+  }
+  .stage.show-grid .grid-hint { display: block; }
+  .stage[data-theme="navy"] .grid-hint {
+    color: #fff;
+    background: var(--navy);
+  }
+
+  .measure-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 32;
+    pointer-events: none;
+  }
+  .stage.show-measure .measure-overlay { display: block; }
+  .m-box {
+    position: absolute;
+    border: 1px solid rgba(0, 83, 226, 0.85);
+    background: rgba(0, 83, 226, 0.05);
+  }
+  .stage[data-theme="navy"] .m-box {
+    border-color: rgba(77, 189, 245, 0.9);
+    background: rgba(77, 189, 245, 0.08);
+  }
+  .m-tag {
+    position: absolute;
+    left: 0;
+    top: -18px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--true);
+    color: #fff;
+    padding: 2px 6px;
+    white-space: nowrap;
+  }
+  .stage[data-theme="navy"] .m-tag { background: var(--everyday); color: var(--navy); }
+  .m-gap {
+    position: absolute;
+    width: 0;
+    border-left: 1px dashed var(--everyday);
+  }
+  .m-gap span {
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--true);
+    background: var(--paper);
+    padding: 1px 4px;
+  }
+  .stage[data-theme="navy"] .m-gap span {
+    color: #fff;
+    background: var(--navy);
+  }
+  .measure-hint {
+    position: absolute;
+    z-index: 33;
+    inset-inline-end: calc(var(--rail) + 52px);
+    top: 12px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--true);
+    background: var(--paper);
+    padding: 4px 8px;
+    display: none;
+  }
+  .stage.show-measure .measure-hint { display: block; }
+  .stage[data-theme="navy"] .measure-hint {
+    color: #fff;
+    background: var(--navy);
+  }
+
+  aside.notes { display: none; }
+  .notes-panel {
+    display: none;
+    position: absolute;
+    z-index: 20;
+    inset-inline-start: var(--rail);
+    inset-inline-end: calc(var(--rail) + var(--nav));
+    bottom: calc(var(--rail-y) + 48px);
+    max-height: 200px;
+    overflow: auto;
+    background: var(--navy);
+    color: #fff;
+    padding: 16px 20px;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .stage.show-notes .notes-panel { display: block; }
+
+
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+    gap: 0 64px;
+    max-width: 1520px;
+    width: 100%;
+    min-height: 0;
+    align-content: start;
+  }
+  .metric {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 28px 0 12px;
+    border-top: 1px solid var(--line);
+    min-height: 0;
+  }
+  .metric .n {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 72px;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    color: var(--true);
+    font-variant-numeric: tabular-nums;
+  }
+  .metric h3 { font-size: 18px; font-weight: 500; margin: 12px 0 8px; }
+  .metric p { font-size: 16px; line-height: 1.4; color: var(--muted); }
+
+  .forecast {
+    display: flex;
+    flex-direction: column;
+    max-width: 1520px;
+    width: 100%;
+  }
+  .bars { display: flex; flex-direction: column; gap: 14px; max-width: 1520px; width: 100%; }
+  .bar-row {
+    display: grid;
+    grid-template-columns: 4.2em 1fr 6.5em;
+    gap: 16px;
+    align-items: center;
+  }
+  .bar-row .yr { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; }
+  .bar-row .val { font-family: var(--mono); font-size: 13px; color: var(--true); text-align: end; font-variant-numeric: tabular-nums; }
+  .bar-track { height: 8px; background: var(--line); }
+  .bar-fill { height: 100%; background: var(--true); transform-origin: 0 50%; }
+  .bar-fill.b2 { background: #3B7DE8; }
+  .bar-fill.b3 { background: var(--everyday); }
+  .bar-fill.b4 { background: #7ECBF0; }
+  .bar-fill.b5 { background: var(--sky); }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    max-width: 1520px;
+    width: 100%;
+    position: relative;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    top: 18px;
+    bottom: 18px;
+    inset-inline-start: 7px;
+    width: 1px;
+    height: auto;
+    background: var(--true);
+  }
+  .step {
+    display: grid;
+    grid-template-columns: minmax(220px, 24%) minmax(280px, 32%) 1fr;
+    column-gap: 32px;
+    align-items: center;
+    padding-block: 16px;
+    padding-inline: 36px 0;
+    min-height: 0;
+    border-top: 1px solid var(--line);
+    position: relative;
+  }
+  .step:first-child { border-top: none; }
+  .step::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    inset-inline-start: 0;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid var(--true);
+    background: var(--paper);
+    box-sizing: border-box;
+  }
+  .step .when {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--true);
+    line-height: 1.35;
+    margin: 0;
+  }
+  .step h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 26px;
+    letter-spacing: -0.03em;
+    line-height: 1.26;
+    margin: 0;
+  }
+  .step p { margin: 0; font-size: 16px; line-height: 1.4; color: var(--muted); }
+
+  .principles {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0 48px;
+    max-width: 1520px;
+    width: 100%;
+    min-height: 0;
+    align-items: start;
+  }
+  .principles article { padding: 18px 0 14px; border-top: 1px solid var(--line); }
+  .principles h3 { font-family: var(--display); font-weight: 300; font-size: 28px; margin-bottom: 8px; }
+  .principles p { font-size: 15px; line-height: 1.35; color: var(--muted); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; max-width: 1200px; }
+  .chip {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid var(--line);
+    padding: 8px 12px;
+    color: var(--navy);
+    background: transparent;
+  }
+
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    max-width: 1520px;
+    width: 100%;
+    align-items: start;
+  }
+  .compare h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 26px;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .compare .kicker {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--true);
+    margin-bottom: 10px;
+  }
+  .compare ul { list-style: none; }
+  .compare li {
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
+    font-size: 16px;
+    line-height: 1.35;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    max-width: 1280px;
+    width: 100%;
+  }
+  .item {
+    display: grid;
+    grid-template-columns: 2.6em 1fr;
+    gap: 16px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+  }
+  .item .num { font-family: var(--mono); font-size: 12px; color: var(--true); padding-top: 3px; }
+  .item h3 { font-size: 18px; font-weight: 500; }
+  .item p { font-size: 15px; color: var(--muted); line-height: 1.35; margin-top: 4px; }
+
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1520px;
+    width: 100%;
+  }
+  .node { padding-top: 12px; border-top: 1px solid var(--line); }
+  .node h3 { font-size: 18px; font-weight: 500; margin-bottom: 8px; }
+  .node p { font-size: 14px; line-height: 1.35; color: var(--muted); }
+
+  .people {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 1fr;
+    gap: 0 48px;
+    max-width: 1520px;
+    width: 100%;
+  }
+  .person { padding: 14px 0; border-top: 1px solid var(--line); }
+  .person h3 { font-size: 20px; font-weight: 500; }
+  .person p {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .quote-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 16px 48px;
+    max-width: 1520px;
+    width: 100%;
+  }
+  .quote-grid q {
+    font-family: var(--italic);
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.35;
+    quotes: none;
+  }
+
+  .tbl {
+    width: 1520px;
+    max-width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+  .tbl th {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--true);
+    text-align: start;
+    padding-block: 8px;
+    padding-inline: 0 14px;
+    border-bottom: 1px solid var(--line);
+    font-weight: 400;
+  }
+  .tbl td {
+    padding-block: 8px;
+    padding-inline: 0 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+    line-height: 1.35;
+  }
+
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 36px;
+    max-width: 1520px;
+  }
+  .cols h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 24px;
+    letter-spacing: -0.03em;
+    margin-bottom: 10px;
+  }
+  .cols ul { list-style: none; }
+  .cols li {
+    font-size: 15px;
+    line-height: 1.35;
+    padding: 8px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .hall {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px 24px;
+    max-width: 1520px;
+  }
+  .hall article { padding-top: 12px; border-top: 1px solid var(--line); }
+  .hall h3 { font-size: 18px; font-weight: 500; }
+  .hall .ord { display: block; margin-bottom: 6px; }
+  .hall p { font-size: 14px; color: var(--muted); line-height: 1.35; margin-top: 6px; }
+
+  .two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px 64px;
+    max-width: 1520px;
+    align-items: start;
+  }
+  .two h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  .two p, .two li { font-size: 16px; line-height: 1.35; color: var(--muted); }
+  .two ul { list-style: none; }
+  .two li { padding: 8px 0; border-top: 1px solid var(--line); color: var(--ink); }
+
+  .s-set .grid.wide { max-width: 1520px; }
+  .card ul { list-style: none; margin-top: 8px; }
+  .card li { font-size: 14px; line-height: 1.35; color: var(--muted); padding: 4px 0; }
+
+  /* skill-pass layouts */
+  .arr:focus-visible,
+  .pagenum:focus-visible,
+  .toc button:focus-visible,
+  .row:focus-visible {
+    outline: 2px solid var(--true);
+    outline-offset: 2px;
+  }
+  .stage[data-theme="navy"] .arr:focus-visible,
+  .stage[data-theme="navy"] .pagenum:focus-visible,
+  .stage[data-theme="navy"] .toc button:focus-visible {
+    outline-color: var(--everyday);
+  }
+
+  .chip-groups {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px 32px;
+    max-width: 1520px;
+    width: 100%;
+    align-content: start;
+  }
+  .chip-groups > div { position: relative; }
+  .chip-groups > div:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    top: 0;
+    inset-inline-end: -22px;
+    color: var(--true);
+    font-size: 14px;
+    line-height: 1;
+  }
+  .chip-groups h3 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--true);
+    margin-bottom: 10px;
+  }
+
+  .seq-block { max-width: 1520px; }
+  .seq-block + .seq-block { margin-top: 32px; }
+  .seq {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px 32px;
+    overflow: visible;
+  }
+  .seq .node {
+    padding-top: 12px;
+    padding-inline-end: 28px;
+    border-top: 1px solid var(--line);
+    position: relative;
+    overflow: visible;
+  }
+  .seq.is-now .node { border-top-color: var(--line); }
+  .seq .node h3 { font-size: 16px; font-weight: 500; }
+  .seq .node p { font-size: 15px; line-height: 1.35; color: var(--muted); margin-top: 6px; }
+  .seq .node:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    top: 8px;
+    inset-inline-end: 4px;
+    color: var(--true);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .seq.is-now .node:not(:last-child)::after { color: #8B93A3; }
+
+  h1, h2 {
+    text-wrap: wrap;
+    overflow-wrap: normal;
+    hyphens: none;
+  }
+  .navy h2 { color: #fff; }
+  .navy .lede { color: rgba(255,255,255,0.88); }
+
+
+  .chap-no {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--everyday);
+    margin: 0 0 24px;
+  }
+  .s-chapter {
+    grid-template-rows: var(--head-inset) minmax(0, 1fr) var(--foot-safe);
+  }
+  .s-chapter .slide-header {
+    grid-row: 2;
+    justify-content: center;
+    height: 100%;
+  }
+  .s-chapter .slide-content { display: none; }
+  .s-chapter h2 { font-size: 48px; max-width: min(1520px, 100%); color: #fff; }
+
+  figure.pull {
+    max-width: 1320px;
+    position: relative;
+    padding-inline-start: 8px;
+  }
+  figure.pull .mark-q {
+    display: block;
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 72px;
+    line-height: 0.7;
+    color: var(--true);
+    margin-bottom: 8px;
+  }
+  figure.pull blockquote {
+    font-size: 36px;
+    line-height: 1.28;
+    max-width: 1200px;
+    text-wrap: pretty;
+  }
+  figure.pull .attr {
+    margin-top: 28px;
+    font-family: var(--ui);
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  figure.pull .attr a,
+  .source a,
+  .tbl a {
+    color: inherit;
+    text-underline-offset: 3px;
+  }
+
+  .quote-grid q {
+    display: block;
+    padding: 18px 0 8px;
+    border-top: 1px solid var(--line);
+    font-size: 20px;
+    line-height: 1.35;
+  }
+  .quote-grid q::before { content: "“"; color: var(--true); }
+
+  .evidence {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr auto;
+    gap: 24px 32px;
+    max-width: 1520px;
+    width: 100%;
+  }
+  .evidence .ev {
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+  .evidence .n {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 64px;
+    letter-spacing: -0.04em;
+    color: var(--true);
+    line-height: 1;
+  }
+  .evidence h3 { font-size: 16px; font-weight: 500; margin: 10px 0 6px; }
+  .evidence p { font-size: 14px; line-height: 1.35; color: var(--muted); }
+  .evidence .themes {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-top: 8px;
+  }
+
+  .principles h3 { letter-spacing: -0.03em; }
+  .principles p { line-height: 1.4; }
+
+  .org {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0 32px;
+    max-width: 1520px;
+    width: 100%;
+  }
+  .org .lead {
+    grid-column: 1 / -1;
+    padding-bottom: 18px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .org .lead h3 { font-size: 28px; font-weight: 500; }
+  .org .person { border-top: 1px solid var(--line); }
+
+  .fromto {
+    display: grid;
+    grid-auto-rows: auto;
+    gap: 0;
+    max-width: 1520px;
+    width: 100%;
+  }
+  .fromto .pair {
+    display: grid;
+    grid-template-columns: 1fr 48px 1fr;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+  }
+  .fromto .pair:first-child { border-top: 1px solid var(--line); }
+  .fromto .lab {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--true);
+    margin-bottom: 14px;
+  }
+  .fromto .from { color: var(--muted); font-size: 16px; }
+  .fromto .to { font-size: 16px; font-weight: 500; color: var(--true); }
+  .fromto .arrw { color: var(--true); text-align: center; font-size: 18px; }
+
+  .compare > div { padding-top: 16px; border-top: 1px solid var(--line); }
+
+  /* visual grammar — relationships, not cards */
+  .spine {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 48px;
+    max-width: 1520px;
+    width: 100%;
+    position: relative;
+  }
+  .spine.n4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .spine article { position: relative; padding-top: 0; }
+  .spine .dot { display: none; }
+  .spine .ord {
+    display: block;
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 44px;
+    letter-spacing: -0.04em;
+    text-transform: none;
+    color: var(--true);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .spine h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 28px;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin: 0 0 10px;
+  }
+  .spine p:empty { display: none; }
+  .ask-row h3 { font-size: 18px; font-weight: 500; }
+  .ask-row p { font-size: 15px; color: var(--muted); line-height: 1.35; margin-top: 4px; }
+
+  .burden {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 56px;
+    max-width: 1520px;
+    width: 100%;
+    align-items: start;
+  }
+  .burden .goal {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 36px;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    padding-top: 12px;
+    border-top: 1px solid var(--true);
+  }
+  .burden .goal span { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--true); margin-bottom: 12px; }
+  .burden .layers { display: flex; flex-direction: column; }
+  .burden .layer {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 24px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+  .burden .layer:last-child { border-bottom: 1px solid var(--line); }
+  .burden .layer b {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--true);
+    font-weight: 400;
+    padding-top: 4px;
+  }
+  .burden .layer p { font-size: 16px; line-height: 1.35; color: var(--muted); }
+
+  .paths { display: flex; flex-direction: column; gap: 40px; max-width: 1520px; width: 100%; }
+  .paths .lab {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--true);
+    margin-bottom: 14px;
+  }
+  .paths .flow {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0 20px;
+    position: relative;
+  }
+  .paths .flow.n4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .paths + .paths { margin-top: 40px; }
+  .paths .flow::before { display: none; }
+  .paths.is-broken .stop { padding-inline-end: 28px; }
+  .paths .stop { position: relative; padding-top: 14px; padding-inline-end: 28px; border-top: 1px solid var(--line); }
+  .paths.is-one .stop { border-top-color: var(--true); }
+  .paths .stop::before { display: none; }
+  .paths .stop:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    top: 8px;
+    inset-inline-end: 4px;
+    color: #8B93A3;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .paths.is-one .stop:not(:last-child)::after { color: var(--true); }
+  .paths .stop h3 { font-size: 18px; font-weight: 500; margin: 0 0 6px; }
+  .paths .stop p { font-size: 15px; line-height: 1.35; color: var(--muted); }
+
+  .anatomy { display: flex; flex-direction: column; gap: 28px; max-width: 1520px; width: 100%; }
+  .anatomy .lab {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--true);
+    margin-bottom: 10px;
+  }
+  .anatomy .doors { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
+  .anatomy .halls { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 24px; }
+  .anatomy .cell { padding-top: 12px; border-top: 1px solid var(--line); }
+  .anatomy .doors .cell { border-top-color: var(--true); }
+  .anatomy .cell h3 { font-size: 18px; font-weight: 500; }
+  .anatomy .cell p { font-size: 15px; line-height: 1.35; color: var(--muted); margin-top: 4px; }
+  .anatomy .shared {
+    border-top: 1px solid var(--true);
+    padding-top: 16px;
+  }
+  .anatomy .shared h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 24px;
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+  }
+  .anatomy .shared p { font-size: 16px; line-height: 1.4; color: var(--muted); max-width: 48em; }
+
+  .equation {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 28px;
+    align-items: start;
+    max-width: 1520px;
+    width: 100%;
+  }
+  .equation .op {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 44px;
+    color: var(--true);
+    line-height: 1;
+    padding-top: 8px;
+  }
+  .equation .box { padding-top: 14px; border-top: 1px solid var(--line); }
+  .equation .box.is-out { border-top-color: var(--true); }
+  .equation h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 26px;
+    letter-spacing: -0.03em;
+    margin-bottom: 10px;
+  }
+  .equation li { font-size: 15px; line-height: 1.4; color: var(--muted); padding: 5px 0; list-style: none; }
+  .equation p { font-size: 16px; line-height: 1.4; color: var(--muted); max-width: 28em; }
+
+  .trust-sys { display: grid; grid-template-columns: 1fr 1fr; gap: 0 80px; max-width: 1520px; width: 100%; }
+  .trust-sys .pair {
+    display: grid;
+    grid-template-columns: 1fr 36px 1fr;
+    align-items: baseline;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+  .trust-sys .pair:first-child,
+  .trust-sys .pair:nth-child(2) { border-top-color: var(--true); }
+  .trust-sys .from { font-size: 18px; color: var(--muted); }
+  .trust-sys .arrw { color: var(--true); text-align: center; }
+  .trust-sys .to { font-size: 18px; font-weight: 500; }
+
+  .stack { display: flex; flex-direction: column; gap: 0; max-width: 1520px; width: 100%; }
+  .stack .exp { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 24px; padding-bottom: 24px; }
+  .stack .exp.n4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .stack .exp div { padding-top: 12px; border-top: 1px solid var(--line); }
+  .stack .exp h3 { font-size: 16px; font-weight: 500; }
+  .stack .exp p { font-size: 14px; color: var(--muted); margin-top: 4px; line-height: 1.35; }
+  .stack .found {
+    border-top: 1px solid var(--true);
+    padding-top: 18px;
+  }
+  .stack .found h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 24px;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+  }
+  .stack .found p { font-size: 16px; color: var(--muted); line-height: 1.4; max-width: 52em; }
+
+  .inherit { display: flex; flex-direction: column; gap: 28px; max-width: 1520px; width: 100%; }
+  .inherit .cap {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 36px;
+    letter-spacing: -0.03em;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--true);
+  }
+  .inherit .kids { display: flex; flex-wrap: wrap; gap: 10px 28px; }
+  .inherit .kids span {
+    font-size: 18px;
+    padding-top: 8px;
+    border-top: 1px solid var(--line);
+    min-width: 160px;
+  }
+
+  .quote-grid {
+    gap: 32px 64px;
+    grid-template-rows: auto auto;
+  }
+  .quote-grid q {
+    border-top: 1px solid var(--line);
+    font-size: 24px;
+    line-height: 1.4;
+    padding: 20px 0 8px;
+  }
+
+  .flow.n5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+
+  .paths-set {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 1520px;
+    width: 100%;
+  }
+
+  .forecast .imply {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 28px;
+    letter-spacing: -0.03em;
+    line-height: 1.25;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--true);
+    max-width: 28em;
+  }
+
+  .chain {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0 40px;
+    max-width: 1520px;
+    width: 100%;
+    position: relative;
+  }
+  .chain::before {
+    content: "";
+    position: absolute;
+    top: 10px; inset-inline: 0;
+    height: 1px;
+    background: var(--true);
+  }
+  .chain article { position: relative; padding-top: 32px; }
+  .chain .dot {
+    position: absolute;
+    top: 4px; inset-inline-start: 0;
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    border: 1px solid var(--true);
+    background: var(--paper);
+  }
+  .chain .n {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 44px;
+    letter-spacing: -0.04em;
+    color: var(--true);
+    line-height: 1;
+    margin: 0 0 8px;
+  }
+  .chain h3 { font-size: 18px; font-weight: 500; margin: 0 0 6px; }
+  .chain p { font-size: 15px; line-height: 1.35; color: var(--muted); }
+
+  .hero-metric {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 8px 64px;
+    max-width: 1520px;
+    width: 100%;
+    align-items: start;
+  }
+  .hero-metric .hero {
+    grid-row: 1 / span 3;
+    padding-top: 16px;
+    border-top: 1px solid var(--true);
+  }
+  .hero-metric .hero .n {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 128px;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    color: var(--true);
+  }
+  .hero-metric .hero h3 { font-size: 22px; font-weight: 500; margin: 16px 0 8px; }
+  .hero-metric .hero p { font-size: 16px; line-height: 1.4; color: var(--muted); max-width: 22em; }
+  .hero-metric .metric { border-top: 1px solid var(--line); }
+  .hero-metric .metric .n { font-size: 48px; }
+
+  .root-split {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 56px;
+    max-width: 1520px;
+    width: 100%;
+    align-items: start;
+  }
+  .root-split .root {
+    padding-top: 14px;
+    border-top: 1px solid var(--true);
+  }
+  .root-split .root h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 36px;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+  .root-split .root p { font-size: 16px; line-height: 1.4; color: var(--muted); }
+  .root-split .kids {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 40px;
+  }
+  .root-split .kids article {
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+  .root-split .kids .ord { display: block; margin-bottom: 6px; }
+  .root-split .kids h3 { font-size: 18px; font-weight: 500; margin-bottom: 6px; }
+  .root-split .kids p,
+  .root-split .kids li { font-size: 15px; line-height: 1.35; color: var(--muted); list-style: none; }
+
+  .evidence .themes {
+    border-top: 1px solid var(--true);
+    padding-top: 16px;
+    align-items: baseline;
+  }
+  .evidence .themes .lab {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--true);
+    margin-inline-end: 8px;
+  }
+
+  .say {
+    display: grid;
+    grid-template-columns: 1fr 48px 1fr;
+    gap: 0;
+    max-width: 1520px;
+    width: 100%;
+  }
+  .say .hd {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--true);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--true);
+  }
+  .say .mid { }
+  .say .row {
+    display: contents;
+  }
+  .say .from, .say .to {
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+    font-size: 17px;
+    line-height: 1.35;
+  }
+  .say .from { color: var(--muted); }
+  .say .to { font-weight: 500; }
+  .say .arrw {
+    display: grid;
+    place-items: center;
+    color: var(--true);
+    border-top: 1px solid var(--line);
+  }
+
+  .shared-note {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--true);
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 24px;
+    letter-spacing: -0.03em;
+    max-width: 1520px;
+    width: 100%;
+  }
+
+  .spectrum {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 80px;
+    max-width: 1520px;
+    width: 100%;
+    position: relative;
+  }
+  .spectrum::before {
+    content: "";
+    position: absolute;
+    top: 10px; inset-inline: 0;
+    height: 1px;
+    background: var(--true);
+  }
+  .spectrum > div { padding-top: 32px; }
+  .spectrum .kicker {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--true);
+    margin-bottom: 8px;
+  }
+  .spectrum h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 28px;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+  }
+  .spectrum li { font-size: 16px; line-height: 1.4; color: var(--muted); list-style: none; padding: 5px 0; }
+
+  .axes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 64px;
+    max-width: 1520px;
+    width: 100%;
+  }
+  .axes article {
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .axes article:nth-child(1),
+  .axes article:nth-child(2) { border-top-color: var(--true); }
+  .axes .ord { display: block; margin-bottom: 8px; }
+  .axes h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 26px;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .axes p { font-size: 16px; line-height: 1.4; color: var(--muted); }
+
+  .loop {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0 24px;
+    max-width: 1520px;
+    width: 100%;
+    position: relative;
+  }
+  .loop::before {
+    content: "";
+    position: absolute;
+    top: 10px; inset-inline: 0;
+    height: 1px;
+    background: var(--true);
+  }
+  .loop article { position: relative; padding-top: 32px; }
+  .loop .dot {
+    position: absolute;
+    top: 4px; inset-inline-start: 0;
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    border: 1px solid var(--true);
+    background: var(--paper);
+  }
+  .loop .ord { display: block; margin-bottom: 8px; }
+  .loop h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 24px;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  .loop p { font-size: 15px; line-height: 1.35; color: var(--muted); }
+
+  .nest { display: flex; flex-direction: column; max-width: 1520px; width: 100%; }
+  .nest .band {
+    padding: 18px 24px 18px 0;
+    border-top: 1px solid var(--line);
+  }
+  .nest .band.h1 { padding-inline-start: 0; }
+  .nest .band.h2 { padding-inline-start: 40px; }
+  .nest .band.h3 { padding-inline-start: 80px; }
+  .nest .band.across {
+    border-top-color: var(--true);
+    margin-top: 12px;
+  }
+  .nest .when {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--true);
+    margin-bottom: 6px;
+  }
+  .nest h3 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
+  .nest p { font-size: 15px; line-height: 1.35; color: var(--muted); max-width: 48em; }
+
+  .life {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0 32px;
+    max-width: 1520px;
+    width: 100%;
+    position: relative;
+  }
+  .life::before {
+    content: "";
+    position: absolute;
+    top: 10px; inset-inline: 0;
+    height: 1px;
+    background: var(--true);
+  }
+  .life article { position: relative; padding-top: 32px; }
+  .life .dot {
+    position: absolute;
+    top: 4px; inset-inline-start: 0;
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    border: 1px solid var(--true);
+    background: var(--paper);
+  }
+  .life .ord { display: block; margin-bottom: 8px; }
+  .life h3 { font-size: 18px; font-weight: 500; margin-bottom: 6px; }
+  .life p { font-size: 15px; line-height: 1.35; color: var(--muted); }
+
+  .formula {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 28px;
+    align-items: start;
+    max-width: 1520px;
+    width: 100%;
+  }
+  .formula .op {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 44px;
+    color: var(--true);
+    line-height: 1;
+    padding-top: 8px;
+  }
+  .formula .box { padding-top: 14px; border-top: 1px solid var(--line); }
+  .formula .box.is-out { border-top-color: var(--true); }
+  .formula h3 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 26px;
+    letter-spacing: -0.03em;
+    margin-bottom: 10px;
+  }
+  .formula li { font-size: 15px; line-height: 1.4; color: var(--muted); padding: 5px 0; list-style: none; }
+  .formula p { font-size: 16px; line-height: 1.4; color: var(--muted); max-width: 28em; }
+
+  .fromto.is-future {
+    display: block;
+    max-width: 1520px;
+    width: 100%;
+  }
+  .fromto.is-future > .arrw { display: none; }
+  .fromto.is-future .to {
+    font-size: 20px;
+    font-weight: 500;
+    padding-block: 4px 8px;
+  }
+  .fromto.is-future .from { font-size: 15px; }
+
+  .ask-row {
+    display: grid;
+    grid-template-columns: 4.8em 1fr;
+    gap: 16px 24px;
+    max-width: 1520px;
+    width: 100%;
+  }
+  .ask-row .item {
+    display: contents;
+  }
+  .ask-row .num {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 32px;
+    letter-spacing: -0.04em;
+    color: var(--true);
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+  }
+  .ask-row .copy {
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .ask-row .item:nth-child(1) .num,
+  .ask-row .item:nth-child(1) .copy { border-top-color: var(--true); }
+
+  .now-reuse {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 64px;
+    max-width: 1520px;
+    width: 100%;
+  }
+  .now-reuse .lab {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--true);
+    margin-bottom: 12px;
+  }
+  .now-reuse article {
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+  }
+  .now-reuse .now article:first-of-type { border-top-color: var(--true); }
+  .now-reuse h3 { font-size: 18px; font-weight: 500; margin-bottom: 4px; }
+  .now-reuse p { font-size: 15px; line-height: 1.35; color: var(--muted); }
+
+  .assertion {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: 56px;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+    max-width: 18em;
+  }
+  .assertion em { font-family: var(--italic); font-style: italic; color: var(--true); font-weight: 300; }
+
+  [dir="rtl"] .bar-fill { transform-origin: 100% 50%; }
+  [dir="rtl"] .toc button .toc-l { transform: translateX(-6px); }
+  [dir="rtl"] .toc:hover button .toc-l,
+  [dir="rtl"] .toc button:focus .toc-l,
+  [dir="rtl"] .toc:focus-within button .toc-l { transform: none; }
+  [dir="rtl"] .row.is-ready::after,
+  [dir="rtl"] .paths .stop:not(:last-child)::after,
+  [dir="rtl"] .seq .node:not(:last-child)::after,
+  [dir="rtl"] .chip-groups > div:not(:last-child)::after,
+  [dir="rtl"] .fromto .arrw,
+  [dir="rtl"] .say .arrw,
+  [dir="rtl"] .trust-sys .arrw {
+    transform: scaleX(-1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .slide, .toc button .toc-l { transition: none; }
+  }
+</style>
+<link rel="stylesheet" href="layout-system.css" />
+</head>
+<body>
+<div class="viewport">
+<div class="stage" id="stage" data-theme="navy">
+
+
+  <nav class="toc" id="toc" aria-label="Sections">
+    <span class="toc-line"></span>
+    <span class="toc-fill" id="tocFill"></span>
+  </nav>
+
+  <footer class="pager">
+    <div class="brand">
+      <img class="spark" id="spark" src="logos/spark-white.svg" alt="Walmart Spark">
+      <span class="meta">Advertiser Experience · Walmart Global Ads</span>
+    </div>
+    <div class="keys" id="keys" aria-label="Presenter keys">
+      <span>J jump</span>
+      <span>N notes</span>
+      <span>G grid</span>
+      <span class="build-cue" id="buildCue" hidden></span>
+    </div>
+    <div class="pager-controls">
+      <button class="arr" id="prev" type="button" aria-label="Previous">‹</button>
+      <button class="pagenum" id="pagenum" type="button" aria-live="polite" aria-label="Jump to slide. Press J." title="Jump to slide (J)">01 / 68</button>
+      <label class="goto" id="goto" hidden>
+        <span class="goto-k">Go</span>
+        <input id="gotoNum" name="slide-number" type="text" inputmode="numeric" maxlength="2" autocomplete="off" spellcheck="false" aria-label="Slide number">
+      </label>
+      <button class="arr" id="next" type="button" aria-label="Next">›</button>
+    </div>
+  </footer>
+
+  <div class="grid-overlay" aria-hidden="true">
+    <b class="v" style="left:80px"></b>
+    <b class="v" style="left:1840px"></b>
+    <b class="h" style="top:48px"></b>
+    <b class="h" style="top:var(--head-inset)"></b>
+    <b class="h" style="top:1008px"></b>
+    <b class="h" style="top:1032px"></b>
+  </div>
+  <div class="grid-hint">Grid · rails 80 · header from --head-inset · footer 1008 · J to jump · press G to hide</div>
+  <div class="measure-overlay" id="measure" aria-hidden="true"></div>
+  <div class="measure-hint">Measure · boxes + gaps · press M to hide</div>
+  <div class="notes-panel" id="notesPanel" hidden></div>
+
+    <section class="slide navy s-cover active" data-label="Cover">
+    <div class="body">
+      <div class="slide-header">
+<span class="pill">Advertiser Experience Strategy</span>
+<h1>One <em class="mark">connected</em> experience advertisers can actually use.</h1>
+<p class="sub">Building the next competitive advantage for Walmart Ads.</p>
+      </div>
+      <div class="slide-content">
+      </div>
+    </div>
+    <aside class="notes">Pause on “connected.” The sub is the claim. Do not preview the map.</aside>
+  </section>
+
+  <section class="slide paper s-map" data-label="Map">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Content map</span>
+<h2>The narrative at a <em class="mark">glance</em>.</h2>
+<p class="lede">Ten sections, from the market shift through the operating model to what needs to be <em class="mark">true</em>.</p>
+      </div>
+      <div class="slide-content">
+<div>
+        <button class="row is-ready" type="button" data-section="01"><div class="num">01</div><div><span class="ttl">Market shift</span><p>How commerce media is evolving</p></div></button>
+        <button class="row is-ready" type="button" data-section="02"><div class="num">02</div><div><span class="ttl">Where we are today</span><p>What’s working and what’s holding us back</p></div></button>
+        <button class="row is-ready" type="button" data-section="03"><div class="num">03</div><div><span class="ttl">Our vision</span><p>Where we’re going next, and why</p></div></button>
+        <button class="row is-ready" type="button" data-section="04"><div class="num">04</div><div><span class="ttl">Strategic reset</span><p>Why the approach has to change</p></div></button>
+        <button class="row is-ready" type="button" data-section="05"><div class="num">05</div><div><span class="ttl">Roadmap</span><p>How we’ll get there, in the right order</p></div></button>
+      </div>
+<div>
+        <button class="row is-ready" type="button" data-section="06"><div class="num">06</div><div><span class="ttl">Operating model</span><p>How we’ll work differently to deliver it</p></div></button>
+        <button class="row is-ready" type="button" data-section="07"><div class="num">07</div><div><span class="ttl">Measuring success</span><p>How we’ll know we’re winning</p></div></button>
+        <button class="row is-ready" type="button" data-section="08"><div class="num">08</div><div><span class="ttl">What needs to be true</span><p>The conditions for the strategy to hold</p></div></button>
+        <button class="row is-ready" type="button" data-section="09"><div class="num">09</div><div><span class="ttl">Closing</span><p>Bringing it all together</p></div></button>
+        <button class="row is-ready" type="button" data-section="10"><div class="num">10</div><div><span class="ttl">Appendix</span><p>The evidence behind the strategy</p></div></button>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Walk 01–05 first. 09 is the close, 10 is only if challenged. Do not preview the argument.</aside>
+  </section>
+
+  <section class="slide paper s-thesis s-ls s-ls-shallow" data-label="Argument">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Executive summary</span>
+<h2>The next era is won on <em class="mark">experience</em>, not more ad products.</h2>
+<p class="lede">Simplify, unify, and connect core Walmart Ads first. Then differentiate — and extend those foundations to Sam’s Club and International through configuration, not another rebuild.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="spine n4" role="img" aria-label="Simplify, unify, connect, then differentiate.">
+        <article>
+          <span class="ord">01</span>
+          <h3>Simplify</h3>
+          <p>Make sophisticated work feel simple. Remove the translation tax before adding more capability.</p>
+        </article>
+        <article>
+          <span class="ord">02</span>
+          <h3>Unify</h3>
+          <p>One platform layer under every hallway, so each launch starts further ahead.</p>
+        </article>
+        <article>
+          <span class="ord">03</span>
+          <h3>Connect</h3>
+          <p>Planning, activation, and reporting share components and API parity.</p>
+        </article>
+        <article>
+          <span class="ord">04</span>
+          <h3>Differentiate</h3>
+          <p>Once the journey holds, intelligence becomes an advantage instead of another surface to learn.</p>
+        </article>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Walk Simplify → Unify → Connect → Differentiate. Land the belief. Don’t rush the ask.</aside>
+  </section>
+
+  <section class="slide navy s-chapter" data-label="Shift">
+    <div class="body">
+      <div class="slide-header">
+<div class="chap-no">Section 01</div>
+<h2>Experience is becoming the basis of <em class="mark">competition</em>.</h2>
+<p class="lede">How commerce media is evolving, what advertisers increasingly expect, and why experience is becoming a more important basis of competition.</p>
+      </div>
+      <div class="slide-content">
+      </div>
+    </div>
+    <aside class="notes">Market section. Walmart products wait until 02.</aside>
+  </section>
+
+  <section class="slide paper s-bars s-ls" data-label="Forecast">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Industry maturity</span>
+<h2>Growth is table stakes. Experience is the remaining <em class="mark">advantage</em>.</h2>
+<p class="lede">U.S. commerce-media spend climbs to ~$142B by 2030 — +70% from 2026.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="forecast">
+<div class="bars">
+        <div class="bar-row">
+          <div class="yr">2026</div>
+          <div class="bar-track"><div class="bar-fill b5" style="width:59%"></div></div>
+          <div class="val">$83.7B</div>
+        </div>
+        <div class="bar-row">
+          <div class="yr">2027</div>
+          <div class="bar-track"><div class="bar-fill b4" style="width:70%"></div></div>
+          <div class="val">$99.8B</div>
+        </div>
+        <div class="bar-row">
+          <div class="yr">2028</div>
+          <div class="bar-track"><div class="bar-fill b3" style="width:81%"></div></div>
+          <div class="val">$115.6B</div>
+        </div>
+        <div class="bar-row">
+          <div class="yr">2029</div>
+          <div class="bar-track"><div class="bar-fill b2" style="width:91%"></div></div>
+          <div class="val">$129.1B</div>
+        </div>
+        <div class="bar-row">
+          <div class="yr">2030</div>
+          <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+          <div class="val">$142.1B</div>
+        </div>
+      </div>
+<p class="imply">As capabilities become table stakes, competition crosses from expansion to experience.</p>
+<div class="source"><a href="https://www.emarketer.com/" target="_blank" rel="noopener">eMarketer Forecast, US Commerce Media Ad Spending, June 2026</a></div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Walk 2026 to 2030 on the bars. Stop on 2030. Do not restate the lede — the crossing from expansion to experience is the point.</aside>
+  </section>
+
+  <section class="slide paper s-ls s-ls-shallow" data-label="Maturity">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Market shift</span>
+<h2>The basis of competition is shifting to <em class="mark">experience</em>.</h2>
+<p class="lede">Capabilities are becoming easier to replicate. The next advantage comes from simplifying the advertiser experience today and embedding intelligence tomorrow.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="spine" role="img" aria-label="Capability becomes parity. Experience becomes the remaining advantage.">
+        <article>
+          <span class="ord">Then</span>
+          <h3>Capability</h3>
+          <p>Launch inventory, self-service, APIs, and measurement. Build the business.</p>
+        </article>
+        <article>
+          <span class="ord">Now</span>
+          <h3>Parity</h3>
+          <p>Those capabilities are easier to replicate. Adding more of them is no longer a lead.</p>
+        </article>
+        <article>
+          <span class="ord">Next</span>
+          <h3>Experience</h3>
+          <p>Advertisers choose the platform that simplifies work, builds confidence, and then earns intelligence.</p>
+        </article>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Five eras. Land on Current, then Future. Don’t debate 2015.</aside>
+  </section>
+
+  <section class="slide paper s-quote" data-label="Maturity gap">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Industry maturity</span>
+<h2>Only <em class="mark">13%</em> of networks meet advanced maturity criteria, despite 42% believing they do.</h2>
+<p class="source"><a href="https://info.koddi.com/hubfs/All%20Commerce%20Media%20Playbook.pdf" target="_blank" rel="noopener">Koddi, The Commerce Media Playbook, Forrester Criteria</a></p>
+      </div>
+      <div class="slide-content"></div>
+    </div>
+    <aside class="notes">13% vs 42%. Pause. That’s the industry. Then we look at us.</aside>
+  </section>
+
+  <section class="slide paper s-chips s-ls" data-label="Reality">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Advertiser reality</span>
+<h2>Advertising has become too cognitively <em class="mark">expensive</em>.</h2>
+<p class="lede">You have one business goal and no connected journey. The work is navigating decisions, not accessing capabilities.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="burden" role="img" aria-label="One business goal entering a growing stack of platform, channel, terminology, workflow, and measurement decisions.">
+        <div class="goal"><span>The job</span>One business goal.</div>
+        <div class="layers">
+          <div class="layer"><b>Platform</b><p>Ad Center or Seller Center. Which front door is the right one.</p></div>
+          <div class="layer"><b>Channel</b><p>Sponsored, Display, DSP, Offsite, In-Store. Decide the hallway before the work.</p></div>
+          <div class="layer"><b>Language</b><p>Buying model, status, abbreviations, and internal names presented as equivalent choices.</p></div>
+          <div class="layer"><b>Workflow</b><p>Setup, approval, creative, eligibility, forecasting — each hallway a different sequence.</p></div>
+          <div class="layer"><b>Measure</b><p>Which report, which metric, which attribution. Reports that do not match.</p></div>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Don’t read the chips. Gesture at the pile. The metric is 9+ networks.</aside>
+  </section>
+
+  <section class="slide paper s-quote" data-label="Partners">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">What buyers now expect</span>
+<h2>Advertisers want partners with <em class="mark">integrated</em>, end-to-end capabilities — not a single performance channel.</h2>
+<p class="source"><a href="https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/commerce-media-at-an-inflection-point-how-to-win-with-a-full-stack-approach" target="_blank" rel="noopener">McKinsey, Commerce Media At An Inflection Point</a></p>
+      </div>
+      <div class="slide-content"></div>
+    </div>
+    <aside class="notes">McKinsey. One sentence, then sit. The quote does the work.</aside>
+  </section>
+
+  <section class="slide paper s-ls" data-label="Revenue">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">The revenue connection</span>
+<h2>Experience is no longer a UX metric. It’s a <em class="mark">revenue</em> growth strategy.</h2>
+<p class="lede">Advertisers are shifting budget toward platforms that make buying simpler and more connected. As trust declines and investment consolidates, experience decides the next dollar.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="ls-group">
+<div class="chain" role="img" aria-label="Experience builds trust, which drives adoption, which concentrates investment.">
+        <article>
+          <span class="dot" aria-hidden="true"></span>
+          <div class="n">80%</div>
+          <h3>Experience</h3>
+          <p>Would shift more budget when buying is simpler and inventory is accessible.</p>
+        </article>
+        <article>
+          <span class="dot" aria-hidden="true"></span>
+          <div class="n">−20</div>
+          <h3>Trust</h3>
+          <p>Industry NPS across 34 networks. Advocacy is weak where the work is hard.</p>
+        </article>
+        <article>
+          <span class="dot" aria-hidden="true"></span>
+          <div class="n">93%</div>
+          <h3>Adoption</h3>
+          <p>DSP access would move some or significant non-retail media into retail media.</p>
+        </article>
+        <article>
+          <span class="dot" aria-hidden="true"></span>
+          <div class="n">50%</div>
+          <h3>Investment</h3>
+          <p>Expect to consolidate spend across fewer networks. Simplicity decides the next dollar.</p>
+        </article>
+      </div>
+<div class="source"><a href="https://koddi.com/resources/programmatic-retail-media-report/" target="_blank" rel="noopener">Koddi, The State Of Programmatic Retail Media 2025</a> · <a href="https://skai.io/reports-and-whitepapers/2025-state-of-retail-media-report/" target="_blank" rel="noopener">Skai, 2025 State Of Retail Media Report</a> · RMN NPS</div>
+      </div>
+</div>
+      </div>
+    </div>
+    <aside class="notes">Spend-shift numbers, not UX scores. 80% and 93% first. NPS is the industry, not us.</aside>
+  </section>
+
+  <section class="slide paper s-quote" data-label="Playbook">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Our position</span>
+<h2>The retail media playbook is no longer enough. The next phase will be defined by differentiation — and CX is the most <em class="mark">durable</em> advantage of all.</h2>
+<p class="source"><a href="https://www.thedrum.com/news/retail-media-s-next-phase-will-be-won-by-differentiation-not-scale" target="_blank" rel="noopener">The Drum, Retail Media’s Next Phase Will Be Won By Differentiation</a></p>
+      </div>
+      <div class="slide-content"></div>
+    </div>
+    <aside class="notes">Let The Drum say it. Don’t add “next competitive” — Cover already did.</aside>
+  </section>
+
+  <section class="slide navy s-chapter" data-label="Today">
+    <div class="body">
+      <div class="slide-header">
+<div class="chap-no">Section 02</div>
+<h2>An honest look at what is working — and what is <em class="mark">holding us back</em>.</h2>
+<p class="lede">Where fragmentation creates friction, and compounds the cost of every new capability.</p>
+      </div>
+      <div class="slide-content">
+      </div>
+    </div>
+    <aside class="notes">Diagnosis section. Friction first, then the cost of adding more.</aside>
+  </section>
+
+  <section class="slide paper s-thesis s-ls" data-label="Evidence">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">UXR + VOC research</span>
+<h2>Every research source points to the same five <em class="mark">themes</em>.</h2>
+<p class="sub">Across 23 research inputs, 18 studies, 28,000+ support tickets, and 20 stakeholder interviews, the same five themes consistently emerge.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="evidence">
+        <div class="ev"><div class="n">23</div><h3>Research inputs</h3><p>External studies, audits, and synthesis documents.</p></div>
+        <div class="ev"><div class="n">18</div><h3>Studies</h3><p>Industry and academic sources on retail and commerce media.</p></div>
+        <div class="ev"><div class="n">28k+</div><h3>Support tickets</h3><p>First-party operational evidence, not a survey sample.</p></div>
+        <div class="ev"><div class="n">20</div><h3>Interviews</h3><p>Stakeholders across product, sales, ops, and experience.</p></div>
+        <div class="themes">
+          <span class="lab">Same diagnosis</span>
+          <span class="chip">Time-consuming</span>
+          <span class="chip">Inconsistent</span>
+          <span class="chip">Fragmented</span>
+          <span class="chip">Complex</span>
+          <span class="chip">Unclear</span>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Name the four counts. The chips at the bottom are the punch, not the stats.</aside>
+  </section>
+
+  <section class="slide paper s-set s-themes s-ls" data-label="Themes">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">The experience gap</span>
+<h2>Systemic friction appears in different forms across every <em class="mark">workflow</em>.</h2>
+<p class="lede">What appears as isolated friction is a repeated pattern across planning, activation, optimization, and measurement.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="root-split" role="img" aria-label="Four friction themes as manifestations of one fragmentation problem.">
+        <div class="root">
+          <h3>Fragmentation</h3>
+          <p>One structural problem. Four ways advertisers feel it.</p>
+        </div>
+        <div class="kids">
+          <article>
+            <span class="ord">Time-consuming</span>
+            <h3>Manual at every stage</h3>
+            <p>Weak duplication. Switching hallways to finish a launch.</p>
+          </article>
+          <article>
+            <span class="ord">Inconsistent</span>
+            <h3>Patterns do not transfer</h3>
+            <p>Different UX, language, and design systems by channel.</p>
+          </article>
+          <article>
+            <span class="ord">Fragmented</span>
+            <h3>Work is pieced together</h3>
+            <p>Tasks split across tools. Reporting consolidated by hand.</p>
+          </article>
+          <article>
+            <span class="ord">Complex + unclear</span>
+            <h3>Hard to act with confidence</h3>
+            <p>No sequence. Recommendations without rationale.</p>
+          </article>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Four problems, not a framework. Don’t give them Adaptive-slide weight in voice either.</aside>
+  </section>
+
+  <section class="slide paper s-ls" data-label="Signal">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">The advertiser signal</span>
+<h2>Persistent friction is eroding both experience and perceived <em class="mark">value</em>.</h2>
+<p class="lede">Across 1,825 feedback records, dissatisfaction spans usability, control, reporting confidence, reliability and performance — with no sustained improvement.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="ls-group">
+<div class="hero-metric" role="img" aria-label="Relationship health is the dominant signal. Supporting evidence sits beside it.">
+        <div class="hero">
+          <div class="n">−27</div>
+          <h3>Relationship health</h3>
+          <p>NPS across 1,350 scored responses. Nearly six in ten came from detractors.</p>
+        </div>
+        <div class="metric">
+          <div class="n">2 / 5</div>
+          <h3>Core experience quality</h3>
+          <p>Foundational friction makes every new capability harder to value.</p>
+        </div>
+        <div class="metric">
+          <div class="n">19 / 19</div>
+          <h3>Persistent dissatisfaction</h3>
+          <p>Negative NPS in every measured month. Systemic, not a release.</p>
+        </div>
+        <div class="metric">
+          <div class="n">0.89</div>
+          <h3>Experience–value correlation</h3>
+          <p>How they rate the experience tracks whether they believe it works.</p>
+        </div>
+      </div>
+<div class="source">Pendo Feedback, 1,825 Records, February 2025-August 2026</div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">The overall NPS is calculated from the 1,350 scored responses: 32.1% promoters minus 58.7% detractors = −26.6, rounded to −27.</aside>
+  </section>
+
+  <section class="slide paper s-quotes s-ls" data-label="Voice">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">What advertisers are saying</span>
+<h2>Advertisers are telling us the experience is too hard to trust and <em class="mark">operate</em>.</h2>
+<p class="lede">Direct feedback makes the pattern clear: they struggle to understand performance, make decisions, and operate the platform confidently.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="quote-grid">
+        <q>Clunky and confusing UI. I can’t just go to where I want.</q>
+        <q>Reports are not accurate. Doesn’t match the actual data in the summary table.</q>
+        <q>It is so hard to use. I am literally trying to have Claude guide me since you can’t provide support.</q>
+        <q>Walmart Seller Center is great so far. Walmart Connect seems decades behind Amazon and Google Ads.</q>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Read two quotes, not four. The Claude line if the room is cold.</aside>
+  </section>
+
+  <section class="slide paper s-compare s-ls" data-label="Hallways">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">The advertiser journey</span>
+<h2>Today you translate Walmart’s organization before you can <em class="mark">buy</em>.</h2>
+<p class="lede">You carry the connections. Completing one job means hopping products, each with its own objects, navigation, identity, and reports.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="paths-set" role="img" aria-label="Today: disconnected hallways. Future: one Ad Center journey.">
+      <div class="paths is-broken">
+          <div class="lab">Today · Translate the org chart</div>
+          <div class="flow">
+            <div class="stop"><h3>Seller Center</h3><p>Start in a different product</p></div>
+            <div class="stop"><h3>Ad Center</h3><p>Then a second front door</p></div>
+            <div class="stop"><h3>Sponsored</h3><p>Relearn this hallway’s objects</p></div>
+            <div class="stop"><h3>Display</h3><p>Switch nav and foundations</p></div>
+            <div class="stop"><h3>Walmart DSP</h3><p>Sign in and report again</p></div>
+          </div>
+      </div>
+      <div class="paths is-one">
+          <div class="lab">Future · One Ad Center journey</div>
+          <div class="flow">
+            <div class="stop"><h3>Ad Center home</h3><p>One front door</p></div>
+            <div class="stop"><h3>Create</h3><p>One Create across hallways</p></div>
+            <div class="stop"><h3>All Campaigns</h3><p>The working table</p></div>
+            <div class="stop"><h3>Recommendations</h3><p>Named next action</p></div>
+            <div class="stop"><h3>Reporting</h3><p>One reporting model</p></div>
+          </div>
+      </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Today the path is Seller Center or Ad Center, then Sponsored, Display, DSP. Product names belong on this slide, not only on the topo.</aside>
+  </section>
+
+  <section class="slide paper s-set s-ls" data-label="Reality">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">The platform structure</span>
+<h2>Advertisers do not experience one Walmart Ads <em class="mark">platform</em>.</h2>
+<p class="lede">Two front doors. Five media hallways. Shared capabilities reached differently from each one.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="anatomy" role="img" aria-label="Seller Center and Ad Center sit above five media hallways. Shared capabilities sit underneath, reached differently from each hallway.">
+        <div>
+          <div class="lab">Front doors</div>
+          <div class="doors">
+            <div class="cell"><h3>Seller Center</h3><p>Marketplace sellers start here, then route into enterprise workflows.</p></div>
+            <div class="cell"><h3>Ad Center</h3><p>Main self-service platform, spanning several product generations at once.</p></div>
+          </div>
+        </div>
+        <div>
+          <div class="lab">Media hallways</div>
+          <div class="halls">
+            <div class="cell"><h3>Sponsored</h3><p>Separate object model and tables</p></div>
+            <div class="cell"><h3>Display</h3><p>Separate navigation and Living Design foundation</p></div>
+            <div class="cell"><h3>Walmart DSP</h3><p>Separate identity, access, and reporting</p></div>
+            <div class="cell"><h3>Offsite</h3><p>Reconciled by hand</p></div>
+            <div class="cell"><h3>In-Store</h3><p>Distinct creative and planning</p></div>
+          </div>
+        </div>
+        <div class="shared">
+          <h3>Shared capabilities, reached differently</h3>
+          <p>Identity, creative, audience, catalog, planning, measurement, reporting. Named and duplicated per hallway.</p>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Two doors, five hallways, shared stuff at the bottom. You carry the wires.</aside>
+  </section>
+
+  <section class="slide paper s-ls" data-label="Language">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Platform audit findings</span>
+<h2>Advertisers should not have to translate Walmart to use <em class="mark">Walmart</em>.</h2>
+<p class="lede">Ad Center presents channels, buying methods, statuses, service models and internal systems as equivalent choices. Language is part of the product.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="say" role="img" aria-label="What Walmart says versus what advertisers are trying to do.">
+        <div class="hd">What Walmart says</div>
+        <div></div>
+        <div class="hd">What advertisers are trying to do</div>
+        <div class="from">Display Auction</div>
+        <div class="arrw">→</div>
+        <div class="to">Buy display media</div>
+        <div class="from">Archived as a media type</div>
+        <div class="arrw">→</div>
+        <div class="to">Find campaigns that are no longer live</div>
+        <div class="from">DSS / MS / internal abbreviations</div>
+        <div class="arrw">→</div>
+        <div class="to">Know which service model they are in</div>
+        <div class="from">DSPs listed as channels</div>
+        <div class="arrw">→</div>
+        <div class="to">Choose where media runs</div>
+        <div class="from">Channel reports in isolation</div>
+        <div class="arrw">→</div>
+        <div class="to">See whether the whole plan is working</div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Don’t read all five. Pick 01 and 04. Status-as-media is the example they’ll remember.</aside>
+  </section>
+
+  <section class="slide paper s-ls" data-label="Foundations">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Platform audit findings</span>
+<h2>Shared products should not feel like they belong to separate <em class="mark">platforms</em>.</h2>
+<p class="lede">Display and Sponsored appear to run on different Living Design foundations. Different media may need different workflows. They should not need different platform fundamentals.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="ls-group">
+<div class="say" role="img" aria-label="Sponsored and Display duplicate the same platform foundations.">
+        <div class="hd">Sponsored today</div>
+        <div></div>
+        <div class="hd">Display today</div>
+        <div class="from">Leads with Create</div>
+        <div class="arrw">→</div>
+        <div class="to">Leads with Reporting</div>
+        <div class="from">One nav tree</div>
+        <div class="arrw">→</div>
+        <div class="to">A different tree</div>
+        <div class="from">Newer Living Design</div>
+        <div class="arrw">→</div>
+        <div class="to">Older Living Design</div>
+        <div class="from">Language in context</div>
+        <div class="arrw">→</div>
+        <div class="to">Terms not normalized</div>
+        <div class="from">Guidance in the flow</div>
+        <div class="arrw">→</div>
+        <div class="to">Less guidance</div>
+      </div>
+        <p class="shared-note">Same fundamentals. Two platforms. Advertisers should not have to notice.</p>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Sponsored starts with Create. Display starts with Reporting. Same product family.</aside>
+  </section>
+
+  <section class="slide paper s-cols s-ls s-ls-shallow" data-label="Expansion">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">The complexity gap</span>
+<h2>We are expanding the platform without reducing the <em class="mark">friction</em>.</h2>
+<p class="lede">New capability on a fragmented journey does not add choice. It adds load.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="equation" role="img" aria-label="Fragmentation times additional capability equals greater cognitive burden.">
+        <div class="box">
+          <h3>Fragmentation</h3>
+          <p>Navigation, workflows, reporting, and foundations don’t share a core.</p>
+        </div>
+        <div class="op" aria-hidden="true">×</div>
+        <div class="box">
+          <h3>New capability</h3>
+          <p>Targeting, formats, campaign types, AI, and Recommendations land on that split.</p>
+        </div>
+        <div class="op" aria-hidden="true">=</div>
+        <div class="box is-out">
+          <h3>Greater load</h3>
+          <p>Slower adoption, weaker trust, worse AI inputs, spend leaving the network.</p>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Walk Adding → Unresolved → Risk. Then the tax line. Do not open a second diagram — this is one cost, advertiser and internal.</aside>
+  </section>
+
+  <section class="slide navy s-chapter" data-label="Vision">
+    <div class="body">
+      <div class="slide-header">
+<div class="chap-no">Section 03</div>
+<h2>The future experience we are working toward — one <em class="mark">unified</em>, intelligent platform.</h2>
+<p class="lede">A simpler, more connected advertiser journey, on one unified, intelligent platform.</p>
+      </div>
+      <div class="slide-content">
+      </div>
+    </div>
+    <aside class="notes">From here, what it should feel like. Principles next — feeling, then Ad Center behavior.</aside>
+  </section>
+
+  <section class="slide paper s-principles s-ls" data-label="Principles">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Design principles</span>
+<h2>Every experience should feel intelligent, adaptive, and <em class="mark">effortless</em>.</h2>
+<p class="lede">Six tests for every Ad Center workflow.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="principles">
+        <article>
+          <h3>Simple</h3>
+          <p>One Create in Ad Center. Sponsored Search setup does not ask which hallway first.</p>
+        </article>
+        <article>
+          <h3>Connected</h3>
+          <p>All Campaigns is the working table. Seller Center launch lands in the same Ad Center campaign.</p>
+        </article>
+        <article>
+          <h3>Consistent</h3>
+          <p>One Living Design generation, one nav tree, one status model. Archived is a status, not a media type.</p>
+        </article>
+        <article>
+          <h3>Guided</h3>
+          <p>Recommendations sit in Display setup the way they already sit in Sponsored. Campaign health names the next action.</p>
+        </article>
+        <article>
+          <h3>Adaptive</h3>
+          <p>Quick Start versus full setup by seller maturity. Paths follow the job, not the org chart.</p>
+        </article>
+        <article>
+          <h3>Intelligent</h3>
+          <p>One Recommendations center across campaigns, items, audiences, and creative. Marty explains the move.</p>
+        </article>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Left is the feeling. Right is Ad Center. Simple is the test that fails first.</aside>
+  </section>
+
+  <section class="slide paper s-table s-ls" data-label="Shifts">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">What must change</span>
+<h2>Shift from shipping more experiences to building <em class="mark">one</em> experience.</h2>
+<p class="lede">Six changes in how we plan, fund and govern the platform. None of them are technology problems.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="fromto">
+        <div class="lab">Journey-led planning</div>
+        <div class="pair"><div class="from">Feature delivery as the goal</div><div class="arrw">→</div><div class="to">Advertiser outcomes as the goal</div></div>
+        <div class="pair"><div class="from">Local patterns per product</div><div class="arrw">→</div><div class="to">Shared standards with adoption requirements</div></div>
+        <div class="pair"><div class="from">Duplicated capabilities</div><div class="arrw">→</div><div class="to">Reusable platform services</div></div>
+        <div class="pair"><div class="from">One-size complexity for everyone</div><div class="arrw">→</div><div class="to">Adaptive paths by goal and maturity</div></div>
+        <div class="pair"><div class="from">Project-by-project coordination</div><div class="arrw">→</div><div class="to">Durable governance and decision rights</div></div>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Each shift moves a decision from inside a product roadmap to across the platform.</aside>
+  </section>
+
+  <section class="slide paper s-compare s-ls" data-label="Philosophy">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Product philosophy</span>
+<h2>There’s no such thing as a universal “best” <em class="mark">experience</em>.</h2>
+<p class="lede">Industry trends like omnichannel, AI, self-service, and automation are powerful, but they aren’t universal solutions. The experience should adapt to the advertiser’s job.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="spectrum" role="img" aria-label="A continuum from judgment to speed, not two equal columns.">
+          <div>
+          <div class="kicker">Needs judgment</div>
+          <h3>Time on the plan</h3>
+          <ul>
+          <li>Annual budget allocation</li>
+          <li>Portfolio planning</li>
+          <li>Cross-channel planning</li>
+          <li>Campaign objectives</li>
+          <li>Audience strategy</li>
+          <li>Retail calendar planning</li>
+          </ul>
+          </div>
+          <div>
+          <div class="kicker">Needs fast, efficient execution</div>
+          <h3>Speed without ceremony</h3>
+          <ul>
+          <li>Campaign launch</li>
+          <li>Bid changes</li>
+          <li>Creative development</li>
+          <li>Bulk editing</li>
+          <li>Asset management</li>
+          <li>Campaign optimizations</li>
+          </ul>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Don’t apply every trend everywhere. Judgment vs speed is the split.</aside>
+  </section>
+
+  <section class="slide paper s-ls" data-label="Fit">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Product design framework</span>
+<h2>Design the right experience for the right job and the right <em class="mark">user</em>.</h2>
+<p class="lede">Not every advertiser needs the same experience. Balance guidance with control, and shared standards with expert flexibility.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="axes" role="img" aria-label="Two axes: guidance versus control, and shared standards versus expert flexibility.">
+        <article>
+          <span class="ord">Guidance</span>
+          <h3>Show the next step</h3>
+          <p>Guided workflows for launch, learning, and moments when the cost of a wrong decision is high.</p>
+        </article>
+        <article>
+          <span class="ord">Control</span>
+          <h3>Stay out of the way</h3>
+          <p>Bulk operations, expert editing, and portfolio tools for people who already know the job.</p>
+        </article>
+        <article>
+          <span class="ord">Standardization</span>
+          <h3>One system to learn</h3>
+          <p>Shared language, components, and metrics so work transfers from hallway to hallway.</p>
+        </article>
+        <article>
+          <span class="ord">Expert flexibility</span>
+          <h3>Depth where it earns it</h3>
+          <p>Channel-specific controls remain available without becoming a second platform to relearn.</p>
+        </article>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">One row: omnichannel is for coordinating investment, not running one campaign.</aside>
+  </section>
+
+  <section class="slide paper s-table s-ls" data-label="Trust">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Product imperative</span>
+<h2>Every interaction either builds trust or reinforces <em class="mark">skepticism</em>.</h2>
+<p class="lede">Trust is built or spent in ordinary moments: a recommendation without a rationale, a metric that changes meaning, an automation that removes control.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="ls-group">
+<div class="trust-sys" role="img" aria-label="Every interaction deposits or withdraws trust.">
+        <div class="pair"><div class="from">Recommendation</div><div class="arrw">→</div><div class="to">Rationale</div></div>
+        <div class="pair"><div class="from">Automation</div><div class="arrw">→</div><div class="to">Control</div></div>
+        <div class="pair"><div class="from">Metric</div><div class="arrw">→</div><div class="to">Consistency</div></div>
+        <div class="pair"><div class="from">Optimization</div><div class="arrw">→</div><div class="to">Transparency</div></div>
+      </div>
+<div class="source"><a href="https://hbr.org/2025/09/the-importance-of-trust-and-transparency-in-retail-media-networks" target="_blank" rel="noopener">Harvard Business Review, The Importance Of Trust And Transparency In Retail Media Networks, 2025</a></div>
+      </div>
+</div>
+      </div>
+    </div>
+    <aside class="notes">Trust is spent in ordinary moments. Pick the recommendation-without-rationale example.</aside>
+  </section>
+
+  <section class="slide navy s-chapter" data-label="Reset">
+    <div class="body">
+      <div class="slide-header">
+<div class="chap-no">Section 04</div>
+<h2>The vision does not change. The <em class="mark">sequence</em> does.</h2>
+<p class="lede">Why our current approach needs to change, and the strategic choices required to create a simpler, more scalable path forward.</p>
+      </div>
+      <div class="slide-content">
+      </div>
+    </div>
+    <aside class="notes">Sequence, not vision. Point at Reconcile later, then the reverse.</aside>
+  </section>
+
+  <section class="slide paper s-compare s-ls" data-label="Sequence">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Our recommendation</span>
+<h2>Foundation first, so innovation <em class="mark">compounds</em>.</h2>
+<p class="lede">Channel-first, reconcile later built today’s fragmentation. Reverse the order so each launch starts further <em class="mark">ahead</em>.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="paths-set" role="img" aria-label="Old: channel, build, reconcile. New: foundation, configure, scale.">
+        <div class="paths is-broken">
+          <div class="lab">Current · Channel → build → reconcile</div>
+          <div class="flow n4">
+            <div class="stop"><h3>Channel feature</h3><p>Built inside one hallway</p></div>
+            <div class="stop"><h3>Channel workflow</h3><p>Local to that product</p></div>
+            <div class="stop"><h3>Channel component</h3><p>Not reusable next door</p></div>
+            <div class="stop"><h3>Reconcile later</h3><p>Fragmentation compounds</p></div>
+          </div>
+        </div>
+        <div class="paths is-one">
+          <div class="lab">Recommended · Foundation → configure → scale</div>
+          <div class="flow n4">
+            <div class="stop"><h3>Shared foundation</h3><p>IA, patterns, contracts</p></div>
+            <div class="stop"><h3>Reusable patterns</h3><p>One component system</p></div>
+            <div class="stop"><h3>Configurable workflows</h3><p>Adapted per channel</p></div>
+            <div class="stop"><h3>Channel execution</h3><p>Innovation compounds</p></div>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Top row is how we ship today. Bottom is the reverse. Don’t reread the chapter line.</aside>
+  </section>
+
+  <section class="slide paper s-ls s-ls-shallow" data-label="Leverage">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Delivery strategy</span>
+<h2>Create room now so every future initiative starts further <em class="mark">ahead</em>.</h2>
+<p class="lede">The goal is not fewer launches. It is less reinvention per launch.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="inherit" role="img" aria-label="One investment in shared foundations accelerates every downstream experience.">
+        <div class="cap">Today, every launch starts near zero.</div>
+        <div class="kids">
+          <span>Future: work starts from an established system</span>
+          <span>Shared patterns</span>
+          <span>Reusable components</span>
+          <span>Stable terminology</span>
+          <span>Defined integrations</span>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Shared systems change the starting line for every front-end initiative, from near zero to an established system.</aside>
+  </section>
+
+  <section class="slide paper s-ls s-ls-shallow" data-label="Phases">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Proposed sequencing</span>
+<h2>Establish, simplify, connect, then <em class="mark">differentiate</em>.</h2>
+<p class="lede">Each phase creates immediate usability improvements while steadily reducing the cost and complexity of future delivery.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="spine n4" role="img" aria-label="Establish, simplify, connect, then differentiate.">
+        <article>
+          <span class="ord">1 · Establish</span>
+          <h3>A shared baseline</h3>
+          <p>Audit, charter, IA, terminology, design-system direction.</p>
+        </article>
+        <article>
+          <span class="ord">2 · Simplify</span>
+          <h3>Reusable patterns</h3>
+          <p>Fix critical findings. Align Living Design. Make campaign basics the same.</p>
+        </article>
+        <article>
+          <span class="ord">3 · Connect</span>
+          <h3>One platform</h3>
+          <p>Planning, activation, and reporting share components and API parity.</p>
+        </article>
+        <article>
+          <span class="ord">4 · Differentiate</span>
+          <h3>Compounding intelligence</h3>
+          <p>Recommendations, Marty, and automation on foundations that already hold.</p>
+        </article>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Each phase unlocks a compounding form of leverage.</aside>
+  </section>
+
+  <section class="slide paper s-list s-ls" data-label="Intake">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Roadmap decision framework</span>
+<h2>Every initiative must reduce a core advertiser <em class="mark">pain-point</em>.</h2>
+<p class="lede">Five questions applied at intake. An initiative that answers no to all five does not enter the roadmap.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="fromto">
+        <div class="pair"><div class="from">Reduce fragmentation?</div><div class="arrw">→</div><div class="to">Connect products, workflows, data, or entry points</div></div>
+        <div class="pair"><div class="from">Reduce time + effort?</div><div class="arrw">→</div><div class="to">Cut repetition, waiting, manual setup, or hallway switching</div></div>
+        <div class="pair"><div class="from">Easier to navigate?</div><div class="arrw">→</div><div class="to">Name where to begin, what to do next, where capabilities live</div></div>
+        <div class="pair"><div class="from">Improve consistency?</div><div class="arrw">→</div><div class="to">Reuse terminology, components, patterns, and metrics</div></div>
+        <div class="pair"><div class="from">Increase clarity + trust?</div><div class="arrw">→</div><div class="to">Explain decisions, requirements, results, and next actions</div></div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Five questions determine whether to prioritize, reshape, or defer.</aside>
+  </section>
+
+  <section class="slide paper s-set s-ls" data-label="Rubric">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Prioritization rubric</span>
+<h2>Prioritize work that creates customer impact and platform <em class="mark">leverage</em>.</h2>
+<p class="lede">Six criteria produce a score. The score resolves to accelerate, reshape, sequence, or defer.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="fromto">
+        <div class="pair"><div class="from">Pain, leverage, foundation</div><div class="arrw">→</div><div class="to">Score 01–03 · how strongly it solves a validated pain; whether hallways reuse it; whether it advances IA or Living Design</div></div>
+        <div class="pair"><div class="from">Effort, readiness, rework</div><div class="arrw">→</div><div class="to">Score 04–06 · time or steps cut; UI, API, and AI support; whether it will be rebuilt when the platform unifies</div></div>
+        <div class="pair"><div class="from">High pain, high leverage, low rework</div><div class="arrw">→</div><div class="to">Accelerate. Move it now.</div></div>
+        <div class="pair"><div class="from">Valuable but unfinished</div><div class="arrw">→</div><div class="to">Reshape if it can strengthen foundations. Sequence if it depends on them. Defer if impact is low.</div></div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Six criteria produce a score, and the score resolves to one of four outcomes.</aside>
+  </section>
+
+  <section class="slide paper s-set s-ls" data-label="Priorities">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Four strategic priorities</span>
+<h2>Simplify the core, connect the platform, then <em class="mark">differentiate</em>.</h2>
+<p class="lede">Four priorities on one spine. Each depends on the one before it, so they are not independent bets.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="spine n4" role="img" aria-label="Four dependent priorities on one spine.">
+        <article>
+          <span class="ord">01 · First</span>
+          <h3>Simplify advertiser experience</h3>
+          <p>Remove unnecessary steps, clarify decisions, and make foundational workflows easier to complete confidently.</p>
+        </article>
+        <article>
+          <span class="ord">02 · Next</span>
+          <h3>Unlock Marketplace demand</h3>
+          <p>Meet sellers in Seller Center and reduce the advertising expertise required to begin and grow.</p>
+        </article>
+        <article>
+          <span class="ord">03 · Then</span>
+          <h3>Unified ads platform</h3>
+          <p>Shared foundations that turn separate products into one understandable ecosystem.</p>
+        </article>
+        <article>
+          <span class="ord">04 · Ongoing</span>
+          <h3>Differentiate through intelligence</h3>
+          <p>Use Walmart’s data and AI once trust and foundations exist.</p>
+        </article>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Four priorities on one spine, read left to right. They are not four independent bets.</aside>
+  </section>
+
+  <section class="slide paper s-ls" data-label="Rock 01">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">FY28 big rock 01 · Simplify the advertiser experience</span>
+<h2>Each hallway improvement should become a reusable <em class="mark">pattern</em>.</h2>
+<p class="lede">Make core workflows faster, clearer, and more consistent — starting with the funded Sponsored hallway.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="now-reuse" role="img" aria-label="Immediate improvement versus reusable capability created.">
+        <div class="now">
+          <div class="lab">Immediate improvement</div>
+          <article>
+            <h3>Sponsored Search in Ad Center</h3>
+            <p>Creation, management + editing with fewer steps. This is the funded hallway.</p>
+          </article>
+        </div>
+        <div>
+          <div class="lab">Reusable capability created</div>
+          <article>
+            <h3>Onsite Display on the same patterns</h3>
+            <p>Not a second rebuild. Apply the Sponsored workflow once it exists.</p>
+          </article>
+          <article>
+            <h3>Cross-channel management</h3>
+            <p>Common tables, filters, bulk actions + budgets across both hallways.</p>
+          </article>
+          <article>
+            <h3>Creative Hub once</h3>
+            <p>Create, reuse, moderate, approve + appeal in one place.</p>
+          </article>
+          <article>
+            <h3>Then Offsite + In-Store</h3>
+            <p>Guided self-service only after the shared patterns exist.</p>
+          </article>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Reduce task time, errors, and launch friction today; avoid rebuilding the same workflow tomorrow.</aside>
+  </section>
+
+  <section class="slide paper s-ls s-ls-shallow" data-label="Rock 02">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">FY28 big rock 02 · Unlock Marketplace seller demand</span>
+<h2>Advertising should live inside the seller <em class="mark">journey</em>.</h2>
+<p class="lede">Make advertising native to how sellers discover opportunity, launch, manage performance, grow investment, and return.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="loop" role="img" aria-label="Seller journey: opportunity, launch, manage, grow, return.">
+        <article>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="ord">01</span>
+          <h3>Opportunity</h3>
+          <p>See why advertising is worth starting, inside Seller Center.</p>
+        </article>
+        <article>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="ord">02</span>
+          <h3>Launch</h3>
+          <p>Native Sponsored Search. Quick Start + forecasting before the first dollar.</p>
+        </article>
+        <article>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="ord">03</span>
+          <h3>Manage</h3>
+          <p>Status, impact, and the next action without leaving the seller workflow.</p>
+        </article>
+        <article>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="ord">04</span>
+          <h3>Grow</h3>
+          <p>Budget, tROAS + out-of-budget recovery in one click.</p>
+        </article>
+        <article>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="ord">05</span>
+          <h3>Return</h3>
+          <p>Intervene before lapse. Restart without a new setup.</p>
+        </article>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Measure Activate, Expand + Retain — then scale only the recommendations that change behavior.</aside>
+  </section>
+
+  <section class="slide paper s-ls" data-label="Rock 03">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">FY28 big rock 03 · Build a unified ads platform</span>
+<h2>One platform layer, so expansion stays <em class="mark">configurable</em>.</h2>
+<p class="lede">Create one platform layer that reduces fragmentation, accelerates every hallway, and keeps future ecosystem expansion configurable.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="stack" role="img" aria-label="Advertiser and channel experiences sit on shared platform foundations.">
+        <div class="exp">
+          <div><h3>Sponsored</h3><p>Search and item</p></div>
+          <div><h3>Display</h3><p>Onsite and offsite</p></div>
+          <div><h3>DSP</h3><p>Programmatic</p></div>
+          <div><h3>Seller Center</h3><p>Marketplace start</p></div>
+          <div><h3>Future</h3><p>Configurable, not rebuilt</p></div>
+        </div>
+        <div class="found">
+          <h3>Shared platform foundations</h3>
+          <p>Planning · Creative · Audience · Measurement · Campaign primitives · Navigation · Living Design · Identity · APIs</p>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">The goal is configurable reuse across hallways — not a new layer of one-off shared UI.</aside>
+  </section>
+
+  <section class="slide paper s-ls" data-label="Rock 04">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">FY28 big rock 04 · Differentiate through intelligence</span>
+<h2>Intelligence earns adoption when advertisers stay in <em class="mark">control</em>.</h2>
+<p class="lede">Turn Walmart’s intelligence into useful, trusted action by making guidance prioritized, explainable, controllable, and measurable.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="paths is-one" role="img" aria-label="Signal, recommendation, rationale, action, learning.">
+          <div class="lab">Signal → Recommend → Rationale → Action → Learn</div>
+          <div class="flow">
+            <div class="stop"><h3>Signal</h3><p>See what changed. Performance, eligibility, inventory, and context in one object.</p></div>
+            <div class="stop"><h3>Recommend</h3><p>Name the next action. The Recommendations center is that object in Ad Center.</p></div>
+            <div class="stop"><h3>Rationale</h3><p>Show why. Evidence, not a black box. Marty explains the move.</p></div>
+            <div class="stop"><h3>Action</h3><p>Keep control. Accept, edit, or dismiss. Automation never removes the steering wheel.</p></div>
+            <div class="stop"><h3>Learn</h3><p>Measure the outcome. Personalized next action rides the same evidence contract.</p></div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Intelligence earns adoption when advertisers understand why, stay in control, and see the impact.</aside>
+  </section>
+
+  <section class="slide navy s-chapter" data-label="Roadmap">
+    <div class="body">
+      <div class="slide-header">
+<div class="chap-no">Section 05</div>
+<h2>Sequence the work so foundations unlock greater <em class="mark">value</em>.</h2>
+<p class="lede">How we’ll get there, beginning with the foundations that unlock greater value from future capabilities and investments.</p>
+      </div>
+      <div class="slide-content">
+      </div>
+    </div>
+    <aside class="notes">Foundations first, then workstreams. Don’t preview Express pod yet.</aside>
+  </section>
+
+  <section class="slide paper s-set s-ls" data-label="Workstreams">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Current work</span>
+<h2>Current priorities are already bringing the charter to <em class="mark">life</em>.</h2>
+<p class="lede">Five connected workstreams, not a backlog of unrelated front-end requests. Much of this work is jointly driven; our role is to connect, sequence, and scale it.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="ask-row" role="img" aria-label="Five connected workstreams, in order.">
+        <div class="item">
+          <div class="num">01</div>
+          <div class="copy"><h3>Platform foundations</h3><p>Global IA, terminology, Living Design, All Campaigns entry point.</p></div>
+        </div>
+        <div class="item">
+          <div class="num">02</div>
+          <div class="copy"><h3>Campaign workflows</h3><p>Sponsored and Display modernization, cross-channel management.</p></div>
+        </div>
+        <div class="item">
+          <div class="num">03</div>
+          <div class="copy"><h3>Seller lifecycle</h3><p>Quick Start, native launch, one-click optimization, return.</p></div>
+        </div>
+        <div class="item">
+          <div class="num">04</div>
+          <div class="copy"><h3>Shared capabilities</h3><p>Notifications, creative, audiences, reporting — once, then inherited.</p></div>
+        </div>
+        <div class="item">
+          <div class="num">05</div>
+          <div class="copy"><h3>Intelligence</h3><p>Recommendation framework, personalized guidance, Marty.</p></div>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">The roadmap is moving from a collection of front-end requests toward five connected workstreams.</aside>
+  </section>
+
+  <section class="slide paper s-timeline s-ls" data-label="Express pod">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Marketplace express pod</span>
+<h2>Recommendations create learning; native launch removes the <em class="mark">barrier</em>.</h2>
+<p class="lede">Four phases, each with an explicit job and an evidence gate before the next one opens. The approved milestones stay intact.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="timeline">
+        <div class="step">
+          <div class="when">1 · Learn · Gate: evidence</div>
+          <h3>Immediate value + evidence</h3>
+          <p>8/21–8/28. Launch budget, then eligible tROAS one-click recommendations in Seller Center.</p>
+        </div>
+        <div class="step">
+          <div class="when">2 · Measure · Gate: outcomes</div>
+          <h3>Attributable outcomes</h3>
+          <p>9/5–9/19. Instrument Activate, Expand + Retain while Quick Start discovery advances in parallel.</p>
+        </div>
+        <div class="step">
+          <div class="when">3 · Convert · Gate: conversion</div>
+          <h3>Confidence + conversion</h3>
+          <p>9/19–9/26. Add forecasting, then launch lightweight Sponsored Search inside Seller Center.</p>
+        </div>
+        <div class="step">
+          <div class="when">4 · Scale · Gate: durable adoption</div>
+          <h3>Durable adoption</h3>
+          <p>Post-pod. Add management, health + next actions; expand only when evidence + CORE governance support it.</p>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">The product strategy makes each phase&#x27;s role explicit and keeps native creation from waiting behind a growing recommendation backlog.</aside>
+  </section>
+
+  <section class="slide paper s-set s-ls" data-label="Transition">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Transition plan</span>
+<h2>Honor commitments, but reassess what comes <em class="mark">next</em>.</h2>
+<p class="lede">Q3 work may already be committed. Where flexibility exists, reshape current initiatives to strengthen shared foundations.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="axes" role="img" aria-label="Four dispositions for in-flight work.">
+        <article>
+          <span class="ord">Continue</span>
+          <h3>Keep moving</h3>
+          <p>Work already committed with clear near-term value.</p>
+        </article>
+        <article>
+          <span class="ord">Reshape</span>
+          <h3>Strengthen the core</h3>
+          <p>Initiatives that can incorporate shared components, IA, or workflow improvements.</p>
+        </article>
+        <article>
+          <span class="ord">Sequence</span>
+          <h3>Wait on foundations</h3>
+          <p>Valuable work that depends on unresolved foundations.</p>
+        </article>
+        <article>
+          <span class="ord">Reconsider</span>
+          <h3>Protect the future</h3>
+          <p>Limited customer impact, low alignment, or high rework risk.</p>
+        </article>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Four dispositions for in-flight work, applied wherever flexibility still exists.</aside>
+  </section>
+
+  <section class="slide paper s-thesis" data-label="Ambition">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Strategic implications</span>
+<h2>Expand the ambition without expanding the near-term <em class="mark">scope</em>.</h2>
+<p class="sub">Unify Walmart Ads first. Build the shared core so Sam’s Club and priority international markets can plug into it later through configuration rather than reinvention.</p>
+<p class="lede">Keep timing explicitly provisional until maturity, dependencies, and migration complexity are assessed.</p>
+      </div>
+      <div class="slide-content">
+      </div>
+    </div>
+    <aside class="notes">The near-term scope stays core Walmart Ads. What changes is how we design for what comes after it.</aside>
+  </section>
+
+  <section class="slide paper s-ls" data-label="Horizons">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Roadmap update</span>
+<h2>Add a future ecosystem expansion <em class="mark">horizon</em>.</h2>
+<p class="lede">Three horizons, with intelligence developing across all of them rather than waiting at the end.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="nest" role="img" aria-label="Three nested horizons with intelligence running across all of them.">
+        <div class="band h1">
+          <div class="when">Horizon 1 · 0–12 months</div>
+          <h3>Simplify the core experience</h3>
+          <p>IA, navigation and terminology, core workflows, Living Design alignment, Creative Hub, reporting and notifications, platform and API mapping.</p>
+        </div>
+        <div class="band h2">
+          <div class="when">Horizon 2 · 12–24 months</div>
+          <h3>Unify the platform</h3>
+          <p>Shared workflow frameworks and components, unified identity and access, common creative, reporting and campaign foundations, UI and API parity.</p>
+        </div>
+        <div class="band h3">
+          <div class="when">Horizon 3 · To be validated</div>
+          <h3>Extend across the ecosystem</h3>
+          <p>Inventory platforms and data, reusable foundations, separate shared-core from market-specific needs, sequenced migration roadmap.</p>
+        </div>
+        <div class="band across">
+          <div class="when">Across all horizons</div>
+          <h3>Intelligence is not a final phase</h3>
+          <p>Recommendations, automation, personalization, Marty, and agentic workflows develop as foundations become available.</p>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Intelligence is not a final phase — it develops progressively as foundations become available.</aside>
+  </section>
+
+  <section class="slide paper s-list s-ls" data-label="Sam’s Club">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Business segment unification</span>
+<h2>Sam’s Club Connect may be the most practical first <em class="mark">extension</em>.</h2>
+<p class="lede">A likely first extension candidate — not a committed first migration. The strategy establishes the option; discovery determines the sequence.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="compare">
+        <div>
+          <div class="kicker">What we need to learn</div>
+          <h3>Discovery before a date</h3>
+          <ul>
+          <li>Which Ad Center services, code, APIs, and components are already shared?</li>
+          <li>How do identity, billing, reporting, measurement, and support differ?</li>
+          <li>What is the future self-service path for Display after Artemis?</li>
+          </ul>
+        </div>
+        <div>
+          <div class="kicker">What would make it first</div>
+          <h3>Config versus distinct work</h3>
+          <ul>
+          <li>Where is configuration enough, and where are distinct workflows required?</li>
+          <li>What customer and advertiser overlap makes integration most valuable?</li>
+          </ul>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">A hypothesis with named discovery questions, not a committed migration or a date.</aside>
+  </section>
+
+  <section class="slide paper s-compare s-ls s-ls-shallow" data-label="International">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Business segment unification</span>
+<h2>Extend Walmart International market by <em class="mark">market</em>.</h2>
+<p class="lede">Platform maturity, regulation, and operating models vary too much for a single global migration.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<p class="assertion">Globally extensible. <em>Locally configurable.</em></p>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Avoid a single global migration — platform maturity, products, data, regulations, and operating models vary substantially.</aside>
+  </section>
+
+  <section class="slide paper s-list s-ls" data-label="Guardrail">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Priority framework update</span>
+<h2>Add ecosystem readiness as a guardrail, not the primary <em class="mark">score</em>.</h2>
+<p class="lede">Current advertiser impact stays the dominant criterion; extensibility prevents avoidable dead ends.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="fromto">
+        <div class="pair"><div class="from">Reusable later?</div><div class="arrw">→</div><div class="to">Could it support Sam’s Club or international markets without a rebuild?</div></div>
+        <div class="pair"><div class="from">Walmart-specific trap?</div><div class="arrw">→</div><div class="to">Does a core-US assumption make broader integration harder?</div></div>
+        <div class="pair"><div class="from">Configurable?</div><div class="arrw">→</div><div class="to">Can it vary by market, channel, advertiser type, or service model?</div></div>
+        <div class="pair"><div class="from">Shared foundations?</div><div class="arrw">→</div><div class="to">Does it strengthen identity, workflow, component, API, data, or intelligence?</div></div>
+        <div class="pair"><div class="from">Rebuild risk?</div><div class="arrw">→</div><div class="to">Would this need to be rebuilt if the platform expands beyond core U.S.?</div></div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Current advertiser impact stays the dominant near-term criterion; ecosystem readiness prevents avoidable dead ends.</aside>
+  </section>
+
+  <section class="slide navy s-chapter" data-label="Operating model">
+    <div class="body">
+      <div class="slide-header">
+<div class="chap-no">Section 06</div>
+<h2>Organize, prioritize, and build <em class="mark">differently</em>.</h2>
+<p class="lede">How we’ll reduce duplication, strengthen ownership, and deliver more consistently across the platform.</p>
+      </div>
+      <div class="slide-content">
+      </div>
+    </div>
+    <aside class="notes">Operating model, not org chart. Charter and engagement model are the meat.</aside>
+  </section>
+
+  <section class="slide paper s-people s-ls" data-label="Team">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Advertiser Experience</span>
+<h2>Accountable for the end-to-end advertiser experience across every Walmart Ads <em class="mark">product</em>.</h2>
+<p class="lede">A horizontal team — not another hallway.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="org">
+        <div class="person lead"><h3>Sarah Scherer</h3><p>Product Director</p></div>
+        <div class="person"><h3>Elysia Chen</h3><p>Advertiser Experience</p></div>
+        <div class="person"><h3>Pratibha Kumar</h3><p>Advertiser Experience</p></div>
+        <div class="person"><h3>Shaily Saigal</h3><p>Advertiser Experience</p></div>
+        <div class="person"><h3>Soumya Mohan</h3><p>Advertiser Experience</p></div>
+        <div class="person"><h3>Brian Chan</h3><p>Advertiser Experience</p></div>
+        <div class="person"><h3>Daania Kalam</h3><p>Advertiser Experience</p></div>
+        <div class="person"><h3>Max Baum</h3><p>Advertiser Experience</p></div>
+        <div class="person"><h3>Niharika Gupta</h3><p>Advertiser Experience</p></div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Name the people, then sit. Charter is the remit, not this slide.</aside>
+  </section>
+
+  <section class="slide paper s-compare s-ls" data-label="Charter">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Team charter</span>
+<h2>A horizontal team in a channel-based <em class="mark">organization</em>.</h2>
+<p class="lede">We are not another hallway. We own the connective layer that makes separate products behave like one platform.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="compare" role="img" aria-label="Channel teams own the domain. Advertiser Experience owns the connective layer.">
+        <div>
+          <div class="kicker">Channel teams</div>
+          <h3>Own the domain</h3>
+          <ul>
+          <li>Sponsored</li>
+          <li>Display</li>
+          <li>DSP</li>
+          <li>Seller Center</li>
+          <li>Offsite / In-Store</li>
+          </ul>
+        </div>
+        <div>
+          <div class="kicker">Advertiser Experience</div>
+          <h3>The connective layer</h3>
+          <ul>
+          <li>End-to-end journey</li>
+          <li>Shared interaction patterns</li>
+          <li>Platform IA and navigation</li>
+          <li>Reusable front-end foundations</li>
+          <li>Cross-channel connections</li>
+          <li>Consistency and usability</li>
+          </ul>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Our remit is not another hallway — we own the connective experience layer that makes products feel like one platform.</aside>
+  </section>
+
+  <section class="slide paper s-ls s-ls-shallow" data-label="Engagement">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Engagement model</span>
+<h2>Bring us in when the capability becomes an advertiser <em class="mark">experience</em>.</h2>
+<p class="lede">Don’t bring Advertiser Experience in to discover the entire initiative. Bring us in early enough to sequence, research, and design the advertiser-facing workflow correctly.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="life" role="img" aria-label="Engagement timing across the product lifecycle.">
+        <article>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="ord">Consult</span>
+          <h3>Business problem</h3>
+          <p>Capability / channel owns strategy. We consult so the journey is sequenced early.</p>
+        </article>
+        <article>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="ord">Stay aware</span>
+          <h3>Architecture + APIs</h3>
+          <p>We do not discover the whole initiative. We shape experience contracts.</p>
+        </article>
+        <article>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="ord">Own</span>
+          <h3>Experience definition</h3>
+          <p>Front-end workflow, research, shared patterns, and cross-platform integration.</p>
+        </article>
+        <article>
+          <span class="dot" aria-hidden="true"></span>
+          <span class="ord">Share</span>
+          <h3>Launch + adoption</h3>
+          <p>Bring us in when the capability becomes an advertiser experience.</p>
+        </article>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Bring us in after the business problem is clear, while the journey, requirements, and reusable patterns can still be shaped.</aside>
+  </section>
+
+  <section class="slide paper s-ls s-ls-shallow" data-label="Foundation">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Build once, reuse everywhere</span>
+<h2>Solve shared problems once for the entire <em class="mark">platform</em>.</h2>
+<p class="lede">Solve it once in the foundation and every hallway inherits it, instead of rebuilding the same thing channel by channel.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="inherit" role="img" aria-label="One shared capability inherited by every hallway.">
+        <div class="cap">One shared capability.</div>
+        <div class="kids">
+          <span>Sponsored</span>
+          <span>Display</span>
+          <span>Seller Center</span>
+          <span>Offsite</span>
+          <span>In-Store</span>
+          <span>Scintilla</span>
+          <span>Future products</span>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Reusable foundations reduce advertiser inconsistency while accelerating every product team that builds on them.</aside>
+  </section>
+
+  <section class="slide navy s-chapter" data-label="Measuring">
+    <div class="body">
+      <div class="slide-header">
+<div class="chap-no">Section 07</div>
+<h2>Measure whether the platform is easier to use and easier to <em class="mark">build</em>.</h2>
+<p class="lede">The outcomes and signals we’ll use to track progress across advertiser experience, platform health, adoption, and business impact.</p>
+      </div>
+      <div class="slide-content">
+      </div>
+    </div>
+    <aside class="notes">Outcomes, not activity. Three families on the next slide.</aside>
+  </section>
+
+  <section class="slide paper s-cols s-ls" data-label="Outcomes">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Outcomes, not output</span>
+<h2>Outcomes, not <em class="mark">output</em>.</h2>
+<p class="lede">Three outcome families — advertiser success, business growth, and delivery speed — not a dashboard of activity metrics.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="cols">
+        <div><h3>Are advertisers succeeding?</h3><ul>
+          <li>Time to complete core tasks</li>
+          <li>Task success</li>
+          <li>Customer effort</li>
+          <li>Workflow abandonment</li>
+          <li>CSAT / NPS</li>
+          <li>Support reliance</li>
+        </ul></div>
+        <div><h3>Is the business growing?</h3><ul>
+          <li>Adoption</li>
+          <li>Retention</li>
+          <li>Budget expansion</li>
+          <li>Cross-product usage</li>
+          <li>New advertiser activation</li>
+        </ul></div>
+        <div><h3>Are teams moving faster?</h3><ul>
+          <li>Shared component adoption</li>
+          <li>Pattern reuse</li>
+          <li>Fewer channel-specific variants</li>
+          <li>Time to launch front-end changes</li>
+          <li>API parity + earlier dependency discovery</li>
+        </ul></div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Three outcome families: are advertisers succeeding, is the business growing, and are teams moving faster?</aside>
+  </section>
+
+  <section class="slide navy s-chapter" data-label="Conditions">
+    <div class="body">
+      <div class="slide-header">
+<div class="chap-no">Section 08</div>
+<h2>What needs to be <em class="mark">true</em>.</h2>
+<p class="lede">The leadership alignment, shared commitments, capabilities, and ways of working required to turn the strategy into sustained execution.</p>
+      </div>
+      <div class="slide-content">
+      </div>
+    </div>
+    <aside class="notes">Five asks, not a recap. Capacity and ownership before more agreement.</aside>
+  </section>
+
+  <section class="slide paper s-ls" data-label="Asks">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">What we need to move forward</span>
+<h2>Five decisions that turn the charter into <em class="mark">delivery</em>.</h2>
+<p class="lede">Before the next planning cycle. Then hold every roadmap review to the same gates.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="ask-row">
+        <div class="item">
+          <div class="num">01</div>
+          <div class="copy"><h3>Confirm the mandate</h3><p>Formalize ownership of the front-end experience layer.</p></div>
+        </div>
+        <div class="item">
+          <div class="num">02</div>
+          <div class="copy"><h3>Protect roadmap capacity</h3><p>Fund foundations and shared capabilities — not only one-off asks.</p></div>
+        </div>
+        <div class="item">
+          <div class="num">03</div>
+          <div class="copy"><h3>Set decision rights</h3><p>Name DRIs, shared owners, escalation paths + one design source.</p></div>
+        </div>
+        <div class="item">
+          <div class="num">04</div>
+          <div class="copy"><h3>Fund measurement + architecture</h3><p>Instrument outcomes and resolve shared-service dependencies early.</p></div>
+        </div>
+        <div class="item">
+          <div class="num">05</div>
+          <div class="copy"><h3>Hold the reuse standard</h3><p>Require common patterns, contracts + adoption plans across hallways.</p></div>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">The strategy now needs operating commitments — not another round of broad agreement without capacity, ownership, or follow-through.</aside>
+  </section>
+
+  <section class="slide navy s-chapter" data-label="Close">
+    <div class="body">
+      <div class="slide-header">
+<div class="chap-no">Section 09</div>
+<h2>A simpler, unified platform is how we compete, scale, and grow.</h2>
+<p class="lede">Two last beats: the opportunity, then the bet.</p>
+      </div>
+      <div class="slide-content">
+      </div>
+    </div>
+    <aside class="notes">Opportunity is the sequence. The bet is why Walmart can win it. Then the ask.</aside>
+  </section>
+
+  <section class="slide paper s-thesis s-ls s-ls-shallow" data-label="Opportunity">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">The opportunity</span>
+<h2>Build less from scratch. Create more value from everything we <em class="mark">build</em>.</h2>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="spine n4" role="img" aria-label="Simplify, unify, connect, differentiate.">
+        <article>
+          <span class="ord">01</span>
+          <h3>Simplify</h3>
+          <p>Remove the translation tax before adding more capability.</p>
+        </article>
+        <article>
+          <span class="ord">02</span>
+          <h3>Unify</h3>
+          <p>One platform layer under every hallway.</p>
+        </article>
+        <article>
+          <span class="ord">03</span>
+          <h3>Connect</h3>
+          <p>Planning, activation, and reporting share one journey.</p>
+        </article>
+        <article>
+          <span class="ord">04</span>
+          <h3>Differentiate</h3>
+          <p>Intelligence becomes an advantage, not another surface to learn.</p>
+        </article>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Don’t reread the title. Gesture Simplify → Unify → Connect → Differentiate, then go.</aside>
+  </section>
+
+  <section class="slide paper s-cols s-ls s-ls-shallow" data-label="The bet">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Why we are positioned to win</span>
+<h2>Experience is the layer that converts assets into <em class="mark">advantage</em>.</h2>
+<p class="lede">No competitor combines first-party commerce data and omnichannel reach at Walmart’s scale. The advertiser experience is the connective layer that turns those assets into adoption, deeper investment, and durable share.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="formula" role="img" aria-label="Walmart assets plus connected experience equals greater value.">
+        <div class="box">
+          <h3>Walmart assets</h3>
+          <p>First-party commerce data, omnichannel reach, closed-loop measurement, Marketplace, DSP + Marty.</p>
+        </div>
+        <div class="op" aria-hidden="true">+</div>
+        <div class="box">
+          <h3>Connected experience</h3>
+          <p>One journey to buy, shared foundations, simplicity and trust, intelligence that explains itself.</p>
+        </div>
+        <div class="op" aria-hidden="true">=</div>
+        <div class="box is-out">
+          <h3>Greater value</h3>
+          <p>Broader adoption, deeper investment, durable share, the category standard.</p>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Market forces and Walmart assets only become advantage if the experience connects them.</aside>
+  </section>
+
+  <section class="slide navy s-close" data-label="Thank you">
+    <div class="body">
+      <div class="slide-header">
+<span class="pill">Closing</span>
+<h1>Unify Walmart Ads <em class="mark">first</em>.</h1>
+<p class="sub">Unify the core, then extend.</p>
+      </div>
+      <div class="slide-content">
+<div class="ask">
+        <div><div class="k">Ask</div><p>Align on the strategy, the operating model, and the sequence</p></div>
+        <div><div class="k">Next</div><p>Fund foundation-first delivery across the four priorities</p></div>
+        <div><div class="k">Until then</div><p>Do not scale new hallways on unresolved foundations</p></div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Close on the ask: align on strategy, operating model, and sequence. Then fund foundation-first delivery. Do not scale new hallways on unresolved foundations.</aside>
+  </section>
+
+  <section class="slide navy s-chapter" data-label="Appendix">
+    <div class="body">
+      <div class="slide-header">
+<div class="chap-no">Section 10</div>
+<h2>The evidence behind the <em class="mark">strategy</em>.</h2>
+<p class="lede">The research, analysis, and supporting detail behind the strategy and its recommendations.</p>
+      </div>
+      <div class="slide-content">
+      </div>
+    </div>
+    <aside class="notes">Stay here only if challenged. Sources first, then Adaptive if they ask about personas.</aside>
+  </section>
+
+  <section class="slide paper s-table s-ls" data-label="Sources">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Supporting data sources</span>
+<h2>Every claim in this deck traces to a named <em class="mark">source</em>.</h2>
+<p class="lede">Industry forecasts, third-party research and first-party advertiser feedback, with the page each one supports.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<table class="tbl">
+        <thead><tr><th scope="col">Source</th><th scope="col">Supports</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://www.emarketer.com/" target="_blank" rel="noopener">eMarketer Forecast, US Commerce Media Ad Spending, June 2026</a></td><td>p.05</td></tr>
+          <tr><td><a href="https://info.koddi.com/hubfs/All%20Commerce%20Media%20Playbook.pdf" target="_blank" rel="noopener">Koddi, The Commerce Media Playbook (Forrester maturity criteria)</a></td><td>p.07</td></tr>
+          <tr><td><a href="https://skai.io/reports-and-whitepapers/2025-state-of-retail-media-report/" target="_blank" rel="noopener">Skai, 2025 State Of Retail Media Report</a></td><td>p.08</td></tr>
+          <tr><td><a href="https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/commerce-media-at-an-inflection-point-how-to-win-with-a-full-stack-approach" target="_blank" rel="noopener">McKinsey, Commerce Media at an Inflection Point</a></td><td>p.09</td></tr>
+          <tr><td><a href="https://koddi.com/resources/programmatic-retail-media-report/" target="_blank" rel="noopener">Koddi, The State Of Programmatic Retail Media 2025</a> · RMN NPS, 34 networks</td><td>p.10</td></tr>
+          <tr><td><a href="https://www.thedrum.com/news/retail-media-s-next-phase-will-be-won-by-differentiation-not-scale" target="_blank" rel="noopener">The Drum, Retail Media’s Next Phase Won by Differentiation</a></td><td>p.11</td></tr>
+          <tr><td>UXR + VOC synthesis: 23 sources, 18 studies, 28,000+ tickets, 20 interviews</td><td>p.13</td></tr>
+          <tr><td>Pendo Feedback: 1,825 records, February 2025–August 2026</td><td>p.15–16</td></tr>
+          <tr><td>Ad Center platform audit: terminology, taxonomy + Living Design</td><td>p.19–20</td></tr>
+          <tr><td><a href="https://hbr.org/2025/09/the-importance-of-trust-and-transparency-in-retail-media-networks" target="_blank" rel="noopener">Harvard Business Review, Trust and Transparency in RMNs, 2025</a></td><td>p.27</td></tr>
+        </tbody>
+      </table>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Don’t read the table. Point at eMarketer and Pendo if someone asks “says who.”</aside>
+  </section>
+
+  <section class="slide paper s-set s-ls s-ls-shallow" data-label="Adaptive">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Adaptive experience framework</span>
+<h2>Advertisers can’t be reduced to a single <em class="mark">persona</em>.</h2>
+<p class="lede">The platform should adapt to customer, service model, role, goal, job, context, and what they will need next.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="stack" role="img" aria-label="The platform adapts across who, how, why, and now.">
+          <div class="exp n4">
+            <div>
+              <h3>Who</h3>
+              <p>Customer + role. Enterprise, mid-market, agency, 3P seller, non-endemic, internal — and media buyer, analyst, executive, account manager.</p>
+            </div>
+            <div>
+              <h3>How</h3>
+              <p>Service model. Self-serve, managed service, hybrid, 3P API, partner integration. Autonomy versus collaboration.</p>
+            </div>
+            <div>
+              <h3>Why</h3>
+              <p>Goal + job. Launch a product, increase ROAS, grow share, acquire customers — then plan, activate, measure, optimize, report.</p>
+            </div>
+            <div>
+              <h3>Now</h3>
+              <p>Context + next. New user, holiday, budget exhausted, declining performance. Recommend the next best action from real behavior.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">This is a framework, not four equal problems. Contrast with Themes: those were the pains.</aside>
+  </section>
+
+  <section class="slide paper s-table s-ls" data-label="Segments">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Customer segments</span>
+<h2>Core segment groups we need to build the right experience <em class="mark">for</em>.</h2>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<table class="tbl">
+        <thead><tr><th scope="col"></th><th scope="col">Enterprise brand</th><th scope="col">Agency</th><th scope="col">3P seller</th><th scope="col">Mid-market</th></tr></thead>
+        <tbody>
+          <tr><td>Who</td><td>National + global brands</td><td>Hold Cos + independents</td><td>Marketplace sellers</td><td>Regional + challenger brands</td></tr>
+          <tr><td>Service</td><td>Agency-represented</td><td>Self-serve / API</td><td>Self-serve</td><td>Self-serve</td></tr>
+          <tr><td>Needs</td><td>Connected planning, advanced measurement</td><td>Multi-account, APIs, bulk</td><td>Simplicity, education, recommendations</td><td>Guided onboarding, automation</td></tr>
+          <tr><td>Pain</td><td>Fragmented workflow, disconnected channels</td><td>Context switching across retailers</td><td>Expertise, confusing setup</td><td>Limited resources, platform complexity</td></tr>
+        </tbody>
+      </table>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Enterprise vs seller is the split they’ll argue. Don’t flatten it.</aside>
+  </section>
+
+  <section class="slide paper s-table s-ls" data-label="Brand map">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Customer segments</span>
+<h2>Brand functional investment <em class="mark">map</em>.</h2>
+<p class="lede">Four functions touch the same platform with different incentives. That is why a connected experience matters.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<table class="tbl">
+        <thead><tr><th scope="col"></th><th scope="col">Leadership</th><th scope="col">Shopper</th><th scope="col">eCommerce</th><th scope="col">Analytics</th></tr></thead>
+        <tbody>
+          <tr><td>Job</td><td>Share, equity, revenue</td><td>Retailer performance, JBP</td><td>Digital shelf, conversion, search</td><td>Attribution, lift, MMM / MTA</td></tr>
+          <tr><td>Budget</td><td>60–80% allocation authority</td><td>40–70% at the retailer</td><td>30–60% in digital-heavy orgs</td><td>Veto on scale decisions</td></tr>
+          <tr><td>Pain</td><td>ROAS ≠ growth. No cross-channel story.</td><td>In-store and digital do not link</td><td>Limited controls. No automation.</td><td>Black-box attribution. Manual pulls.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Every function touches the same platform with different needs.</aside>
+  </section>
+
+  <section class="slide paper s-table s-ls" data-label="Agency map">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Customer segments</span>
+<h2>Agency functional investment <em class="mark">map</em>.</h2>
+<p class="lede">The lead decides which networks scale. Traders move spend weekly. Analytics can veto incrementality.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<table class="tbl">
+        <thead><tr><th scope="col"></th><th scope="col">Commerce media lead</th><th scope="col">Traders</th><th scope="col">Analytics</th></tr></thead>
+        <tbody>
+          <tr><td>Job</td><td>Portfolio, efficiency, which RMNs scale</td><td>Pacing, bids, weekly optimization</td><td>Validation, comparability, models</td></tr>
+          <tr><td>Budget</td><td>50–70% tactical allocation</td><td>40–60% moved week to week</td><td>Veto on scaling</td></tr>
+          <tr><td>Pain</td><td>Managed-service bottlenecks. Non-standard reporting.</td><td>Manual workflows. Limited controls.</td><td>Black-box attribution. Inconsistent definitions.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Automation, interoperability, and clean data are what earn agency allocation.</aside>
+  </section>
+
+  <section class="slide paper s-table s-ls" data-label="Sellers">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Customer segments</span>
+<h2>3P sellers — the self-serve growth <em class="mark">segment</em>.</h2>
+<p class="lede">Largest account population. No agency. No analysts. Usability is what grows spend.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<table class="tbl">
+        <thead><tr><th scope="col"></th><th scope="col">Small business</th><th scope="col">Mid-market</th><th scope="col">Brand-owner</th><th scope="col">Seller agencies</th></tr></thead>
+        <tbody>
+          <tr><td>Who</td><td>Largest account population</td><td>Scaling spend</td><td>1P + 3P hybrid</td><td>Aggregators</td></tr>
+          <tr><td>Invest</td><td>Sponsored Products, automatic campaigns</td><td>Sponsored + Onsite Display</td><td>Sponsored, Display, offsite tests</td><td>Auction environments, bulk across accounts</td></tr>
+          <tr><td>Need</td><td>Guided setup, simple ROAS, low minimums</td><td>Bulk tools, rule-based automation, pacing</td><td>Unified 1P + 3P view, brand controls</td><td>Multi-account, API, bulk editing</td></tr>
+          <tr><td>Pain</td><td>Complexity / jargon; no time; no dedicated support</td><td>Manual optimization; shallow reporting</td><td>Split Seller Center + Ad Center</td><td>No portfolio view; repetitive manual work</td></tr>
+        </tbody>
+      </table>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Self-serve sellers are the largest population of advertiser accounts on Walmart — the segment where platform usability most directly determines whether spend grows.</aside>
+  </section>
+
+  <section class="slide paper s-compare s-ls" data-label="Checklist">
+    <div class="body">
+      <div class="slide-header">
+<span class="eyebrow">Tracking checklist</span>
+<h2>Decisions and unknowns to resolve before committing to <em class="mark">timing</em>.</h2>
+<p class="lede">Treat the current one-to-three year estimate as an internal hypothesis, not a published commitment.</p>
+      </div>
+      <div class="slide-content">
+<div class="slide-content-inner">
+<div class="compare">
+        <div>
+          <div class="kicker">Sam’s Club Connect</div>
+          <h3>Confirm before sequencing</h3>
+          <ul>
+          <li>Confirm Ad Center architecture + shared services</li>
+          <li>Document Sponsored capabilities + roadmap</li>
+          <li>Validate Artemis migration status + managed-service model</li>
+          <li>Assess identity, access, billing, reporting, + measurement</li>
+          <li>Identify integration value + advertiser overlap</li>
+          <li>Estimate migration complexity + sequencing options</li>
+          </ul>
+        </div>
+        <div>
+          <div class="kicker">Walmart International</div>
+          <h3>Waves, not a global timeline</h3>
+          <ul>
+          <li>Inventory active markets + advertising platforms</li>
+          <li>Map channel + self-service maturity by market</li>
+          <li>Document regulatory, privacy, data-residency, + localization</li>
+          <li>Identify shared-core reuse + market-specific gaps</li>
+          <li>Assess business value, readiness, + ownership by market</li>
+          <li>Develop candidate waves rather than a single global timeline</li>
+          </ul>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">Use future horizon; timing to be validated until discovery supports a defensible range.</aside>
+  </section>
+
+</div>
+</div>
+<script>
+  const stage = document.getElementById("stage");
+  const slides = Array.from(document.querySelectorAll(".slide"));
+  const toc = document.getElementById("toc");
+  const tocFill = document.getElementById("tocFill");
+  const pagenum = document.getElementById("pagenum");
+
+  const gotoBox = document.getElementById("goto");
+  const gotoNum = document.getElementById("gotoNum");
+  const pagerEl = document.querySelector(".pager");
+  function openGoto() {
+    pagerEl.classList.add("is-goto");
+    gotoBox.hidden = false;
+    gotoNum.value = String(current + 1);
+    gotoNum.focus();
+    gotoNum.select();
+  }
+  function closeGoto() {
+    pagerEl.classList.remove("is-goto");
+    gotoBox.hidden = true;
+  }
+  function commitGoto() {
+    const n = parseInt(gotoNum.value.replace(/[^\d]/g, ""), 10);
+    closeGoto();
+    if (Number.isFinite(n)) show(n - 1);
+  }
+  pagenum.addEventListener("click", (e) => { e.stopPropagation(); openGoto(); });
+  gotoNum.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") { e.preventDefault(); commitGoto(); }
+    if (e.key === "Escape") { e.preventDefault(); closeGoto(); pagenum.focus(); }
+  });
+  gotoNum.addEventListener("blur", () => { setTimeout(closeGoto, 80); });
+  const spark = document.getElementById("spark");
+  const prevBtn = document.getElementById("prev");
+  const nextBtn = document.getElementById("next");
+  const buildCue = document.getElementById("buildCue");
+  let current = 0;
+  let enterTl = null;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const total = slides.length;
+
+
+  const SECTIONS = [
+    { id: "01", label: "Market shift", start: 3, end: 10 },
+    { id: "02", label: "Where we are today", start: 11, end: 20 },
+    { id: "03", label: "Our vision", start: 21, end: 26 },
+    { id: "04", label: "Strategic reset", start: 27, end: 37 },
+    { id: "05", label: "Roadmap", start: 38, end: 46 },
+    { id: "06", label: "Operating model", start: 47, end: 51 },
+    { id: "07", label: "Measuring success", start: 52, end: 53 },
+    { id: "08", label: "What needs to be true", start: 54, end: 55 },
+    { id: "09", label: "Closing", start: 56, end: 59 },
+    { id: "10", label: "Appendix", start: 60, end: 67 }
+  ];
+  const LIVE_END = 59;
+  SECTIONS.forEach((sec) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.dataset.s = String(sec.start);
+    btn.setAttribute("aria-label", sec.id + " " + sec.label);
+    btn.innerHTML = "<i></i><span class=\"toc-l\">" + sec.id + "  " + sec.label + "</span>";
+    btn.addEventListener("click", (e) => { e.stopPropagation(); show(sec.start); });
+    toc.appendChild(btn);
+  });
+  const tocBtns = Array.from(toc.querySelectorAll("button"));
+
+
+  function fit() {
+    const dock = document.body.classList.contains("is-review") ? Math.min(400, window.innerWidth * 0.36) : 0;
+    const scale = Math.min((window.innerWidth - dock) / 1920, window.innerHeight / 1080);
+    const x = ((window.innerWidth - dock) - 1920 * scale) / 2;
+    const y = (window.innerHeight - 1080 * scale) / 2;
+    stage.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+  }
+  window.ADXFit = fit;
+  window.addEventListener("resize", fit);
+  fit();
+
+  let buildStep = 0;
+
+  function buildEls(slide) {
+    return Array.from(slide.querySelectorAll("[data-build]"));
+  }
+  function maxBuild(slide) {
+    const els = buildEls(slide);
+    if (!els.length) return 0;
+    return Math.max.apply(null, els.map((el) => Number(el.dataset.build) || 0));
+  }
+  function revealBuild(slide, n) {
+    buildEls(slide).filter((el) => Number(el.dataset.build) === n).forEach((el) => {
+      el.classList.add("is-on");
+    });
+  }
+  function resetBuilds(slide) {
+    const max = maxBuild(slide);
+    for (let n = 1; n <= max; n++) revealBuild(slide, n);
+    buildStep = max;
+    syncBuildCue();
+  }
+  function forward() {
+    if (current === LIVE_END) return;
+    show(current + 1);
+  }
+  function back() {
+    show(current - 1);
+  }
+
+  function resetSlide(slide) {
+    const fig = slide.querySelector(".figure[data-count]");
+    if (fig) fig.textContent = "~" + fig.dataset.count + "%";
+    resetBuilds(slide);
+  }
+
+  const measuring = () => stage.classList.contains("show-measure");
+
+  function stageBox(el) {
+    const sr = stage.getBoundingClientRect();
+    const r = el.getBoundingClientRect();
+    const sx = 1920 / sr.width;
+    const sy = 1080 / sr.height;
+    return {
+      x: (r.left - sr.left) * sx,
+      y: (r.top - sr.top) * sy,
+      w: r.width * sx,
+      h: r.height * sy
+    };
+  }
+
+  function updateMeasure() {
+    const layer = document.getElementById("measure");
+    if (!measuring() || !layer) return;
+    layer.innerHTML = "";
+    const slide = slides[current];
+    const els = Array.from(slide.querySelectorAll(".pill, h1, h2, .sub, .lede, blockquote, .figure, .source"));
+    const boxes = els.map((el) => {
+      const b = stageBox(el);
+      const cs = getComputedStyle(el);
+      const name = el.classList.contains("pill") ? "pill"
+        : el.tagName === "H1" ? "h1"
+        : el.tagName === "H2" ? "h2"
+        : el.classList.contains("sub") ? "sub"
+        : el.classList.contains("lede") ? "lede"
+        : el.tagName === "BLOCKQUOTE" ? "quote"
+        : el.classList.contains("figure") ? "stat"
+        : el.classList.contains("source") ? "source"
+        : el.tagName.toLowerCase();
+      return { ...b, name, size: Math.round(parseFloat(cs.fontSize)) };
+    });
+    boxes.forEach((b, i) => {
+      const box = document.createElement("div");
+      box.className = "m-box";
+      box.style.cssText = `left:${b.x}px;top:${b.y}px;width:${b.w}px;height:${b.h}px`;
+      const tag = document.createElement("span");
+      tag.className = "m-tag";
+      tag.textContent = `${b.name}  ${b.size}px  ${Math.round(b.w)}w`;
+      box.appendChild(tag);
+      layer.appendChild(box);
+      if (i === 0) return;
+      const prev = boxes[i - 1];
+      const gap = Math.round(b.y - (prev.y + prev.h));
+      if (gap < 4 || gap > 120) return;
+      const g = document.createElement("div");
+      g.className = "m-gap";
+      g.style.cssText = `left:${Math.max(88, Math.min(prev.x, b.x) - 22)}px;top:${prev.y + prev.h}px;height:${gap}px`;
+      g.innerHTML = `<span>${gap}</span>`;
+      layer.appendChild(g);
+    });
+  }
+
+  function enterTargets() {
+    return "h1, h2, .sub, .lede, .pill, .eyebrow, .chap-no, .row, .card, .metric, .step, .item, .person, .node, .anatomy .cell, .principles article, .ev, .spine article, .burden .layer, .paths .stop, .equation .box, .trust-sys .pair, .stack .exp div, .inherit .kids span, .chain article, .hero-metric .hero, .hero-metric .metric, .root-split article, .say .from, .spectrum > div, .axes article, .loop article, .nest .band, .life article, .formula .box, .ask-row .item, .now-reuse article, .fromto .pair, .pull, .quote-grid q, .screen, .org .person, .chip-groups > div, .cols > div, .seq-block, .chips, .ask > div, blockquote, .figure, .tbl, .assertion";
+  }
+  function settleEnter(slide) {
+    if (!slide || typeof gsap === "undefined") return;
+    gsap.killTweensOf(slide.querySelectorAll("*"));
+    gsap.set(slide.querySelectorAll(enterTargets()), { autoAlpha: 1, y: 0, clearProps: "transform,opacity,visibility" });
+  }
+  function playEnter(slide) {
+    if (enterTl) enterTl.kill();
+    const fig = slide.querySelector(".figure[data-count]");
+    if (measuring() || reduce || typeof gsap === "undefined") {
+      if (fig) fig.textContent = "~" + fig.dataset.count + "%";
+      settleEnter(slide);
+      if (measuring()) requestAnimationFrame(updateMeasure);
+      return;
+    }
+    const tl = gsap.timeline({ defaults: { ease: "expo.out", duration: 0.72 } });
+    enterTl = tl;
+    const rows = Array.from(slide.querySelectorAll(".row"));
+    const cards = Array.from(slide.querySelectorAll(".card, .metric, .step, .item, .person, .node, .anatomy .cell, .principles article, .ev, .spine article, .burden .layer, .paths .stop, .equation .box, .trust-sys .pair, .stack .exp div, .inherit .kids span, .chain article, .hero-metric .hero, .hero-metric .metric, .root-split article, .axes article, .loop article, .nest .band, .life article, .formula .box, .now-reuse article, .fromto .pair, .pull, .quote-grid q, .screen, .org .person, .chip-groups > div, .cols > div, .seq-block, .chips, .tbl, .assertion"));
+    const asks = Array.from(slide.querySelectorAll(".ask > div"));
+    const quote = slide.querySelector("blockquote");
+    const pill = slide.querySelector(".pill, .eyebrow, .chap-no");
+    const chap = slide.querySelector(".chap-no");
+    const sub = slide.querySelector(".sub");
+    const lede = slide.querySelector(".lede");
+    if (pill) tl.fromTo(pill, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 0.05);
+    if (chap) tl.fromTo(chap, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 0.05);
+    /* Titles stay visible. Enter motion is for stage content, not every headline. */
+    if (quote) tl.fromTo(quote, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.85 }, 0.1);
+    if (sub) tl.fromTo(sub, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.55 }, 0.28);
+    if (lede) tl.fromTo(lede, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 0.36);
+    if (rows.length) tl.fromTo(rows, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.035 }, 0.1);
+    if (cards.length) tl.fromTo(cards, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.05 }, 0.1);
+    if (asks.length) tl.fromTo(asks, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.07 }, 0.28);
+    if (fig) {
+      const end = Number(fig.dataset.count) || 0;
+      const proxy = { v: 0 };
+      fig.textContent = "~0%";
+      tl.fromTo(fig, { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.55 }, 0.06);
+      tl.to(proxy, {
+        v: end, duration: 1.1, ease: "expo.out",
+        onUpdate() { fig.textContent = "~" + Math.round(proxy.v) + "%"; }
+      }, 0.12);
+    }
+  }
+
+
+  const notesPanel = document.getElementById("notesPanel");
+  function syncBuildCue() {
+    if (!buildCue) return;
+    buildCue.hidden = true;
+    buildCue.textContent = "";
+  }
+  function syncNotes(i) {
+    const n = slides[i].querySelector("aside.notes");
+    const text = n ? n.textContent.trim() : "";
+    notesPanel.textContent = text;
+    notesPanel.hidden = !stage.classList.contains("show-notes") || !text;
+  }
+  function syncChrome(i) {
+    const slide = slides[i];
+    const navy = slide.classList.contains("navy");
+    stage.dataset.theme = navy ? "navy" : "paper";
+    spark.src = navy ? "logos/spark-white.svg" : "logos/spark-everyday-blue.svg";
+    pagenum.textContent = String(i + 1).padStart(2, "0") + " / " + String(total).padStart(2, "0");
+    prevBtn.disabled = i === 0;
+    nextBtn.disabled = i === LIVE_END || i === total - 1;
+    syncBuildCue();
+    const secIdx = SECTIONS.findIndex((s) => i >= s.start && i <= s.end);
+    tocBtns.forEach((b, idx) => {
+      b.classList.toggle("is-current", idx === secIdx);
+      if (idx === secIdx) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current");
+      b.classList.toggle("is-done", secIdx >= 0 && idx < secIdx);
+    });
+    const t = total === 1 ? 1 : i / (total - 1);
+    tocFill.style.height = "calc(8px + " + (t * 100) + "% - 16px)";
+  }
+
+  function show(i) {
+    i = Math.max(0, Math.min(total - 1, i));
+    if (i === current && slides[i].classList.contains("active") && enterTl) return;
+    if (enterTl) enterTl.kill();
+    settleEnter(slides[current]);
+    slides[current].classList.remove("active");
+    resetSlide(slides[i]);
+    slides[i].classList.add("active");
+    current = i;
+    syncChrome(i);
+    playEnter(slides[i]);
+    syncNotes(i);
+    if (window.ADXReview) window.ADXReview.onShow(i);
+    const url = new URL(location.href);
+    url.searchParams.set("s", String(i));
+    history.replaceState(null, "", url);
+  }
+
+  prevBtn.addEventListener("click", (e) => { e.stopPropagation(); back(); });
+  nextBtn.addEventListener("click", (e) => { e.stopPropagation(); forward(); });
+
+  const sectionSlides = Object.fromEntries(SECTIONS.map((s) => [s.id, s.start]));
+  document.querySelectorAll(".s-map .row").forEach((row) => {
+    row.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const target = sectionSlides[row.dataset.section];
+      if (typeof target === "number") show(target);
+    });
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.target && e.target.closest && e.target.closest(".review-dock")) return;
+    if (e.target && e.target.matches && e.target.matches("input, textarea, select")) return;
+    if (e.key === "j" || e.key === "J") {
+      e.preventDefault();
+      openGoto();
+      return;
+    }
+    if (e.key === "n" || e.key === "N") {
+      stage.classList.toggle("show-notes");
+      syncNotes(current);
+      return;
+    }
+    if (e.key === "g" || e.key === "G") {
+      stage.classList.toggle("show-grid");
+      return;
+    }
+    if (e.key === "m" || e.key === "M") {
+      stage.classList.toggle("show-measure");
+      if (measuring()) {
+        if (enterTl) enterTl.kill();
+        settleEnter(slides[current]);
+        resetSlide(slides[current]);
+        requestAnimationFrame(updateMeasure);
+      }
+      return;
+    }
+    if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); forward(); }
+    else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); back(); }
+    else if (e.key === "Home") { e.preventDefault(); show(0); }
+    else if (e.key === "End") { e.preventDefault(); show(total - 1); }
+  });
+
+  const params = new URLSearchParams(location.search);
+  const start = Number(params.get("s") || 0);
+  current = start;
+  slides.forEach((s, idx) => s.classList.toggle("active", idx === start));
+  syncChrome(start);
+  syncNotes(start);
+  if (params.has("measure") || params.get("m") === "1") {
+    stage.classList.add("show-measure", "show-grid");
+  }
+  const boot = () => {
+    resetBuilds(slides[start]);
+    playEnter(slides[start]);
+    if (measuring()) requestAnimationFrame(updateMeasure);
+  };
+  const startBoot = () => {
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(boot);
+    else boot();
+  };
+  if (typeof gsap === "undefined") {
+    const gsapScript = document.querySelector("script[src*='gsap']");
+    if (gsapScript) gsapScript.addEventListener("load", startBoot);
+    else startBoot();
+  } else {
+    startBoot();
+  }
+  window.addEventListener("resize", () => { if (measuring()) updateMeasure(); });
+</script>
+<script src="review.js"></script>
+<script src="layout-system.js"></script>
+</body>
+</html>
