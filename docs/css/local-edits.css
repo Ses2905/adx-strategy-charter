@@ -394,3 +394,67 @@
 .slide[data-label="Argument"] div.body > div.slide-header:nth-of-type(1) > span.eyebrow {
   margin-top: 74px;
 }
+
+/* ===== Editor save 2026-09-20 04:34 ===== */
+
+/* SLIDE 1 · Cover · eyebrow · opacity */
+.slide[data-label="Cover"] .eyebrow {
+  opacity: 1;
+}
+
+/* ===== Editor save 2026-09-20 04:50 ===== */
+
+/* SLIDE 3 · Argument · element · margin-top */
+.slide[data-label="Argument"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.arg-path {
+  margin-top: 80px;
+}
+
+/* SLIDE 3 · Argument · element · margin-bottom */
+.slide[data-label="Argument"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.arg-path {
+  margin-bottom: 0px;
+}
+
+/* SLIDE 3 · Argument · element · row-gap */
+.slide[data-label="Argument"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.arg-path {
+  row-gap: 58px;
+}
+
+/* SLIDE 3 · Argument · eyebrow · margin-top */
+.slide[data-label="Argument"] div.body > div.slide-header:nth-of-type(1) > span.eyebrow {
+  margin-top: 74px;
+}
+
+/* SLIDE 5 · Forecast · chart · visibility */
+.slide[data-label="Forecast"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.forecast {
+  visibility: visible;
+}
+
+/* SLIDE 5 · Forecast · body · margin-top */
+.slide[data-label="Forecast"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.forecast > p.imply {
+  margin-top: 26px;
+}
+
+/* SLIDE 3 · Argument · eyebrow · width */
+.slide[data-label="Argument"] div.body > div.slide-header:nth-of-type(1) > span.eyebrow {
+  width: 144px;
+}
+
+/* SLIDE 3 · Argument · eyebrow · letter-spacing */
+.slide[data-label="Argument"] div.body > div.slide-header:nth-of-type(1) > span.eyebrow {
+  letter-spacing: 1.8px;
+}
+
+/* SLIDE 3 · Argument · eyebrow · align-self */
+.slide[data-label="Argument"] div.body > div.slide-header:nth-of-type(1) > span.eyebrow {
+  align-self: flex-start;
+}
+
+/* SLIDE 3 · Argument · eyebrow · text-align */
+.slide[data-label="Argument"] div.body > div.slide-header:nth-of-type(1) > span.eyebrow {
+  text-align: left;
+}
+
+/* SLIDE 3 · Argument · eyebrow · margin-inline-start */
+.slide[data-label="Argument"] div.body > div.slide-header:nth-of-type(1) > span.eyebrow {
+  margin-inline-start: 0px;
+}

@@ -3145,12 +3145,83 @@
     width: 10px;
     height: 10px;
   }
+
+  .fn {
+    display: inline;
+    margin-inline-start: 1px;
+  }
+  .fn-n {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: var(--true);
+    text-decoration: none;
+    vertical-align: super;
+    cursor: pointer;
+  }
+  .fn-n:hover,
+  .fn:focus-within .fn-n {
+    text-decoration: underline;
+  }
+  .fn-src {
+    display: none;
+  }
+  .slide[data-label="Sources"] tr.is-cite td {
+    color: var(--true);
+    background: #D7EEF9;
+  }
+  .slide[data-label="Sources"] .tbl .cite-n {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--true);
+    width: 3em;
+  }
+  #cite-float {
+    position: fixed;
+    z-index: 10000;
+    display: none;
+    width: max-content;
+    max-width: 300px;
+    padding: 10px 12px 12px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    font-family: var(--ui);
+    font-size: 13px;
+    line-height: 1.35;
+    color: var(--ink);
+    text-align: left;
+  }
+  #cite-float a {
+    color: var(--true);
+    text-decoration: none;
+    display: block;
+  }
+  #cite-float a:hover {
+    text-decoration: underline;
+  }
+  #cite-float .fn-app {
+    margin-top: 5px;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  #cite-float .fn-app:hover {
+    color: var(--true);
+    text-decoration: none;
+  }
 </style>
 <link rel="stylesheet" href="editor.css" />
 <link rel="stylesheet" href="css/local-edits.css" />
 </head>
 <body>
 <div class="viewport">
+<div id="cite-float" hidden></div>
 <div class="stage" id="stage" data-theme="navy">
 
 
@@ -3185,7 +3256,7 @@
       <div class="slide-header">
 <span class="eyebrow">Content map</span>
 <h2>The narrative at a <em class="mark">glance</em>.</h2>
-<p class="lede">Ten sections, from the market shift through the operating model to what needs to be <em class="mark">true</em>.</p>
+<p class="lede"></p>
       </div>
       <div class="slide-content">
 <div>
@@ -3211,8 +3282,8 @@
     <div class="body">
       <div class="slide-header">
 <span class="eyebrow">Executive summary</span>
-<h2>The next era is won on <em class="mark">experience</em>, not more ad products.</h2>
-<p class="lede">Simplify, unify, and connect core Walmart Ads first. Then differentiate — and extend those foundations to Sam’s Club and International through configuration, not another rebuild.</p>
+<h2>Winning the next era in Commerce Media requires a different playbook.&nbsp;&nbsp;</h2>
+<p class="lede">Advertiser expectations are rising, but fragmented foundations and complex workflows limit our ability to innovate, scale, and differentiate. To compete in the next era, we must simplify and unify the core Walmart Ads experience, modernize the platform, and build shared foundations that can extend to Sam’s Club and Walmart International over time.&nbsp;</p>
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
@@ -3221,13 +3292,13 @@
           <span class="ord" aria-hidden="true">01</span>
           <div class="kicker">01</div>
           <h3>Simplify</h3>
-          <p>Make sophisticated work feel simple. Remove the translation tax before adding more capability.</p>
+          <p>Advertisers increasingly expect platforms that are easier to use, faster to navigate, and more effective.·</p>
         </article>
         <article>
           <span class="ord" aria-hidden="true">02</span>
           <div class="kicker">02</div>
           <h3>Unify</h3>
-          <p>One platform layer under every hallway, so each launch starts further ahead.</p>
+          <p>One platform layer under every hallway, so each launch starts further ahead.·</p>
         </article>
         <article>
           <span class="ord" aria-hidden="true">03</span>
@@ -3239,7 +3310,7 @@
           <span class="ord" aria-hidden="true">04</span>
           <div class="kicker">04</div>
           <h3>Differentiate</h3>
-          <p>Once the journey holds, intelligence becomes an advantage instead of another surface to learn.</p>
+          <p>Once the journey holds, intelligence becomes an advantage instead of another surface to learn.·</p>
         </article>
       </div>
       </div>
@@ -3266,7 +3337,7 @@
       <div class="slide-header">
 <span class="eyebrow">Industry maturity</span>
 <h2>Growth is table stakes. Experience is the remaining <em class="mark">advantage</em>.</h2>
-<p class="lede">U.S. commerce-media spend climbs to ~$142B by 2030 — +70% from 2026.</p>
+<p class="lede">U.S. commerce-media spend climbs to ~$142B by 2030 — +70% from 2026.<span class="fn"><a class="fn-n" href="https://www.emarketer.com/" target="_blank" rel="noopener noreferrer">1</a><span class="fn-src"><a href="https://www.emarketer.com/" target="_blank" rel="noopener noreferrer">eMarketer Forecast, US Commerce Media Ad Spending, June 2026</a><a class="fn-app" href="#cite-1">Sources · 1</a></span></span></p>
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
@@ -3295,7 +3366,6 @@
         </svg>
       </figure>
 <p class="imply">As capabilities become table stakes, competition crosses from expansion to experience.</p>
-<div class="source"><a href="https://www.emarketer.com/" target="_blank" rel="noopener">eMarketer Forecast, US Commerce Media Ad Spending, June 2026</a></div>
       </div>
       </div>
       </div>
@@ -3440,32 +3510,28 @@
 <div class="ls-group">
 <div class="evidence" role="img" aria-label="Four independent evidence points. Different measures, questions, and sources.">
         <article>
-          <div class="n">80%</div>
+          <div class="n">80%<span class="fn"><a class="fn-n" href="https://koddi.com/resources/programmatic-retail-media-report/" target="_blank" rel="noopener noreferrer">4</a><span class="fn-src"><a href="https://koddi.com/resources/programmatic-retail-media-report/" target="_blank" rel="noopener noreferrer">Koddi, The State Of Programmatic Retail Media 2025</a><a class="fn-app" href="#cite-4">Sources · 4</a></span></span></div>
           <div class="unit">Share of respondents</div>
           <h3>Experience</h3>
           <p>Would shift more budget when buying is simpler and inventory is accessible.</p>
-          <p class="cite"><a href="https://koddi.com/resources/programmatic-retail-media-report/" target="_blank" rel="noopener">Koddi, 2025</a></p>
         </article>
         <article>
-          <div class="n">−20</div>
+          <div class="n">−20<span class="fn"><a class="fn-n fn-app" href="#cite-5">5</a><span class="fn-src"><span>RMN NPS, 34 networks</span><a class="fn-app" href="#cite-5">Sources · 5</a></span></span></div>
           <div class="unit">Industry NPS</div>
           <h3>Trust</h3>
           <p>Industry NPS across 34 networks. Advocacy is weak where the work is hard.</p>
-          <p class="cite">RMN NPS</p>
         </article>
         <article>
-          <div class="n">93%</div>
+          <div class="n">93%<span class="fn"><a class="fn-n" href="https://koddi.com/resources/programmatic-retail-media-report/" target="_blank" rel="noopener noreferrer">4</a><span class="fn-src"><a href="https://koddi.com/resources/programmatic-retail-media-report/" target="_blank" rel="noopener noreferrer">Koddi, The State Of Programmatic Retail Media 2025</a><a class="fn-app" href="#cite-4">Sources · 4</a></span></span></div>
           <div class="unit">Share of respondents</div>
           <h3>Adoption</h3>
           <p>DSP access would move some or significant non-retail media into retail media.</p>
-          <p class="cite"><a href="https://koddi.com/resources/programmatic-retail-media-report/" target="_blank" rel="noopener">Koddi, 2025</a></p>
         </article>
         <article>
-          <div class="n">50%</div>
+          <div class="n">50%<span class="fn"><a class="fn-n" href="https://skai.io/reports-and-whitepapers/2025-state-of-retail-media-report/" target="_blank" rel="noopener noreferrer">6</a><span class="fn-src"><a href="https://skai.io/reports-and-whitepapers/2025-state-of-retail-media-report/" target="_blank" rel="noopener noreferrer">Skai, 2025 State Of Retail Media Report</a><a class="fn-app" href="#cite-6">Sources · 6</a></span></span></div>
           <div class="unit">Share of respondents</div>
           <h3>Investment</h3>
           <p>Expect to consolidate spend across fewer networks. Simplicity decides the next dollar.</p>
-          <p class="cite"><a href="https://skai.io/reports-and-whitepapers/2025-state-of-retail-media-report/" target="_blank" rel="noopener">Skai, 2025</a></p>
         </article>
       </div>
       </div>
@@ -3549,7 +3615,7 @@
       <div class="slide-header">
 <span class="eyebrow">UXR + VOC research</span>
 <h2>Every research source points to the same five <em class="mark">themes</em>.</h2>
-<p class="sub">Across 23 research inputs, 18 studies, 28,000+ support tickets, and 20 stakeholder interviews, the same five themes consistently emerge.</p>
+<p class="sub">Across 23 research inputs, 18 studies, 28,000+ support tickets, and 20 stakeholder interviews, the same five themes consistently emerge.<span class="fn"><a class="fn-n fn-app" href="#cite-8">8</a><span class="fn-src"><span>UXR + VOC synthesis: 23 sources, 18 studies, 28,000+ tickets, 20 interviews</span><a class="fn-app" href="#cite-8">Sources · 8</a></span></span></p>
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
@@ -3621,7 +3687,7 @@
       <div class="slide-header">
 <span class="eyebrow">The advertiser signal</span>
 <h2>Persistent friction is eroding both experience and perceived <em class="mark">value</em>.</h2>
-<p class="lede">Across 1,825 feedback records, dissatisfaction spans usability, control, reporting confidence, reliability and performance — with no sustained improvement.</p>
+<p class="lede">Across 1,825 feedback records, dissatisfaction spans usability, control, reporting confidence, reliability and performance — with no sustained improvement.<span class="fn"><a class="fn-n fn-app" href="#cite-9">9</a><span class="fn-src"><span>Pendo Feedback, 1,825 records, February 2025–August 2026</span><a class="fn-app" href="#cite-9">Sources · 9</a></span></span></p>
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
@@ -3648,7 +3714,7 @@
           <p>How they rate the experience tracks whether they believe it works.</p>
         </div>
       </div>
-<div class="source">Pendo Feedback, 1,825 Records, February 2025-August 2026</div>
+      </div>
       </div>
       </div>
       </div>
@@ -3795,7 +3861,7 @@
       <div class="slide-header">
 <span class="eyebrow">Platform audit findings</span>
 <h2>Advertisers should not have to translate Walmart to use <em class="mark">Walmart</em>.</h2>
-<p class="lede">Ad Center presents channels, buying methods, statuses, service models and internal systems as equivalent choices. Language is part of the product.</p>
+<p class="lede">Ad Center presents channels, buying methods, statuses, service models and internal systems as equivalent choices. Language is part of the product.<span class="fn"><a class="fn-n fn-app" href="#cite-10">10</a><span class="fn-src"><span>Ad Center platform audit: terminology, taxonomy + Living Design</span><a class="fn-app" href="#cite-10">Sources · 10</a></span></span></p>
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
@@ -4132,7 +4198,7 @@
       <div class="slide-header">
 <span class="eyebrow">Product imperative</span>
 <h2>Every interaction either builds trust or reinforces <em class="mark">skepticism</em>.</h2>
-<p class="lede">Trust is built or spent in ordinary moments: a recommendation without a rationale, a metric that changes meaning, an automation that removes control.</p>
+<p class="lede">Trust is built or spent in ordinary moments: a recommendation without a rationale, a metric that changes meaning, an automation that removes control.<span class="fn"><a class="fn-n" href="https://hbr.org/2025/09/the-importance-of-trust-and-transparency-in-retail-media-networks" target="_blank" rel="noopener noreferrer">11</a><span class="fn-src"><a href="https://hbr.org/2025/09/the-importance-of-trust-and-transparency-in-retail-media-networks" target="_blank" rel="noopener noreferrer">Harvard Business Review, The Importance Of Trust And Transparency In Retail Media Networks, 2025</a><a class="fn-app" href="#cite-11">Sources · 11</a></span></span></p>
       </div>
       <div class="slide-content">
 <div class="slide-content-inner">
@@ -4143,7 +4209,7 @@
         <div class="pair"><div class="from">Metric</div><div class="arrw">→</div><div class="to">Consistency</div></div>
         <div class="pair"><div class="from">Optimization</div><div class="arrw">→</div><div class="to">Transparency</div></div>
       </div>
-<div class="source"><a href="https://hbr.org/2025/09/the-importance-of-trust-and-transparency-in-retail-media-networks" target="_blank" rel="noopener">Harvard Business Review, The Importance Of Trust And Transparency In Retail Media Networks, 2025</a></div>
+</div>
       </div>
 </div>
       </div>
@@ -5331,7 +5397,7 @@
     <aside class="notes">Stay here only if challenged. Sources first, then Adaptive if they ask about personas.</aside>
   </section>
 
-  <section class="slide paper s-table s-ls" data-label="Sources">
+  <section class="slide paper s-table s-ls s-dense" data-label="Sources">
     <div class="body">
       <div class="slide-header">
 <span class="eyebrow">Supporting data sources</span>
@@ -5341,18 +5407,19 @@
       <div class="slide-content">
 <div class="slide-content-inner">
 <table class="tbl">
-        <thead><tr><th scope="col">Source</th><th scope="col">Supports</th></tr></thead>
+        <thead><tr><th scope="col">#</th><th scope="col">Source</th><th scope="col">Supports</th></tr></thead>
         <tbody>
-          <tr><td><a href="https://www.emarketer.com/" target="_blank" rel="noopener">eMarketer Forecast, US Commerce Media Ad Spending, June 2026</a></td><td>p.05</td></tr>
-          <tr><td><a href="https://info.koddi.com/hubfs/All%20Commerce%20Media%20Playbook.pdf" target="_blank" rel="noopener">Koddi, The Commerce Media Playbook (Forrester maturity criteria)</a></td><td>p.07</td></tr>
-          <tr><td><a href="https://skai.io/reports-and-whitepapers/2025-state-of-retail-media-report/" target="_blank" rel="noopener">Skai, 2025 State Of Retail Media Report</a></td><td>p.11</td></tr>
-          <tr><td><a href="https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/commerce-media-at-an-inflection-point-how-to-win-with-a-full-stack-approach" target="_blank" rel="noopener">McKinsey, Commerce Media at an Inflection Point</a></td><td>p.10</td></tr>
-          <tr><td><a href="https://koddi.com/resources/programmatic-retail-media-report/" target="_blank" rel="noopener">Koddi, The State Of Programmatic Retail Media 2025</a> · RMN NPS, 34 networks</td><td>p.11</td></tr>
-          <tr><td><a href="https://www.thedrum.com/news/retail-media-s-next-phase-will-be-won-by-differentiation-not-scale" target="_blank" rel="noopener">The Drum, Retail Media’s Next Phase Won by Differentiation</a></td><td>p.12</td></tr>
-          <tr><td>UXR + VOC synthesis: 23 sources, 18 studies, 28,000+ tickets, 20 interviews</td><td>p.15</td></tr>
-          <tr><td>Pendo Feedback: 1,825 records, February 2025–August 2026</td><td>p.17–18</td></tr>
-          <tr><td>Ad Center platform audit: terminology, taxonomy + Living Design</td><td>p.21–22</td></tr>
-          <tr><td><a href="https://hbr.org/2025/09/the-importance-of-trust-and-transparency-in-retail-media-networks" target="_blank" rel="noopener">Harvard Business Review, Trust and Transparency in RMNs, 2025</a></td><td>p.30</td></tr>
+          <tr id="cite-1"><td class="cite-n">1</td><td><a href="https://www.emarketer.com/" target="_blank" rel="noopener">eMarketer Forecast, US Commerce Media Ad Spending, June 2026</a></td><td>p.05</td></tr>
+          <tr id="cite-2"><td class="cite-n">2</td><td><a href="https://info.koddi.com/hubfs/All%20Commerce%20Media%20Playbook.pdf" target="_blank" rel="noopener">Koddi, The Commerce Media Playbook (Forrester maturity criteria)</a></td><td>p.07</td></tr>
+          <tr id="cite-3"><td class="cite-n">3</td><td><a href="https://www.mckinsey.com/capabilities/growth-marketing-and-sales/our-insights/commerce-media-at-an-inflection-point-how-to-win-with-a-full-stack-approach" target="_blank" rel="noopener">McKinsey, Commerce Media at an Inflection Point</a></td><td>p.10</td></tr>
+          <tr id="cite-4"><td class="cite-n">4</td><td><a href="https://koddi.com/resources/programmatic-retail-media-report/" target="_blank" rel="noopener">Koddi, The State Of Programmatic Retail Media 2025</a></td><td>p.11</td></tr>
+          <tr id="cite-5"><td class="cite-n">5</td><td>RMN NPS, 34 networks</td><td>p.11</td></tr>
+          <tr id="cite-6"><td class="cite-n">6</td><td><a href="https://skai.io/reports-and-whitepapers/2025-state-of-retail-media-report/" target="_blank" rel="noopener">Skai, 2025 State Of Retail Media Report</a></td><td>p.11</td></tr>
+          <tr id="cite-7"><td class="cite-n">7</td><td><a href="https://www.thedrum.com/news/retail-media-s-next-phase-will-be-won-by-differentiation-not-scale" target="_blank" rel="noopener">The Drum, Retail Media’s Next Phase Won by Differentiation</a></td><td>p.12</td></tr>
+          <tr id="cite-8"><td class="cite-n">8</td><td>UXR + VOC synthesis: 23 sources, 18 studies, 28,000+ tickets, 20 interviews</td><td>p.15–16</td></tr>
+          <tr id="cite-9"><td class="cite-n">9</td><td>Pendo Feedback: 1,825 records, February 2025–August 2026</td><td>p.17</td></tr>
+          <tr id="cite-10"><td class="cite-n">10</td><td>Ad Center platform audit: terminology, taxonomy + Living Design</td><td>p.21–22</td></tr>
+          <tr id="cite-11"><td class="cite-n">11</td><td><a href="https://hbr.org/2025/09/the-importance-of-trust-and-transparency-in-retail-media-networks" target="_blank" rel="noopener">Harvard Business Review, Trust and Transparency in RMNs, 2025</a></td><td>p.30</td></tr>
         </tbody>
       </table>
       </div>
@@ -5723,6 +5790,7 @@
     stage.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
   }
   window.ADXFit = fit;
+  window.ADXShow = show;
   window.addEventListener("resize", fit);
   fit();
 
@@ -5900,6 +5968,7 @@
   function show(i) {
     i = Math.max(0, Math.min(total - 1, i));
     if (i === current && slides[i].classList.contains("active") && enterTl) return;
+    if (typeof hideCite === "function") hideCite();
     if (enterTl) enterTl.kill();
     settleEnter(slides[current]);
     slides[current].classList.remove("active");
@@ -5917,6 +5986,60 @@
 
   prevBtn.addEventListener("click", (e) => { e.stopPropagation(); back(); });
   nextBtn.addEventListener("click", (e) => { e.stopPropagation(); forward(); });
+
+  const citeFloat = document.getElementById("cite-float");
+  let citeHide;
+  function placeCite(anchor) {
+    const src = anchor.closest(".fn") && anchor.closest(".fn").querySelector(".fn-src");
+    if (!src || !citeFloat) return;
+    citeFloat.innerHTML = src.innerHTML;
+    citeFloat.hidden = false;
+    citeFloat.style.display = "block";
+    const r = anchor.getBoundingClientRect();
+    const w = citeFloat.offsetWidth;
+    const left = Math.min(Math.max(16, r.left), window.innerWidth - w - 16);
+    let top = r.bottom + 8;
+    if (top + citeFloat.offsetHeight > window.innerHeight - 16) top = r.top - citeFloat.offsetHeight - 8;
+    citeFloat.style.left = left + "px";
+    citeFloat.style.top = top + "px";
+  }
+  function hideCite() {
+    if (!citeFloat) return;
+    citeFloat.hidden = true;
+    citeFloat.style.display = "none";
+    citeFloat.innerHTML = "";
+  }
+  document.addEventListener("mouseover", (e) => {
+    const mark = e.target.closest(".fn-n");
+    if (mark) {
+      clearTimeout(citeHide);
+      placeCite(mark);
+    }
+  });
+  document.addEventListener("mouseout", (e) => {
+    const fromFn = e.target.closest(".fn, #cite-float");
+    const toFn = e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest(".fn, #cite-float");
+    if (fromFn && !toFn) citeHide = setTimeout(hideCite, 120);
+  });
+  if (citeFloat) {
+    citeFloat.addEventListener("mouseenter", () => clearTimeout(citeHide));
+    citeFloat.addEventListener("mouseleave", hideCite);
+  }
+  document.addEventListener("click", (e) => {
+    const inCite = e.target.closest(".fn, #cite-float");
+    if (!inCite) return;
+    e.stopPropagation();
+    const app = e.target.closest("a.fn-app");
+    if (!app) return;
+    e.preventDefault();
+    hideCite();
+    const id = (app.getAttribute("href") || "").replace("#", "");
+    const srcI = Array.from(slides).findIndex((s) => s.dataset.label === "Sources");
+    if (srcI >= 0) show(srcI);
+    document.querySelectorAll(".slide[data-label='Sources'] tr[id^='cite-']").forEach((row) => row.classList.remove("is-cite"));
+    const row = id && document.getElementById(id);
+    if (row) row.classList.add("is-cite");
+  }, true);
 
   const sectionSlides = Object.fromEntries(SECTIONS.map((s) => [s.id, s.start]));
   document.querySelectorAll(".s-map .row").forEach((row) => {
