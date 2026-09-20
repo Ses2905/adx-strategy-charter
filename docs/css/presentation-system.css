@@ -1,0 +1,307 @@
+/* Presentation Starter Kit — canvas, chrome, type, default slide shell.
+   Standard content slides add .s-ls (see layout-system.css).
+   Special archetypes override row geometry in archetypes.css. */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: var(--stage-void);
+}
+
+body {
+  font-family: var(--ui);
+  color: var(--ink);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.viewport { position: fixed; inset: 0; }
+
+.stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--stage-w);
+  height: var(--stage-h);
+  transform-origin: top left;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+/* Default slide: 4 rows. .s-ls replaces this with 5 rows. */
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 0 var(--rail);
+  display: grid;
+  grid-template-rows: var(--head-inset) auto minmax(0, 1fr) var(--foot-safe);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.slide.navy { background: var(--navy); color: var(--on-navy); }
+.slide.paper { background: var(--paper); color: var(--ink); }
+.slide > .body { display: contents; }
+
+.slide-header {
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  min-width: 0;
+}
+
+.slide-header h1,
+.slide-header h2 { margin: 0; }
+
+.slide-content {
+  grid-row: 3;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  gap: 0;
+  padding: 0;
+}
+
+.slide-content:empty { display: none; }
+
+.slide-content-inner {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Type */
+h1, h2 {
+  font-family: var(--display);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1.26;
+  overflow-wrap: normal;
+  hyphens: none;
+  max-width: min(var(--measure-title-editorial), 100%);
+}
+
+h1 { font-size: 64px; }
+h2 { font-size: 48px; }
+
+.slide.navy h2 { color: var(--on-navy); }
+
+.sub {
+  font-family: var(--ui);
+  font-weight: 400;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--muted);
+  line-height: 1.45;
+  text-wrap: pretty;
+  max-width: min(var(--measure-lede-editorial), 100%);
+}
+
+.lede {
+  font-size: 18px;
+  line-height: 1.45;
+  color: var(--muted);
+  text-wrap: pretty;
+  max-width: min(var(--measure-lede-editorial), 100%);
+}
+
+.slide.navy .sub,
+.slide.navy .lede { color: rgba(255, 255, 255, 0.88); }
+
+.slide.navy .eyebrow,
+.slide.navy .chap-no {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.slide.navy .source {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Core eyebrow: placement, type role, spacing, semantics.
+   Chip / pill / color-block / line treatment belongs in theme/, not here. */
+.eyebrow {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--accent);
+  width: fit-content;
+  margin: 0 0 var(--space-16);
+}
+
+.chap-no {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin: 0 0 var(--space-24);
+}
+
+.source {
+  font-size: 13px;
+  color: var(--muted);
+  max-width: 100%;
+}
+
+em.mark {
+  font-family: var(--italic);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--accent);
+}
+
+.slide.navy em.mark { color: var(--accent-2); }
+
+aside.notes { display: none; }
+
+/* Chrome */
+.pager {
+  position: absolute;
+  z-index: 6;
+  inset-inline-start: var(--rail);
+  inset-inline-end: calc(var(--rail) + var(--nav));
+  bottom: var(--rail-y);
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+}
+
+.pager .brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-width: 0;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.stage[data-theme="navy"] .pager .brand { color: var(--on-navy); }
+
+.pager-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.arr {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--accent);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.stage[data-theme="navy"] .arr {
+  border-color: rgba(255, 255, 255, 0.45);
+  color: var(--on-navy);
+}
+
+.arr:disabled { opacity: 0.35; cursor: default; }
+
+.pagenum {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  min-width: 4.8em;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+}
+
+.stage[data-theme="navy"] .pagenum { color: rgba(255, 255, 255, 0.82); }
+
+.toc {
+  position: absolute;
+  z-index: 7;
+  top: var(--rail-y);
+  bottom: calc(var(--rail-y) + 40px);
+  inset-inline-end: 28px;
+  width: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.toc-line {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--line);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.stage[data-theme="navy"] .toc-line { background: rgba(255, 255, 255, 0.28); }
+
+.toc-fill {
+  position: absolute;
+  top: 8px;
+  width: 1px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  height: 0;
+}
+
+.toc button {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  width: 40px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toc i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid var(--accent-2);
+  display: block;
+}
+
+.toc button.is-current i {
+  width: 11px;
+  height: 11px;
+  background: var(--accent);
+  border-color: var(--accent);
+}

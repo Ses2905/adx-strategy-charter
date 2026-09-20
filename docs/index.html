@@ -2,10 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>Advertiser Experience Strategy</title>
+<title>Advertiser Experience Strategy · working</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
 <link rel="stylesheet" href="review.css" />
+<link rel="stylesheet" href="css/tokens.css" />
+<link rel="stylesheet" href="css/presentation-system.css" />
+<link rel="stylesheet" href="css/layout-system.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/archetypes.css" />
+<link rel="stylesheet" href="css/debug.css" />
+<link rel="stylesheet" href="theme/optional-editorial-blue.css" />
 <style>
   @font-face {
     font-family: "Everyday Sans Headline";
@@ -55,8 +62,9 @@
     --foot: 72px;
     --nav: 48px;
     --copy: 960px;
-    --title: 1360px;
-    --lede: 980px;
+    --title: var(--measure-title-editorial);
+    --lede: var(--measure-lede-editorial);
+    --cover-title: var(--measure-cover-title);
     --head-inset: 148px; /* shared top safe area for all non-full-bleed slides */
     --gutter: 48px;
     --foot-safe: 72px;
@@ -355,7 +363,7 @@
   .slide-content:empty { display: none; padding: 0; gap: 0; }
 
   .s-cover {
-    --cover-title: 1200px;
+    --cover-title: var(--measure-cover-title);
     grid-template-rows: var(--head-inset) minmax(0, 1fr) var(--foot-safe);
   }
   .s-cover .slide-header {
@@ -389,7 +397,7 @@
     font-style: italic;
     font-weight: 300;
     font-size: 44px;
-    max-width: min(1320px, 100%);
+    max-width: min(var(--measure-quote), 100%);
     line-height: 1.28;
     letter-spacing: -0.03em;
   }
@@ -398,7 +406,7 @@
   .s-map .slide-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0 96px;
+    gap: 0 var(--space-80);
     align-content: start;
     max-width: 1520px;
   }
@@ -495,7 +503,7 @@
   .s-cover h1,
   .s-close h1 { font-size: 72px; }
   .s-cover h1 {
-    max-width: min(var(--cover-title, 1200px), 100%);
+    max-width: min(var(--cover-title), 100%);
     text-wrap: balance;
   }
   .s-cover .sub,
@@ -1954,7 +1962,12 @@
     .slide, .toc button .toc-l { transition: none; }
   }
 </style>
-<link rel="stylesheet" href="layout-system.css" />
+<!-- Re-assert kit architecture after house CSS so .s-ls / map / debug win on geometry. -->
+<link rel="stylesheet" href="css/layout-system.css" />
+<link rel="stylesheet" href="css/archetypes.css" />
+<link rel="stylesheet" href="css/deck-families.css" />
+<link rel="stylesheet" href="css/debug.css" />
+<link rel="stylesheet" href="theme/optional-editorial-blue.css" />
 </head>
 <body>
 <div class="viewport">
@@ -1969,7 +1982,7 @@
   <footer class="pager">
     <div class="brand">
       <img class="spark" id="spark" src="logos/spark-white.svg" alt="Walmart Spark">
-      <span class="meta">Advertiser Experience · Walmart Global Ads</span>
+      <span class="meta">Advertiser Experience · working</span>
     </div>
     <div class="keys" id="keys" aria-label="Presenter keys">
       <span>J jump</span>

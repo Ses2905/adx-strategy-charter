@@ -1,0 +1,76 @@
+/* Presentation Starter Kit v1.0.0 — tokens
+   Geometry and spacing are frozen system rules.
+   Color and type families are theme slots. Override them in theme/*.css. */
+
+:root {
+  /* ------------------------------------------------------------------ */
+  /* CANVAS / CONTENT GEOMETRY                                           */
+  /* Slide-content origin. Agents must not treat chrome as these.        */
+  /* ------------------------------------------------------------------ */
+  --stage-w: 1920px;
+  --stage-h: 1080px;
+
+  --rail: 80px;
+  --head-inset: 148px;
+  --foot-safe: 72px;
+  --ls-transition: 40px;
+
+  /* ------------------------------------------------------------------ */
+  /* PRESENTATION CHROME                                                 */
+  /* Pager, TOC, brand strip. Not content rails or safe areas.           */
+  /* ------------------------------------------------------------------ */
+  --rail-y: 48px;
+  --nav: 48px;
+
+  /* Spacing scale — use these values only */
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-80: 80px;
+
+  /* Layout-system aliases used by .s-ls */
+  --ls-8: var(--space-8);
+  --ls-12: var(--space-12);
+  --ls-16: var(--space-16);
+  --ls-24: var(--space-24);
+  --ls-32: var(--space-32);
+  --ls-40: var(--space-40);
+  --ls-48: var(--space-48);
+  --ls-64: var(--space-64);
+  --ls-80: var(--space-80);
+  --ls-frame: 100%;
+  --ls-header-gap: var(--space-16);
+  --ls-lede-gap: var(--space-16);
+  --ls-optical-before: 0.8fr;
+  --ls-optical-after: 1.2fr;
+
+  /* Editorial text measures — readability, not structural alignment.
+     Standard .s-ls header text uses the master frame, not these caps.
+     Themes may override. */
+  --measure-title-editorial: 1360px;
+  --measure-lede-editorial: 980px;
+  --measure-cover-title: 1200px;
+  --measure-quote: 1320px;
+
+  /* Theme slots — generic defaults. Do not treat as brand. */
+  --paper: #f4f4f2;
+  --ink: #161616;
+  --muted: #5c5c5c;
+  --line: #e4e4de;
+  --accent: #1c1c1c;
+  --accent-2: #6e6e6e;
+  --navy: #161616;
+  --on-navy: #ffffff;
+  --stage-void: #0c0c0c;
+
+  /* Semantic type roles. Themes supply brand families. */
+  --display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --ui: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --italic: Georgia, "Times New Roman", serif;
+  --mono: ui-monospace, Menlo, Consolas, monospace;
+}

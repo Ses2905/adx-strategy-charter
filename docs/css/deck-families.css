@@ -1,0 +1,408 @@
+/* deck-families.css
+   Stable component-family geometry copied from the frozen Advertiser
+   Experience layout-system.css (header-width live). Not kit core.
+   Kit layout-system.css owns .s-ls rails / header-width B / modes.
+   This file keeps .principles, .anatomy, .paths, tables, etc. intact. */
+
+.slide.s-ls .ls-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ls-16);
+  width: 100%;
+  min-width: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Repeated components — Batch 1 families                              */
+/* Title zones are NOT 2lh. Apply only when sibling wrap actually      */
+/* misaligns body copy (none of the Batch 1 titles wrap).              */
+/* ------------------------------------------------------------------ */
+
+.slide.s-ls .principles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 var(--ls-48);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .principles article {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+  height: 100%;
+  padding-block: var(--ls-16);
+  padding-inline: 0;
+}
+
+.slide.s-ls .principles h3 {
+  margin: 0 0 var(--ls-8);
+  min-width: 0;
+  text-wrap: balance;
+}
+
+.slide.s-ls .principles p {
+  min-width: 0;
+  margin: 0;
+}
+
+.slide.s-ls .cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--ls-32);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .cols > div {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+}
+
+.slide.s-ls .cols h3 {
+  margin: 0 0 var(--ls-8);
+  min-width: 0;
+  text-wrap: balance;
+}
+
+.slide.s-ls .cols ul,
+.slide.s-ls .cols li {
+  min-width: 0;
+}
+
+.slide.s-ls .spectrum {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--ls-80);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+  position: relative;
+}
+
+.slide.s-ls .spectrum > div {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  min-width: 0;
+  padding-top: var(--ls-32);
+}
+
+.slide.s-ls .spectrum .kicker {
+  margin: 0 0 var(--ls-8);
+  min-width: 0;
+}
+
+.slide.s-ls .spectrum h3 {
+  margin: 0 0 var(--ls-12);
+  min-width: 0;
+  text-wrap: balance;
+}
+
+.slide.s-ls .spectrum ul {
+  min-width: 0;
+}
+
+.slide.s-ls .evidence {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: auto auto;
+  gap: var(--ls-24) var(--ls-32);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .evidence .ev {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  min-width: 0;
+}
+
+.slide.s-ls .evidence h3,
+.slide.s-ls .evidence p {
+  min-width: 0;
+}
+
+.slide.s-ls .evidence .themes {
+  grid-column: 1 / -1;
+  min-width: 0;
+  width: 100%;
+}
+
+.slide.s-ls .paths-set {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ls-40);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.slide.s-ls .paths-set .paths + .paths {
+  margin-top: 0;
+}
+
+.slide.s-ls .paths {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.slide.s-ls .paths .flow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0 var(--ls-16);
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .paths .flow.n4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.slide.s-ls .paths .stop {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+}
+
+.slide.s-ls .paths .stop h3 {
+  margin: 0 0 var(--ls-8);
+  min-width: 0;
+  text-wrap: balance;
+}
+
+.slide.s-ls .paths .stop p {
+  min-width: 0;
+  margin: 0;
+}
+
+.slide.s-ls .fromto {
+  display: grid;
+  grid-auto-rows: auto;
+  gap: 0;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.slide.s-ls .fromto .pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--ls-48) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--ls-16);
+  min-width: 0;
+  padding-block: var(--ls-12);
+}
+
+.slide.s-ls .fromto .from,
+.slide.s-ls .fromto .to,
+.slide.s-ls .fromto .arrw {
+  min-width: 0;
+}
+
+.slide.s-ls .quote-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: auto auto;
+  gap: var(--ls-16) var(--ls-48);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .quote-grid q {
+  min-width: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Repeated components — Batch 2 families                              */
+/* Structural max-width neutralized; text max-width stays in house CSS */
+/* ------------------------------------------------------------------ */
+
+.slide.s-ls .spine {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 var(--ls-48);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .spine.n4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.slide.s-ls .spine article {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  min-width: 0;
+}
+
+.slide.s-ls .spine h3,
+.slide.s-ls .spine p {
+  min-width: 0;
+}
+
+.slide.s-ls .forecast,
+.slide.s-ls .bars {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.slide.s-ls .chain {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0 var(--ls-40);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .chain article {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  min-width: 0;
+}
+
+.slide.s-ls .axes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ls-40) var(--ls-64);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .axes article {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  min-width: 0;
+}
+
+.slide.s-ls .trust-sys {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--ls-80);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.slide.s-ls .trust-sys .pair {
+  min-width: 0;
+}
+
+.slide.s-ls .loop {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0 var(--ls-24);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .loop article {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  min-width: 0;
+}
+
+.slide.s-ls .ask-row {
+  display: grid;
+  grid-template-columns: 4.8em minmax(0, 1fr);
+  gap: var(--ls-16) var(--ls-24);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.slide.s-ls .ask-row .copy,
+.slide.s-ls .ask-row .num {
+  min-width: 0;
+}
+
+.slide.s-ls .compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ls-48);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  align-items: stretch;
+}
+
+.slide.s-ls .compare > div {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  min-width: 0;
+}
+
+.slide.s-ls .tbl {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.slide.s-ls .list {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Repeated components — Batch 3 families                              */
+/* Neutralize structural max-width. Internal composition stays house.  */
+/* ------------------------------------------------------------------ */
+
+.slide.s-ls .burden,
+.slide.s-ls .root-split,
+.slide.s-ls .hero-metric,
+.slide.s-ls .anatomy,
+.slide.s-ls .say,
+.slide.s-ls .equation,
+.slide.s-ls .inherit,
+.slide.s-ls .now-reuse,
+.slide.s-ls .stack,
+.slide.s-ls .timeline,
+.slide.s-ls .nest,
+.slide.s-ls .org,
+.slide.s-ls .life,
+.slide.s-ls .formula,
+.slide.s-ls .shared-note {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+.slide.s-ls .hero-metric .hero,
+.slide.s-ls .hero-metric .metric,
+.slide.s-ls .root-split .root,
+.slide.s-ls .root-split .kids,
+.slide.s-ls .anatomy .cell,
+.slide.s-ls .equation .box,
+.slide.s-ls .formula .box,
+.slide.s-ls .now-reuse article,
+.slide.s-ls .stack .exp,
+.slide.s-ls .timeline .step,
+.slide.s-ls .nest .band,
+.slide.s-ls .org .person,
+.slide.s-ls .life article {
+  min-width: 0;
+}
+
+/* Assertion is a display-text measure, not a structural container. */
+.slide.s-ls .assertion {
+  max-width: 18em;
+}

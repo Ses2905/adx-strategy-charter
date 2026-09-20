@@ -1,30 +1,37 @@
 #!/usr/bin/env bash
-# Copy an aligned/frozen Advertiser Experience deck into docs/ and push it
-# to GitHub Pages. Run this only after a version is frozen — not on every save.
+# Copy an aligned Advertiser Experience deck into docs/ and push it to
+# GitHub Pages. Run this only after a version is aligned — not on every save.
 #
 # Usage:
 #   scripts/publish-deck.sh
-#   scripts/publish-deck.sh /path/to/export-or-frozen-folder
-#   scripts/publish-deck.sh --dry-run /path/to/folder
+#   scripts/publish-deck.sh /path/to/working-or-export-folder
+#   scripts/publish-deck.sh --dry-run
+#   scripts/publish-deck.sh --revert-archive   # publish the frozen 8793 backup
 #
-# Default source is the frozen live deck on this machine:
+# Default source is the WORKING deck:
+#   ~/.claude/plugins/marketplaces/local-desktop-app-uploads/html-presentation-toolkit/previews/editorial-blue-kit-v1
+#
+# The frozen original is a revert backup only (do not edit it):
 #   ~/.claude/plugins/marketplaces/local-desktop-app-uploads/html-presentation-toolkit/previews/editorial-blue
 #
-# Never copies layout-test/, experiments, starter-kit, or kit-v1 compare.
+# Never copies layout-test/, presentation-starter-kit/, or other experiments.
 
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DEST="$ROOT/docs"
-DEFAULT_SRC="${DECK_SRC:-$HOME/.claude/plugins/marketplaces/local-desktop-app-uploads/html-presentation-toolkit/previews/editorial-blue}"
+WORKING_SRC="${DECK_SRC:-$HOME/.claude/plugins/marketplaces/local-desktop-app-uploads/html-presentation-toolkit/previews/editorial-blue-kit-v1}"
+ARCHIVE_SRC="$HOME/.claude/plugins/marketplaces/local-desktop-app-uploads/html-presentation-toolkit/previews/editorial-blue"
 
 DRY_RUN=0
+REVERT_ARCHIVE=0
 SRC=""
 for arg in "$@"; do
   case "$arg" in
     --dry-run) DRY_RUN=1 ;;
+    --revert-archive) REVERT_ARCHIVE=1 ;;
     --help|-h)
-      sed -n '2,16p' "$0"
+      sed -n '2,20p' "$0"
       exit 0
       ;;
     *)
@@ -36,14 +43,17 @@ for arg in "$@"; do
       ;;
   esac
 done
-SRC="${SRC:-$DEFAULT_SRC}"
+
+if [[ "$REVERT_ARCHIVE" -eq 1 && -z "$SRC" ]]; then
+  SRC="$ARCHIVE_SRC"
+fi
+SRC="${SRC:-$WORKING_SRC}"
 
 if [[ ! -d "$SRC" ]]; then
   echo "Source folder not found: $SRC" >&2
   exit 1
 fi
 
-# Export packs sometimes wrap index.html in a nested folder.
 if [[ ! -f "$SRC/index.html" ]]; then
   INNER="$(find "$SRC" -mindepth 1 -maxdepth 3 -name index.html | head -n 1 || true)"
   if [[ -n "$INNER" ]]; then
@@ -56,9 +66,11 @@ if [[ ! -f "$SRC/index.html" ]]; then
   exit 1
 fi
 
+# Allow the working kit-v1 deck and an explicit archive revert.
+# Block starter-kit / layout-test / other experiments.
 case "$SRC" in
-  *layout-test*|*starter-kit*|*kit-v1*|*experiments*)
-    echo "Refusing to publish from $SRC (layout-test / starter-kit / kit-v1 / experiments stay off Pages)." >&2
+  *presentation-starter-kit*|*layout-test*|*experiments*)
+    echo "Refusing to publish from $SRC (starter-kit / layout-test / experiments stay off Pages)." >&2
     exit 1
     ;;
 esac
@@ -81,6 +93,14 @@ copy_if_present() {
   fi
 }
 
+copy_dir_if_present() {
+  local name="$1"
+  if [[ -d "$SRC/$name" ]]; then
+    mkdir -p "$TMP/$name"
+    rsync -a --exclude '.DS_Store' "$SRC/$name/" "$TMP/$name/"
+  fi
+}
+
 copy_if_present index.html
 copy_if_present layout-system.css
 copy_if_present layout-system.js
@@ -88,17 +108,18 @@ copy_if_present review.css
 copy_if_present review.js
 copy_if_present extra.css
 
-if [[ -d "$SRC/fonts" ]]; then
-  mkdir -p "$TMP/fonts"
-  rsync -a "$SRC/fonts/" "$TMP/fonts/"
-fi
-if [[ -d "$SRC/logos" ]]; then
-  mkdir -p "$TMP/logos"
-  rsync -a "$SRC/logos/" "$TMP/logos/"
-fi
+copy_dir_if_present css
+copy_dir_if_present js
+copy_dir_if_present theme
+copy_dir_if_present fonts
+copy_dir_if_present logos
 
 touch "$TMP/.nojekyll"
 
+if [[ ! -f "$TMP/index.html" ]]; then
+  echo "Copy failed: index.html missing" >&2
+  exit 1
+fi
 if ! grep -q 'layout-system.css' "$TMP/index.html"; then
   echo "index.html does not reference layout-system.css — aborting." >&2
   exit 1
@@ -111,8 +132,10 @@ fi
 cat > "$TMP/VERSION" << EOF
 published: $STAMP
 source: $SRC
-included: index.html, layout-system.css/js, review.css/js, extra.css (if present), fonts/, logos/
-not_included: layout-test, experiments, starter-kit, kit-v1
+working_default: editorial-blue-kit-v1 (http://127.0.0.1:8795/)
+archive_backup: editorial-blue (http://127.0.0.1:8793/) — revert only, do not edit
+included: index.html, review.css/js, layout-system.js, css/, js/, theme/, fonts/, logos/
+not_included: layout-test, presentation-starter-kit, experiments, COMPARE.txt
 EOF
 
 if [[ "$DRY_RUN" -eq 1 ]]; then
@@ -122,7 +145,6 @@ if [[ "$DRY_RUN" -eq 1 ]]; then
 fi
 
 mkdir -p "$DEST"
-# Keep VERSION we just wrote; replace the rest of the published tree.
 rsync -a --delete \
   --exclude '.DS_Store' \
   "$TMP/" "$DEST/"
@@ -141,7 +163,7 @@ fi
 git commit -m "$(cat <<EOF
 Publish aligned deck ${STAMP_FILE}
 
-Replace GitHub Pages with the frozen Advertiser Experience HTML deck.
+Replace GitHub Pages with the working Advertiser Experience HTML deck from editorial-blue-kit-v1.
 EOF
 )"
 

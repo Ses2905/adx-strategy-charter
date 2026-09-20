@@ -1,0 +1,138 @@
+/* Presentation Starter Kit — debug overlays
+   Opt-in only: body.debug-layout or ?debug=layout
+   Never visible in presentation mode.
+   Do not import these rules into a new deck’s presentation look. */
+
+body.debug-layout .slide.s-ls {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--accent) 12%, transparent), color-mix(in srgb, var(--accent) 12%, transparent)),
+    linear-gradient(color-mix(in srgb, var(--accent) 12%, transparent), color-mix(in srgb, var(--accent) 12%, transparent)),
+    linear-gradient(color-mix(in srgb, var(--accent-2) 18%, transparent), color-mix(in srgb, var(--accent-2) 18%, transparent)),
+    linear-gradient(color-mix(in srgb, var(--accent-2) 18%, transparent), color-mix(in srgb, var(--accent-2) 18%, transparent));
+  background-size:
+    var(--rail) 100%,
+    var(--rail) 100%,
+    100% var(--head-inset),
+    100% var(--foot-safe);
+  background-position:
+    left top,
+    right top,
+    left top,
+    left bottom;
+  background-repeat: no-repeat;
+}
+
+body.debug-layout .slide.s-ls .slide-header {
+  position: relative;
+  box-shadow:
+    inset 1px 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent),
+    inset -1px 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent),
+    inset 0 -1px 0 0 color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+body.debug-layout .slide.s-ls .slide-header::after {
+  content: "header · master frame";
+  position: absolute;
+  inset-inline-end: 0;
+  top: 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--paper);
+  padding: 2px 6px;
+  pointer-events: none;
+}
+
+body.debug-layout .slide.s-ls .slide-header::before {
+  content: "40px transition";
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  height: var(--ls-transition);
+  background: color-mix(in srgb, var(--accent-2) 16%, transparent);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-inline: 6px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+body.debug-layout .slide.s-ls .slide-content {
+  position: relative;
+  background-color: color-mix(in srgb, var(--accent) 4%, transparent);
+  box-shadow:
+    inset 1px 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent),
+    inset -1px 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+body.debug-layout .slide.s-ls .slide-content::before {
+  content: "content zone · optical 0.8 / 1.2";
+  position: absolute;
+  inset-inline-end: 0;
+  top: 0;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--paper);
+  padding: 2px 6px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+body.debug-layout .slide.s-ls.s-ls-shallow .slide-content::before {
+  content: "content zone · optical shallow 0.55 / 1.45";
+}
+
+body.debug-layout .slide.s-ls.s-dense .slide-content::before {
+  content: "content zone · dense / top-aligned";
+}
+
+body.debug-layout .kit-grid > *,
+body.debug-layout .kit-card,
+body.debug-layout .kit-metric,
+body.debug-layout .kit-compare > *,
+body.debug-layout .kit-spine article,
+body.debug-layout .kit-fromto .pair {
+  outline: 1px dashed color-mix(in srgb, var(--accent) 35%, transparent);
+  outline-offset: -1px;
+}
+
+body.debug-layout .ls-over-capacity {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+body.debug-layout .ls-overflow {
+  outline: 2px solid #c0392b;
+  outline-offset: 2px;
+}
+
+.ls-debug-hint {
+  display: none;
+  position: absolute;
+  z-index: 34;
+  inset-inline-start: var(--rail);
+  top: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--paper);
+  padding: 4px 8px;
+  pointer-events: none;
+}
+
+body.debug-layout .ls-debug-hint {
+  display: block;
+}

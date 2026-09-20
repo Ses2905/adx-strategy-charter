@@ -1,7 +1,6 @@
-published: 2026-09-19
-source: frozen live Advertiser Experience deck (editorial freeze + header-width B)
-source_path: previews/editorial-blue
-export_pack: previews/editorial-blue/exports/2026-09-19-2136/advertiser-experience-strategy-header-width-live
-index.html: 2026-09-19 20:38
-layout-system.css: 2026-09-19 21:35
-not_included: layout-test, experiments, starter-kit, kit-v1
+published: 2026-09-19 22:15
+source: /Users/sarahscherer/.claude/plugins/marketplaces/local-desktop-app-uploads/html-presentation-toolkit/previews/editorial-blue-kit-v1
+working_default: editorial-blue-kit-v1 (http://127.0.0.1:8795/)
+archive_backup: editorial-blue (http://127.0.0.1:8793/) — revert only, do not edit
+included: index.html, review.css/js, layout-system.js, css/, js/, theme/, fonts/, logos/
+not_included: layout-test, presentation-starter-kit, experiments, COMPARE.txt

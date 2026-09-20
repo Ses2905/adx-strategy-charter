@@ -1,0 +1,143 @@
+/* Presentation Starter Kit — standard content architecture (.s-ls)
+   Extracted from the frozen Advertiser Experience deck (header-width live).
+   Special archetypes never receive .s-ls.
+
+   Modes (do not add more):
+     STANDARD  .s-ls              0.8fr / content / 1.2fr
+     SHALLOW   .s-ls.s-ls-shallow 0.55fr / content / 1.45fr
+     DENSE     .s-ls.s-dense      top-aligned
+
+   Shallow is assigned manually. Do not auto-detect.
+   Do not add per-slide Y offsets, transforms, or negative margins. */
+
+.slide.s-ls {
+  grid-template-rows:
+    var(--head-inset)
+    auto
+    var(--ls-transition)
+    minmax(0, 1fr)
+    var(--foot-safe);
+}
+
+.slide.s-ls.s-ls-shallow {
+  --ls-optical-before: 0.55fr;
+  --ls-optical-after: 1.45fr;
+}
+
+/* Master frame — container width = alignment */
+.slide.s-ls .slide-header,
+.slide.s-ls .slide-content {
+  width: var(--ls-frame);
+  max-width: none;
+  min-width: 0;
+  justify-self: stretch;
+}
+
+.slide.s-ls .slide-content > *,
+.slide.s-ls .slide-content-inner > * {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+/* Header stack */
+.slide.s-ls .slide-header {
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.slide.s-ls .slide-header .eyebrow,
+.slide.s-ls .slide-header .pill {
+  margin: 0 0 var(--ls-header-gap);
+}
+
+.slide.s-ls .slide-header h1 + .sub,
+.slide.s-ls .slide-header h1 + .lede,
+.slide.s-ls .slide-header h2 + .sub,
+.slide.s-ls .slide-header h2 + .lede,
+.slide.s-ls .slide-header h2 + .source {
+  margin-top: var(--ls-lede-gap);
+}
+
+.slide.s-ls .slide-header .sub + .lede {
+  margin-top: var(--ls-12);
+}
+
+/* Standard content slides: header text uses the master frame.
+   Special archetypes keep --measure-*-editorial readability caps. */
+.slide.s-ls .slide-header h1,
+.slide.s-ls .slide-header h2 {
+  width: 100%;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.slide.s-ls .slide-header .lede,
+.slide.s-ls .slide-header .sub {
+  width: 100%;
+  max-width: none;
+  text-wrap: pretty;
+}
+
+/* Body region — 40px transition is its own grid row */
+.slide.s-ls .slide-content {
+  grid-row: 4;
+  min-height: 0;
+  height: 100%;
+  width: var(--ls-frame);
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+}
+
+.slide.s-ls .slide-content-inner {
+  min-height: 0;
+  height: 100%;
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-rows:
+    minmax(0, var(--ls-optical-before))
+    auto
+    minmax(0, var(--ls-optical-after));
+  align-items: stretch;
+  justify-items: stretch;
+  width: 100%;
+}
+
+.slide.s-ls .slide-content-inner > * {
+  grid-row: 2;
+}
+
+/* Dense: top-aligned, no optical weighting */
+.slide.s-ls.s-dense .slide-content-inner,
+.slide.s-ls .slide-content.is-dense .slide-content-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  grid-template-rows: none;
+}
+
+.slide.s-ls.s-dense .slide-content-inner > *,
+.slide.s-ls .slide-content.is-dense .slide-content-inner > * {
+  grid-row: auto;
+}
+
+/* Parent owns BETWEEN. Component owns INSIDE.
+   Shell does not space arbitrary body children. */
+.slide.s-ls .stack-sm { display: flex; flex-direction: column; gap: var(--ls-16); }
+.slide.s-ls .stack-md { display: flex; flex-direction: column; gap: var(--ls-24); }
+.slide.s-ls .stack-lg { display: flex; flex-direction: column; gap: var(--ls-40); }
+
+.slide.s-ls .lede,
+.slide.s-ls .sub,
+.slide.s-ls p,
+.slide.s-ls li,
+.slide.s-ls q {
+  text-wrap: pretty;
+}

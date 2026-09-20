@@ -1,0 +1,58 @@
+/* Optional brand layer — Editorial Blue / Walmart house colors.
+   Deck-local copy. Do not bake these into kit core.
+   Aliases keep frozen HTML/CSS (--title, --true) working on kit tokens. */
+
+:root {
+  --navy: #001E60;
+  --accent: #0053E2;
+  --accent-2: #4DBDF5;
+  --paper: #F5F6F8;
+  --ink: #001E60;
+  --muted: #3D4A63;
+  --line: #E4E8EF;
+  --on-navy: #ffffff;
+  --stage-void: #070B14;
+
+  /* Frozen house names → kit tokens */
+  --true: var(--accent);
+  --everyday: var(--accent-2);
+  --sky: #A9DDF7;
+  --paper-2: var(--paper);
+  --quiet: var(--muted);
+
+  --title: var(--measure-title-editorial);
+  --lede: var(--measure-lede-editorial);
+  --cover-title: var(--measure-cover-title);
+}
+
+/* House chip / pill — brand layer only. Kit core eyebrow stays generic. */
+.navy .pill,
+.navy .eyebrow {
+  color: var(--true);
+  background: #D7EEF9;
+}
+
+.slide.navy .chap-no {
+  color: var(--everyday);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--true);
+  background: #D7EEF9;
+  padding: 8px 14px;
+  border-radius: 999px;
+  width: fit-content;
+  max-width: var(--title);
+  margin: 0;
+}
