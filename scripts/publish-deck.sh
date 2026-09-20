@@ -14,7 +14,9 @@
 # The frozen original is a revert backup only (do not edit it):
 #   ~/.claude/plugins/marketplaces/local-desktop-app-uploads/html-presentation-toolkit/previews/editorial-blue
 #
-# Never copies layout-test/, presentation-starter-kit/, or other experiments.
+# Never copies layout-test/, presentation-starter-kit, _qa/, or other experiments.
+# Push credentials: reads gitignored $ROOT/.github-token if GH_TOKEN is unset. Never echoes it.
+
 
 set -euo pipefail
 
@@ -152,7 +154,7 @@ rsync -a --delete \
   "$TMP/" "$DEST/"
 
 cd "$ROOT"
-git add docs scripts/publish-deck.sh README.md .github/workflows/pages.yml
+git add docs scripts/publish-deck.sh README.md .github/workflows/pages.yml .gitignore
 if [[ -f .github/workflows/jekyll-gh-pages.yml ]]; then
   git rm -f .github/workflows/jekyll-gh-pages.yml
 fi
@@ -169,7 +171,41 @@ Replace GitHub Pages with the working Advertiser Experience HTML deck from edito
 EOF
 )"
 
-git push origin HEAD:main
+load_push_token() {
+  if [[ -n "${GH_TOKEN:-}" || -n "${GITHUB_TOKEN:-}" ]]; then
+    export GH_TOKEN="${GH_TOKEN:-$GITHUB_TOKEN}"
+    export GITHUB_TOKEN="${GITHUB_TOKEN:-$GH_TOKEN}"
+    return 0
+  fi
+  local token_file="$ROOT/.github-token"
+  if [[ -f "$token_file" ]]; then
+    GH_TOKEN="$(tr -d '[:space:]' < "$token_file")"
+    export GH_TOKEN
+    export GITHUB_TOKEN="$GH_TOKEN"
+  fi
+}
+
+push_main() {
+  load_push_token
+  if [[ -z "${GH_TOKEN:-}" ]]; then
+    git push origin HEAD:main
+    return
+  fi
+  local ask
+  ask="$(mktemp)"
+  chmod 700 "$ask"
+  cat > "$ask" << 'EOF'
+#!/bin/sh
+case "$1" in
+  *Username*) echo "x-access-token" ;;
+  *) echo "$GH_TOKEN" ;;
+esac
+EOF
+  GIT_TERMINAL_PROMPT=0 GIT_ASKPASS="$ask" git -c credential.helper= push origin HEAD:main
+  rm -f "$ask"
+}
+
+push_main
 echo
 echo "Pushed. Live URL: https://ses2905.github.io/adx-strategy-charter/"
 echo "Pages may take a minute to rebuild."

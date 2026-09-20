@@ -56,6 +56,8 @@ Default source:
 
 Override with `DECK_SRC=/path ./scripts/publish-deck.sh`.
 
+Local push auth (never commit this): put a GitHub PAT in `.github-token` in the clone root (mode 600). That file is gitignored. The publish script reads it if `GH_TOKEN` is not already set, and does not print it. Repo Actions secret `GH_PAGES_TOKEN` is stored on GitHub for the same purpose; do not put a PAT in any tracked file.
+
 Do not publish until the version is aligned. Do not point the script at `layout-test/` or `presentation-starter-kit/`.
 
 ## Frozen archive (revert backup)
