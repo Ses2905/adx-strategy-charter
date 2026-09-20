@@ -108,10 +108,10 @@
   grid-column: 1 / -1;
 }
 
-/* ---- Prior approved visual rules kept (02:29 export). New approved type-width rules follow and win on the same selector+property. Argument Option C structure is above; ALIGN notes remain open. ---- */
-
 /* ---- Approved Editor Mode rules (2026-09-20 export). Argument ALIGN still pending: Option C layout kept above; approved Argument max-width rules follow and are more specific. ---- */
-/* SLIDE 4 · Shift · lede · max-width */ .slide[data-label="Shift"] div.body > div.slide-header:nth-of-type(1) > p.lede {
+
+/* SLIDE 4 · Shift · lede · max-width */
+.slide[data-label="Shift"] div.body > div.slide-header:nth-of-type(1) > p.lede {
   max-width: 1072px;
 }
 
@@ -148,6 +148,16 @@
 /* SLIDE 3 · Argument · lede · max-width */
 .slide[data-label="Argument"] div.body > div.slide-header:nth-of-type(1) > p.lede {
   max-width: 456px;
+}
+
+/* SLIDE 6 · Maturity · body · max-width */
+.slide[data-label="Maturity"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.spine > article:nth-of-type(3) > p {
+  max-width: 65ch;
+}
+
+/* SLIDE 6 · Maturity · body · max-width */
+.slide[data-label="Maturity"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.spine > article:nth-of-type(3) > p {
+  max-width: 344px;
 }
 
 /* SLIDE 7 · Maturity gap · headline · max-width */
@@ -258,117 +268,4 @@
 /* SLIDE 44 · Delivery · element · gap */
 .slide[data-label="Delivery"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.deliv {
   gap: 80px;
-}
-
-/* ---- Approved Editor Mode rules (2026-09-20T07:46 export). Philosophy spectrum-points width skipped (accidental list-strip sibling). ---- */
-
-/* Scoped local edits from Editor Mode. APPLY APPROVED CHANGES.
-   Do not merge into presentation-system.css, layout-system.css, or tokens.css. */
-/* SLIDE 11 · Revenue · body · max-width */ .slide[data-label="Revenue"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.ls-group > div.chain:nth-of-type(1) > article:nth-of-type(1) > p {
-  max-width: 88ch;
-}
-
-/* SLIDE 11 · Revenue · body · max-width */
-.slide[data-label="Revenue"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.ls-group > div.chain:nth-of-type(1) > article:nth-of-type(1) > p {
-  max-width: 240px;
-}
-
-/* SLIDE 11 · Revenue · body · max-width */
-.slide[data-label="Revenue"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.ls-group > div.chain:nth-of-type(1) > article:nth-of-type(2) > p {
-  max-width: 248px;
-}
-
-/* SLIDE 11 · Revenue · element · gap */
-.slide[data-label="Revenue"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.ls-group > div.chain:nth-of-type(1) {
-  gap: 0px;
-}
-
-/* SLIDE 11 · Revenue · element · padding */
-.slide[data-label="Revenue"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.ls-group > div.chain:nth-of-type(1) {
-  padding: 0px;
-}
-
-/* SLIDE 11 · Revenue · element · padding */
-.slide[data-label="Revenue"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.ls-group {
-  padding: 0px;
-}
-
-/* SLIDE 11 · Revenue · element · gap */
-.slide[data-label="Revenue"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.ls-group {
-  gap: 0px;
-}
-
-/* SLIDE 11 · Revenue · element · gap */
-.slide[data-label="Revenue"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.ls-group > div.chain:nth-of-type(1) > article:nth-of-type(4) {
-  gap: 0px;
-}
-
-/* SLIDE 11 · Revenue · element · padding */
-.slide[data-label="Revenue"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.ls-group > div.chain:nth-of-type(1) > article:nth-of-type(4) {
-  padding: 0px;
-}
-
-/* SLIDE 27 · Philosophy · lede · max-width */
-.slide[data-label="Philosophy"] div.body > div.slide-header:nth-of-type(1) > p.lede {
-  max-width: 608px;
-}
-
-/* SLIDE 33 · Leverage · element · gap */
-.slide[data-label="Leverage"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.inherit.inherit-branch {
-  gap: 0px;
-}
-
-/* SLIDE 33 · Leverage · element · padding */
-.slide[data-label="Leverage"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.inherit.inherit-branch {
-  padding: 0px;
-}
-
-/* SLIDE 3 · Argument · eyebrow · gap */
-.slide[data-label="Argument"] div.body > div.slide-header:nth-of-type(1) > span.eyebrow {
-  gap: 0px;
-}
-
-/* SLIDE 3 · Argument · eyebrow · max-width */
-.slide[data-label="Argument"] div.body > div.slide-header:nth-of-type(1) > span.eyebrow {
-  max-width: 1600px;
-}
-
-/* SLIDE 6 · Maturity · body · max-width */
-.slide[data-label="Maturity"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.spine > article:nth-of-type(2) > p {
-  max-width: 40ch;
-}
-
-/* SLIDE 6 · Maturity · body · max-width */
-.slide[data-label="Maturity"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.spine > article:nth-of-type(3) > p {
-  max-width: 40ch;
-}
-
-/* SLIDE 6 · Maturity · body · max-width */
-.slide[data-label="Maturity"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.spine > article:nth-of-type(1) > p {
-  max-width: 40ch;
-}
-
-/* SLIDE 13 · Right to win · body · max-width */
-.slide[data-label="Right\ to\ win"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.chain > article:nth-of-type(1) > p {
-  max-width: 37ch;
-}
-
-/* SLIDE 13 · Right to win · label · max-width */
-.slide[data-label="Right\ to\ win"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.chain > article:nth-of-type(4) > h3 {
-  max-width: 37ch;
-}
-
-/* SLIDE 13 · Right to win · label · max-width */
-.slide[data-label="Right\ to\ win"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.chain > article:nth-of-type(1) > h3 {
-  max-width: 37ch;
-}
-
-/* SLIDE 13 · Right to win · label · max-width */
-.slide[data-label="Right\ to\ win"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.chain > article:nth-of-type(2) > h3 {
-  max-width: 37ch;
-}
-
-/* SLIDE 13 · Right to win · label · max-width */
-.slide[data-label="Right\ to\ win"] div.body > div.slide-content:nth-of-type(2) > div.slide-content-inner > div.chain > article:nth-of-type(3) > h3 {
-  max-width: 37ch;
 }
