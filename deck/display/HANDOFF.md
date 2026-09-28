@@ -1,14 +1,14 @@
 # Handoff: Advertiser Experience Strategy Deck (Display as Proof Point)
 
 **For:** an AI agent rebuilding this deck exactly: same narrative, copy, layout and visual system.
-**Reference build:** `docs/display.html` in `Ses2905/adx-strategy-charter`, PR #38, branch `claude/display-advertiser-experience-deck-w8n770`. The file name is historical; the deck is not a Display deck.
+**Reference build:** `docs/advertiser-experience.html` in `Ses2905/adx-strategy-charter`, PR #38, branch `claude/display-advertiser-experience-deck-w8n770`.
 **Source of truth:** `deck/display/slides.html` (copy and markup, reproduced verbatim in Appendix B), `deck/display/display.css` (Appendix A), `deck/display/build.py` (assembly). Where this document and the source files disagree, the source files win.
 
 ---
 
 ## 1. What You Are Building
 
-A 17-slide HTML presentation (1920×1080 stage, scaled to fit the viewport), plus an editable PowerPoint generated from it.
+An 18-slide HTML presentation (1920×1080 stage, scaled to fit the viewport), plus an editable PowerPoint generated from it.
 
 **It is an Advertiser Experience strategy across Walmart Ads. It is not a Display strategy.** Display is a proof point, used because Sales has raised real performance concerns and the evidence supports investigating them. The argument:
 
@@ -29,7 +29,7 @@ A 17-slide HTML presentation (1920×1080 stage, scaled to fit the viewport), plu
 | 02 | How we diagnose | 04 |
 | 03 | Display as a proof point | 05–07 |
 | 04 | What we are building | 08–15 |
-| 05 | One system | 16–17 |
+| 05 | One system | 16–18 |
 
 ---
 
@@ -43,7 +43,7 @@ A 17-slide HTML presentation (1920×1080 stage, scaled to fit the viewport), plu
    - sets the `<title>` and footer meta to `Advertiser Experience Strategy · draft`
    - removes the `editor*.js` script tags (not shipped in `docs/`)
    - injects `display.css` as a `<style>` block before `</head>`
-3. The output is `docs/display.html`. Never hand-edit it.
+3. The output is `docs/advertiser-experience.html`. Never hand-edit it.
 4. **PowerPoint:** serve `docs/` on port 8811, then run `node deck/display/pptx/extract.js && node deck/display/pptx/build.js`. The output is `deck/display/Advertiser-Experience-Strategy.pptx`. See `deck/display/pptx/README.md`.
 
 ### Path B: No Repo Access
@@ -98,7 +98,7 @@ Rebuild the shell from §3 and §4. Paste Appendix B as the slides and Appendix 
 - **Statement line (`.dx-say`).** It closes a slide: a 1px True Blue top rule, a mono label in a 220px left rail, and the statement at 28px Headline Light. There's no fill. Weight comes from type size and the rule.
 - **Peer rows stay identical.** Siblings share the same rule, padding and type. Don't single out the last item of a sequence.
 - **Chrome is recessive.** Axes and dividers are hairline gray, never navy.
-- Dark (navy) slides: **only the opening slide.** There are no section-divider slides; the right-rail navigator carries the acts.
+- Dark (navy) slides: **only the opening slide and the ask (18).** There are no section-divider slides; the right-rail navigator carries the acts.
 - **Text arrows** (`→`) are allowed inside a chain. Don't use decorative SVG arrows.
 
 ---
@@ -133,8 +133,9 @@ Rebuild the shell from §3 and §4. Paste Appendix B as the slides and Appendix 
 | 13 | `.dx-note` + `.paths.is-one` `.dx-n7` + `.dx-benefit` | Kit `.paths`, 7-up |
 | 14 | `.dx-note` + `.loop.dx-n5` + `.dx-benefit.n3` + `.dx-say` | Kit `.loop`, 5-up |
 | 15 | `.dx-contrast` with a `.dx-ab` A-vs-B grid + chips + `.dx-say` | New |
-| 16 | `.tbl.dx-matrix` + `.dx-caveat` + `.dx-say` | Kit `.tbl` |
-| 17 | `.loop.dx-n6` + `.dx-repeat` + `.dx-close` | Kit `.loop`, 6-up |
+| 16 | `.tbl.dx-matrix` with a `tfoot` count row + `.dx-caveat` + `.dx-say` | Kit `.tbl` |
+| 17 | `.loop.dx-n5` + `.dx-repeat` + `.dx-close` | Kit `.loop`, 5-up |
+| 18 | `navy s-close` + `.ask` three commitments | Kit archetype |
 
 **Specificity trap.** The kit's `deck-families.css` sets grids as `.slide.s-ls .chain`, `.slide.s-ls .loop`, `.slide.s-ls .paths .flow`, `.slide.s-ls .cols` and `.slide.s-ls .stack`. Any variant that changes a column count **must** carry the same prefix. Without it, a 5-up chain silently wraps to 4.
 
@@ -165,12 +166,15 @@ The eyebrow, title and navigator label for each slide are below, generated from 
 | 15 | Experiments | Close the learning loop | Campaign experiments turn performance questions into [evidence]. |
 | 16 | Portfolio | One strategy, multiple interventions | Each initiative attacks a different part of the [same] experience problem. |
 | 17 | Operating loop | The system we’re building | Listen. Diagnose. Simplify. Measure. [Learn]. |
+| 18 | The ask | What we need | Three commitments make this [work]. |
 
 Build notes that aren't obvious from the markup:
 - **01** is a navy `s-close`, not `s-cover`. `s-cover` hides slide content, and this slide carries a statement, a paragraph and the six-step journey.
 - **03 keeps two scopes apart on purpose.** The four behavior metrics are Onsite Display ad group setup; the two perception metrics are the Walmart Ads relationship survey. Each group has its own label and footnote. Don't merge them into one row of six equal stats.
 - **07's measurement is a band under the three buckets, not a fourth column.** That shape is the argument: measurement is the diagnostic layer, not a root cause.
-- **16's dots are intent, not impact.** The caveat under the table has to stay.
+- **One journey vocabulary.** Slide 01's journey and slide 08's advertiser jobs are the same six: Plan, Build, Launch, Understand, Optimize, Grow. Slide 17's loop has exactly the five steps its title names. If you change one of these, change all three.
+- **16's dots are intent, not impact.** The caveat under the table has to stay. The count row (7 / 3 / 5 / 8 / 7) is derived from the dots; recount it if a dot changes. *Fragmented* is the thinnest column, and the speaker notes make that the point.
+- **18 is the ask**, written as proposals, not decisions taken: Align, Staff, Measure.
 - **Footnotes:** slide 03 carries two. In the PowerPoint export they are appended to the speaker notes, because the hover card doesn't exist there.
 
 ---
@@ -188,7 +192,7 @@ Build notes that aren't obvious from the markup:
 ## 8. Validation (Do All of These Before Calling It Done)
 1. **Render every slide** at 1920×1080 with `reducedMotion: 'reduce'`, navigating with `window.ADXShow(i)`. Look at each screenshot.
 2. **Rail check.** No leaf text may run past x<78, x>1842 or y>990. The kit's `.slide-content-inner` box reaching y=1008 is expected, so ignore it.
-3. **Column counts.** 04 renders 5 across, 09's future path 3, 13's path 7, 14's loop 5, 17's loop 6, 06 three columns. If a row wraps, it's the specificity trap in §5.
+3. **Column counts.** 04 renders 5 across, 09's future path 3, 13's path 7, 14's and 17's loops 5, 06 three columns. If a row wraps, it's the specificity trap in §5.
 4. **Fonts load.** Everyday Sans must actually load, or the fallback metrics will mislead every width check.
 5. **PowerPoint:** run the OOXML validator, render through LibreOffice with the desktop-named fonts installed, and look at every slide. Converter bugs so far (all fixed): dropped `<br>`, re-wrapped titles, a bullet dot overlapping its text, and a label overlapping its sentence. Each one showed up only in a render.
 
@@ -197,10 +201,8 @@ Build notes that aren't obvious from the markup:
 ## 9. Open Items to Carry Forward (Not Yours to Resolve)
 - **Slide 03's behavior metrics** (46.2%, 135K+, 28K+, 13.7K+) have no date range or denominator yet. Footnote 1 says so.
 - **Slide 03 mixes scopes:** Display setup behavior next to Walmart Ads-wide perception. The layout separates them, and the presenter must too.
-- **Journey language isn't one set yet.** Slide 01 says Plan → Build → Launch → Understand → Optimize → Grow. Slide 08's jobs are Plan / Build / Target / Launch / Measure / Diagnose / Optimize. Slide 17's title names five steps while its loop has six (Enable is the one not in the title). Language is part of the product, so the author should pick one vocabulary.
-- **Slide 16's matrix** gives Audience Library and Unified Measurement + Reporting all five dots. That reads as "does everything" unless the caveat is said out loud.
-- **The deck has no explicit ask.** It closes on the operating philosophy, not a decision.
-- **Publishing:** merging to `main` publishes `/display.html` via GitHub Pages. The fonts are proprietary Walmart typefaces.
+- **Slide 18's ask is drafted from the deck's own content.** The named teams (Display Product, Sales, Media Insights) and the three commitments are proposals; confirm owners before presenting.
+- **Publishing:** merging to `main` publishes `/advertiser-experience.html` via GitHub Pages. The fonts are proprietary Walmart typefaces.
 - **PowerPoint fonts:** the file uses the desktop names Everyday Sans Headline Light / Light / UI / UI Medium / Mono. Confirm they match an installed PowerPoint's font menu.
 
 ---
@@ -362,8 +364,7 @@ Build notes that aren't obvious from the markup:
 
   /* 14 · 17 · loops */
   .slide.s-ls .loop.dx-n5 { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 32px; }
-  .slide.s-ls .loop.dx-n6 { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0 28px; }
-  .slide.s-ls .loop.dx-n5 h3, .slide.s-ls .loop.dx-n6 h3 { font-size: 26px; line-height: 1.2; }
+  .slide.s-ls .loop.dx-n5 h3 { font-size: 26px; line-height: 1.2; }
   .slide.s-ls .loop .ord { font-size: 12px; }
   .dx-repeat { margin-top: 14px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--true); }
   .dx-close {
@@ -375,7 +376,9 @@ Build notes that aren't obvious from the markup:
   .slide.s-ls .tbl.dx-matrix { width: 100%; font-size: 17px; }
   .slide.s-ls .tbl.dx-matrix th:not(:first-child), .slide.s-ls .tbl.dx-matrix td:not(:first-child) { text-align: center; width: 13%; }
   .slide.s-ls .tbl.dx-matrix td:not(:first-child) { color: var(--true); font-size: 18px; }
-  .slide.s-ls .tbl.dx-matrix td, .slide.s-ls .tbl.dx-matrix th { padding-top: 10px; padding-bottom: 10px; }
+  .slide.s-ls .tbl.dx-matrix td, .slide.s-ls .tbl.dx-matrix th { padding-top: 8px; padding-bottom: 8px; }
+  .slide.s-ls .tbl.dx-matrix tfoot td { border-top: 1px solid var(--true); font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--true); }
+  .slide.s-ls .tbl.dx-matrix tfoot td:not(:first-child) { font-family: var(--display); font-size: 26px; letter-spacing: -0.02em; text-transform: none; }
 ```
 
 ## Appendix B · `slides.html` (Verbatim)
@@ -603,8 +606,8 @@ Build notes that aren't obvious from the markup:
       <div class="slide-content">
 <div class="slide-content-inner">
 <div class="dx-shift-wrap">
-<div class="dx-tiers" role="img" aria-label="Seven shared advertiser jobs are served by eight shared experience capabilities, which power Sponsored, Display, Offsite and Marketplace.">
-  <div class="dx-tier"><span class="ord">Advertiser jobs</span><div class="dx-serves n7"><span>Plan</span><span>Build</span><span>Target</span><span>Launch</span><span>Measure</span><span>Diagnose</span><span>Optimize</span></div></div>
+<div class="dx-tiers" role="img" aria-label="Six shared advertiser jobs — plan, build, launch, understand, optimize, grow — are served by eight shared experience capabilities, which power Sponsored, Display, Offsite and Marketplace.">
+  <div class="dx-tier"><span class="ord">Advertiser jobs</span><div class="dx-serves n7"><span>Plan</span><span>Build</span><span>Launch</span><span>Understand</span><span>Optimize</span><span>Grow</span></div></div>
   <div class="dx-tier"><span class="ord">Shared experience capabilities</span><div class="dx-found"><span>Campaign management</span><span>Audience Library</span><span>Measurement + reporting</span><span>Creative + assets</span><span>Recommendations</span><span>Experimentation</span><span>Forecasting</span><span>Notifications</span></div></div>
   <div class="dx-tier"><span class="ord">Advertising experiences</span><div class="dx-serves"><span>Sponsored</span><span>Display</span><span>Offsite</span><span>Marketplace</span></div></div>
 </div>
@@ -613,7 +616,7 @@ Build notes that aren't obvious from the markup:
       </div>
       </div>
     </div>
-    <aside class="notes">This is where the deck returns decisively from Display to the broader strategy. Read it top to bottom: the jobs are the same, so the capabilities should be too. Channels adapt only where the media genuinely differs.</aside>
+    <aside class="notes">This is where the deck returns decisively from Display to the broader strategy. The top row is the same six-step journey from the opening slide. Read it top to bottom: the jobs are the same, so the capabilities should be too. Channels adapt only where the media genuinely differs.</aside>
   </section>
 
   <section class="slide paper s-ls" data-label="Setup">
@@ -864,6 +867,7 @@ Build notes that aren't obvious from the markup:
     <tr><td>Recommendation Experience Framework</td><td>●</td><td></td><td>●</td><td>●</td><td>●</td></tr>
     <tr><td>Campaign Experiments</td><td></td><td></td><td></td><td>●</td><td></td></tr>
   </tbody>
+  <tfoot><tr><td>Initiatives addressing each problem</td><td>7</td><td>3</td><td>5</td><td>8</td><td>7</td></tr></tfoot>
 </table>
 <p class="dx-caveat">Dots indicate which advertiser pain points each initiative is intended to address. They are not scores, rankings or estimates of relative impact.</p>
 <p class="dx-say"><span class="ord">The system</span><span>Individual initiatives become more valuable when they work together as part of a coherent experience system.</span></p>
@@ -871,7 +875,7 @@ Build notes that aren't obvious from the markup:
       </div>
       </div>
     </div>
-    <aside class="notes">Read the columns, not the rows: every pain point has more than one initiative against it. Say the caveat — dots are intent, not impact.</aside>
+    <aside class="notes">Read the columns, not the rows. The bottom row counts initiatives, not impact. Fragmented is the thinnest column at three — that is the pain point to watch, and it is why the shared capabilities matter. Say the caveat: dots are intent, not impact, so two rows with five dots do not mean those two solve everything.</aside>
   </section>
 
   <section class="slide paper s-ls" data-label="Operating loop">
@@ -884,11 +888,10 @@ Build notes that aren't obvious from the markup:
       <div class="slide-content">
 <div class="slide-content-inner">
 <div class="dx-loop-wrap">
-<div class="loop dx-n6" role="img" aria-label="Listen, diagnose, simplify, enable, measure, learn, then repeat.">
+<div class="loop dx-n5" role="img" aria-label="Listen, diagnose, simplify, measure, learn, then repeat.">
   <article><span class="dot" aria-hidden="true"></span><span class="ord">Listen</span><h3>UXR, VOC, Sales, Support, Pendo</h3></article>
   <article><span class="dot" aria-hidden="true"></span><span class="ord">Diagnose</span><h3>Behavior, experience, performance</h3></article>
-  <article><span class="dot" aria-hidden="true"></span><span class="ord">Simplify</span><h3>Remove friction and unnecessary complexity</h3></article>
-  <article><span class="dot" aria-hidden="true"></span><span class="ord">Enable</span><h3>Shared capabilities and better guidance</h3></article>
+  <article><span class="dot" aria-hidden="true"></span><span class="ord">Simplify</span><h3>Remove friction with shared capabilities and better guidance</h3></article>
   <article><span class="dot" aria-hidden="true"></span><span class="ord">Measure</span><h3>Behavior, adoption, media outcomes</h3></article>
   <article><span class="dot" aria-hidden="true"></span><span class="ord">Learn</span><h3>Decide what to improve, refine or scale next</h3><p class="dx-repeat">↺ Repeat</p></article>
 </div>
@@ -897,6 +900,24 @@ Build notes that aren't obvious from the markup:
       </div>
       </div>
     </div>
-    <aside class="notes">End on the operating philosophy and the accountability model, not a feature list. Read the closing line and stop.</aside>
+    <aside class="notes">The operating philosophy and the accountability model, not a feature list. Five steps, matching the title. Read the closing line, then move to the ask.</aside>
+  </section>
+
+  <section class="slide navy s-close" data-label="The ask">
+    <div class="body">
+      <div class="slide-header">
+<span class="pill eyebrow--feature">What we need</span>
+<h1>Three commitments make this <em class="mark">work</em>.</h1>
+<p class="sub">The strategy only holds if diagnosis, ownership and measurement are agreed before solutions scale.</p>
+      </div>
+      <div class="slide-content">
+<div class="ask">
+        <div><div class="k">Align</div><p>Diagnose Display across all three contributors before prescribing a solution, and use it as the first proof point for this approach.</p></div>
+        <div><div class="k">Staff</div><p>Stand up a joint diagnosis with Display Product, Sales and Media Insights, with shared access to behavioral, setup and delivery data.</p></div>
+        <div><div class="k">Measure</div><p>Agree the outcome measures for Goal-Based Buying, recommendations and shared capabilities before any of them scale.</p></div>
+      </div>
+      </div>
+    </div>
+    <aside class="notes">These are proposals, not decisions already taken. Align is about the approach; Staff is about who does the diagnosis; Measure is about how we will know. If only one lands today, make it Align.</aside>
   </section>
 ```

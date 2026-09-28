@@ -152,8 +152,7 @@
 
   /* 14 · 17 · loops */
   .slide.s-ls .loop.dx-n5 { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 32px; }
-  .slide.s-ls .loop.dx-n6 { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0 28px; }
-  .slide.s-ls .loop.dx-n5 h3, .slide.s-ls .loop.dx-n6 h3 { font-size: 26px; line-height: 1.2; }
+  .slide.s-ls .loop.dx-n5 h3 { font-size: 26px; line-height: 1.2; }
   .slide.s-ls .loop .ord { font-size: 12px; }
   .dx-repeat { margin-top: 14px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--true); }
   .dx-close {
@@ -165,4 +164,6 @@
   .slide.s-ls .tbl.dx-matrix { width: 100%; font-size: 17px; }
   .slide.s-ls .tbl.dx-matrix th:not(:first-child), .slide.s-ls .tbl.dx-matrix td:not(:first-child) { text-align: center; width: 13%; }
   .slide.s-ls .tbl.dx-matrix td:not(:first-child) { color: var(--true); font-size: 18px; }
-  .slide.s-ls .tbl.dx-matrix td, .slide.s-ls .tbl.dx-matrix th { padding-top: 10px; padding-bottom: 10px; }
+  .slide.s-ls .tbl.dx-matrix td, .slide.s-ls .tbl.dx-matrix th { padding-top: 8px; padding-bottom: 8px; }
+  .slide.s-ls .tbl.dx-matrix tfoot td { border-top: 1px solid var(--true); font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--true); }
+  .slide.s-ls .tbl.dx-matrix tfoot td:not(:first-child) { font-family: var(--display); font-size: 26px; letter-spacing: -0.02em; text-transform: none; }

@@ -4,7 +4,7 @@ const fs = require('fs');
 (async()=>{
   const b = await chromium.launch({executablePath:'/opt/pw-browsers/chromium'});
   const p = await b.newPage({viewport:{width:1920,height:1080}, reducedMotion:'reduce'});
-  await p.goto(process.argv[2] || 'http://127.0.0.1:8811/display.html',{waitUntil:'load'});
+  await p.goto(process.argv[2] || 'http://127.0.0.1:8811/advertiser-experience.html',{waitUntil:'load'});
   await p.evaluate(()=>document.fonts.ready); await p.waitForTimeout(500);
   const n = await p.evaluate(()=>document.querySelectorAll('section.slide').length);
   const out = [];
