@@ -3,3 +3,5 @@ __pycache__/
 .github-token
 deck/display/pptx/layout.json
 deck/display/pptx/node_modules
+deck/master-template/node_modules
+deck/master-template/build-map.json
