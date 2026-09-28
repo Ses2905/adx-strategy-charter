@@ -66,19 +66,19 @@ const fs = require('fs');
             const re=/\S+|\s+/g; let m;
             while((m=re.exec(raw))){ if(/^\s/.test(m[0])){pieces.push({sp:true,st});continue;}
               const rg=document.createRange(); rg.setStart(c,m.index); rg.setEnd(c,m.index+m[0].length);
-              const rs=rg.getClientRects(); const top=rs.length?rs[0].bottom:null; const left=rs.length?rs[0].left:null;
-              pieces.push({t:m[0],st,top,left}); } }
+              const rs=rg.getClientRects(); const top=rs.length?rs[0].bottom:null; const left=rs.length?rs[0].left:null; const ttop=rs.length?rs[0].top:null;
+              pieces.push({t:m[0],st,top,left,ttop}); } }
           else if(c.nodeType===1){ if(skip(c))continue; if(c.tagName==='BR'){pieces.push({br:true});continue;} if(!visible(c))continue; const cc=getComputedStyle(c); if(INLINE.has(cc.display)&&c.tagName!=='svg'){ walk(c); if(parseFloat(cc.marginRight)>0) pieces.push({sp:true,st:fontOf(cc)}); } }
         }})(el);
         if(!has)continue;
         // build runs, inserting a break wherever the browser started a new line
-        const runs=[]; let lastTop=null, pendSp=null, minLeft=Infinity;
+        const runs=[]; let lastTop=null, pendSp=null, minLeft=Infinity, minTop=Infinity;
         const lhpx=(cs.lineHeight==='normal'?parseFloat(cs.fontSize)*1.2:parseFloat(cs.lineHeight));
         const push=(t,st)=>{const L=runs[runs.length-1]; if(L&&!L.br&&L.st===st)L.t+=t; else runs.push({t,st});};
         for(const pc of pieces){
           if(pc.br){ runs.push({br:true}); lastTop=null; pendSp=null; continue; }
           if(pc.sp){ pendSp=pc.st; continue; }
-          if(pc.left!=null) minLeft=Math.min(minLeft,pc.left-stage.left);
+          if(pc.left!=null) minLeft=Math.min(minLeft,pc.left-stage.left); if(pc.ttop!=null) minTop=Math.min(minTop,pc.ttop-stage.top);
           if(lastTop!=null && pc.top!=null && pc.top-lastTop>lhpx*0.5){ runs.push({br:true}); pendSp=null; }
           else if(pendSp && runs.length && !runs[runs.length-1].br) push(' ',pendSp);
           pendSp=null; push(pc.t,pc.st); if(pc.top!=null) lastTop=pc.top;
@@ -87,6 +87,8 @@ const fs = require('fs');
         const pad=s=>parseFloat(cs['padding'+s])+parseFloat(cs['border'+s+'Width']);
         let cx=r.x+pad('Left'), cy=r.y+pad('Top'), cw=r.w-pad('Left')-pad('Right'), ch=r.h-pad('Top')-pad('Bottom');
         if(isFinite(minLeft) && minLeft>cx+1 && cs.textAlign!=='center'){ cw-=minLeft-cx; cx=minLeft; }
+        // own text starting below a block child (label above a sentence): anchor at the text's first line
+        if(isFinite(minTop)){ const half=(lhpx-parseFloat(cs.fontSize))/2; if(minTop-half>cy+4){ ch-=minTop-half-cy; cy=minTop-half; } }
         const lh=lhpx;
         const lines=runs.filter(x=>x.br).length+1;
         const align=cs.textAlign==='center'?'c':(cs.textAlign==='right'||cs.textAlign==='end')?'r':'l';

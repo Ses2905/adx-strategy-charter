@@ -26,7 +26,7 @@ const tr = c => c && c.a < 1 ? Math.round((1-c.a)*100) : 0;
     spark[f] = 'image/png;base64,' + (await sharp(fs.readFileSync(require('path').join(__dirname,'../../../docs/logos',f)),{density:600}).resize(256,256).png().toBuffer()).toString('base64');
   const pres = new pptxgen();
   pres.layout = 'LAYOUT_WIDE';
-  pres.title = 'Display + Advertiser Experience';
+  pres.title = 'Advertiser Experience Strategy';
   pres.author = 'Advertiser Experience';
   L.forEach((s, i) => {
     const sl = pres.addSlide();
@@ -75,6 +75,6 @@ const tr = c => c && c.a < 1 ? Math.round((1-c.a)*100) : 0;
       align: 'right', valign: 'middle', fontFace: FONT.mono, fontSize: PT(13), charSpacing: PT(13*0.12), color: s.navy ? 'D0D5DE' : '3D4A63' });
     if (s.notes) sl.addNotes(s.notes);
   });
-  await pres.writeFile({ fileName: require('path').join(__dirname,'../Display-Advertiser-Experience.pptx') });
+  await pres.writeFile({ fileName: require('path').join(__dirname,'../Advertiser-Experience-Strategy.pptx') });
   console.log('written');
 })();
