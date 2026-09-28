@@ -1,3 +1,5 @@
 __pycache__/
 *.pyc
 .github-token
+deck/display/pptx/layout.json
+deck/display/pptx/node_modules
