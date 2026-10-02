@@ -1,48 +1,77 @@
-  /* Walmart Connect theme — layered on the Advertiser Experience deck.
-     Source: Walmart brand guidelines, Walmart Connect page (p48). Keep the Spark,
-     typeface, icons and photo style; add the Connect accents and gradient.
-       purple #993EF4 → teal #00D0CD   (the Connect gradient)
-       purple #993EF4 → True Blue      (text on light grounds; teal fails contrast there)
-     The odd solid colours (#993EF5/6/7) are sentinels: the browser paints the
-     gradient, the PPTX exporter reads the solid colour and swaps in a native gradient. */
-  :root { --cx-purple: #993EF4; --cx-teal: #00D0CD; --cx-tint: rgba(153,62,244,0.06); }
-
-  /* rules: any True Blue rule the kit draws becomes the Connect gradient */
-  .cx-rule { border-color: #993EF6 !important; border-image: linear-gradient(90deg, #993EF4, #00D0CD) 1 !important; }
-  .cx-rule-v { border-color: #993EF6 !important; border-image: linear-gradient(180deg, #993EF4, #00D0CD) 1 !important; }
-  .cx-fill { background-color: #993EF6 !important; background-image: linear-gradient(90deg, #993EF4, #00D0CD) !important; }
-
-  /* display type: gradient ink */
-  .cx-text, em.mark {
-    color: #993EF5 !important;
-    background-image: linear-gradient(90deg, #993EF4, #0053E2);
-    -webkit-background-clip: text; background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-box-decoration-break: clone; box-decoration-break: clone;
-    padding-right: 0.06em; /* keeps an italic's overhang inside the clip */
+  /* Walmart Connect theme, layered on the Advertiser Experience deck.
+     Source: Walmart Connect Guidelines v1.0 (May 2025).
+       Backgrounds      White and Bentonville Blue only (p28)
+       Palette weight   Bentonville > White > Everyday Blue > Purple > True Blue > Teal (p21)
+       Text pairings    small text on white is Bentonville Blue only; purple passes for large text (p26–27)
+       Gradient         Purple → Everyday Blue → Teal, 40/40/20 (p24); oversized type and the
+                        Connect Line only, never small text, data points or backgrounds (p29, p36–37)
+       Type             Headline Light + Regular, sentence case, no italics or tracked-out headlines (p39, p42)
+       Logos            Spark (Everyday Blue) and wordmark are never locked up: Spark top right,
+                        wordmark bottom left (p56–59); presentation chrome per p71
+     #993EF6 is a sentinel: the browser paints the gradient, the PPTX exporter reads the
+     solid colour and swaps in a native gradient. */
+  :root {
+    --paper: #FFFFFF; --paper-2: #FFFFFF;
+    --cx-purple: #993EF4; --cx-teal: #00D0CD;
+    --cx-gradient: linear-gradient(90deg, #993EF4 0%, #4DBDF5 60%, #00D0CD 100%);
   }
-  .navy em.mark, .navy .cx-text {
-    color: #993EF6 !important;
-    background-image: linear-gradient(90deg, #A536FC, #00D0CD);
+  .slide.paper { background: #FFFFFF; }
+  .slide * { font-style: normal !important; }
+
+  /* headline accent: purple on white, the gradient on navy (oversized type only) */
+  em.mark { font-family: var(--display); font-weight: 300; color: var(--cx-purple); }
+  .navy em.mark {
+    color: #993EF6;
+    background-image: var(--cx-gradient);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
   }
 
-  /* quiet surfaces pick up the purple tint instead of the blue one */
-  .slide.s-ls .stack.dx-model .found, .dx-found { background: var(--cx-tint); }
-  .dx-found span { border-color: rgba(153,62,244,0.35); }
+  /* what the kit paints True Blue on white (tagged by connect.js) */
+  .cx-big { color: var(--cx-purple) !important; }     /* ≥ 20px: large-text purple */
+  .cx-small { color: var(--navy) !important; }        /* small text: Bentonville only */
+  .cx-rule { border-color: var(--navy) !important; }  /* structural rules */
+  .cx-mark { background-color: var(--navy) !important; border-color: var(--navy) !important; }
 
-  /* signature colour bar: navy · white · Everyday · True Blue · purple · teal */
-  .cx-bar {
-    position: absolute; left: 0; right: 0; top: 0; height: 8px; z-index: 2; pointer-events: none;
-    background-color: #993EF7;
-    background-image: linear-gradient(90deg,
-      #001E60 0 16.666%, #FFFFFF 16.666% 33.333%, #4DBDF5 33.333% 50%,
-      #0053E2 50% 66.666%, #993EF4 66.666% 83.333%, #00D0CD 83.333% 100%);
+  /* the Connect Line: one weighted gradient stroke for every connector */
+  .slide .chain::before, .slide .loop::before {
+    height: 6px; top: 7px; background: #993EF6; background-image: var(--cx-gradient); border-radius: 3px;
   }
-  .slide:not(.navy) .cx-bar { box-shadow: inset 0 -1px 0 rgba(0,30,96,0.06); }
+  .slide .chain .dot, .slide .loop .dot {
+    width: 8px; height: 8px; top: 6px; inset-inline-start: 4px; border: 0; background: #FFFFFF;
+  }
+  /* closing statements sit on the Connect Line */
+  .slide .dx-say, .slide .dx-close {
+    border-top: 3px solid #993EF6 !important; border-image: var(--cx-gradient) 1 !important;
+  }
 
-  /* chrome */
-  .toc-fill, .stage[data-theme="navy"] .toc-fill { background: linear-gradient(180deg, #993EF4, #00D0CD); }
-  .toc button.is-done i, .toc button.is-current i { background: #993EF4; border-color: #993EF4; }
+  /* labels: Everyday Blue pill, navy type (AAA small-text pairing) */
+  .slide .eyebrow, .slide .pill, .slide .eyebrow--feature,
+  .slide.navy .eyebrow, .slide.navy .pill, .slide.navy .eyebrow--feature {
+    color: var(--navy); background: #4DBDF5; letter-spacing: 0.08em;
+  }
+
+  /* no partial-opacity tints (p29): the measurement layer becomes a gradient-border card (p35) */
+  .slide.s-ls .stack.dx-model .found {
+    background: linear-gradient(#FFFFFF, #FFFFFF) padding-box, var(--cx-gradient) border-box;
+    background-color: #FFFFFF;
+    border: 3px solid rgba(153, 62, 246, 0.004) !important; border-radius: 30px; padding: 22px 30px;
+  }
+  .dx-found { background: transparent; border-top-color: var(--navy) !important; }
+  .dx-found span { border-color: #4DBDF5; color: var(--navy); }
+
+  /* chrome: team label top left, Spark top right, confidentiality bottom left, wordmark on the cover */
+  .cx-team {
+    position: absolute; z-index: 7; top: 44px; inset-inline-start: var(--rail);
+    font-family: var(--ui); font-size: 15px; color: var(--navy);
+  }
+  .cx-spark { position: absolute; z-index: 7; top: 36px; inset-inline-end: calc(var(--rail) + var(--nav)); width: 40px; height: 40px; }
+  .stage[data-theme="navy"] .cx-team { color: #FFFFFF; }
+  .pager .brand .spark { display: none; }
+  .pager .meta { font-family: var(--ui); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--navy); }
+  .cx-wordmark { display: none; height: 30px; width: auto; }
+  .stage.cx-cover .cx-wordmark { display: block; }
+  .stage.cx-cover .pager .meta { display: none; }
+  .toc-fill, .stage[data-theme="navy"] .toc-fill { background: #4DBDF5; }
+  .toc button.is-done i, .toc button.is-current i { background: var(--navy); border-color: var(--navy); }
   .stage[data-theme="navy"] .toc button.is-done i,
-  .stage[data-theme="navy"] .toc button.is-current i { background: #00D0CD; border-color: #00D0CD; }
-  .pager .brand .cx-wordmark { height: 15px; width: auto; display: block; flex-shrink: 0; }
+  .stage[data-theme="navy"] .toc button.is-current i { background: #4DBDF5; border-color: #4DBDF5; }

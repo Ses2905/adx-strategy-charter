@@ -30,14 +30,20 @@ out = re.sub(r'<script src="editor[^"]*"></script>\n', '', out)
 out = out.replace('</head>', '<style>\n' + css + '</style>\n</head>', 1)
 name = 'advertiser-experience.html'
 if THEME == 'connect':
-    # Walmart Connect: same slides, Connect accents + gradient, Connect wordmark beside the Spark.
+    # Walmart Connect presentation system (guidelines p71): same slides, Connect colour,
+    # team label top left, Spark top right, confidentiality bottom left, wordmark on the cover.
     out = out.replace('<title>Advertiser Experience Strategy · draft</title>', '<title>Advertiser Experience Strategy · Walmart Connect · draft</title>')
     out = out.replace('</head>', '<style>\n' + (here / 'connect.css').read_text() + '</style>\n</head>', 1)
-    out = out.replace('<span class="meta">', '<img class="cx-wordmark" id="cxWordmark" src="logos/connect-wordmark-white.svg" alt="Walmart Connect">\n      <span class="meta">', 1)
+    out = out.replace('<span class="meta">Advertiser Experience Strategy · draft</span>',
+        '<img class="cx-wordmark" id="cxWordmark" data-cx-chrome src="logos/connect-wordmark-white.svg" alt="Walmart Connect">\n'
+        '      <span class="meta" data-cx-chrome>Private and confidential</span>')
+    out = out.replace('<div class="chrome-layer" id="chromeLayer">', '<div class="chrome-layer" id="chromeLayer">\n'
+        '  <span class="cx-team" data-cx-chrome>Advertiser Experience</span>\n'
+        '  <img class="cx-spark" data-cx-chrome src="logos/spark-everyday-blue.svg" alt="Walmart Spark">', 1)
     js = 'spark.src = navy ? "logos/spark-white.svg" : "logos/spark-everyday-blue.svg";'
     assert js in out
-    out = out.replace(js, js + '\n    document.getElementById("cxWordmark").src = navy ? "logos/connect-wordmark-white.svg" : "logos/connect-wordmark-navy.svg";')
-    # tag before the deck script runs, so the first paint is already themed
+    out = out.replace(js, js + '\n    document.getElementById("cxWordmark").src = navy ? "logos/connect-wordmark-white.svg" : "logos/connect-wordmark-navy.svg";'
+        '\n    stage.classList.toggle("cx-cover", i === 0);')
     i = out.index('<script', out.index('<div class="chrome-layer"'))
     out = out[:i] + '<script>\n' + (here / 'connect.js').read_text() + '</script>\n' + out[i:]
     name = 'advertiser-experience-connect.html'

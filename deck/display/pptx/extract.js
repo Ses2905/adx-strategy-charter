@@ -97,8 +97,8 @@ const fs = require('fs');
       }
       const navy=slide.classList.contains('navy');
       let notes=(slide.querySelector('aside.notes')||{}).textContent||''; slide.querySelectorAll('.fn').forEach(f=>{ const n=f.querySelector('.fn-n'), src=f.querySelector('.fn-src'); if(n&&src) notes+='\n\nFootnote '+n.textContent.trim()+': '+src.textContent.trim(); });
-      const pn=document.getElementById('pagenum').textContent, meta=document.querySelector('.pager .meta'), spark=document.getElementById('spark'), wm=document.getElementById('cxWordmark');
-      return {label:slide.dataset.label,navy,notes:notes.trim(),shapes,texts,chrome:{meta:{...R(meta),t:meta.textContent,...fontOf(getComputedStyle(meta))},page:{...R(document.getElementById('pagenum')),t:pn,...fontOf(getComputedStyle(document.getElementById('pagenum')))},spark:{...R(spark),src:spark.getAttribute('src')},wordmark:wm?{...R(wm),src:wm.getAttribute('src')}:null}};
+      const pn=document.getElementById('pagenum').textContent, meta=document.querySelector('.pager .meta'), spark=document.getElementById('spark');
+      return {label:slide.dataset.label,navy,notes:notes.trim(),shapes,texts,chrome:{meta:{...R(meta),t:meta.textContent,...fontOf(getComputedStyle(meta))},page:{...R(document.getElementById('pagenum')),t:pn,...fontOf(getComputedStyle(document.getElementById('pagenum')))},spark:{...R(spark),src:spark.getAttribute('src')},cx:[...document.querySelectorAll('[data-cx-chrome]')].filter(e=>visible(e)).map(e=>e.tagName==='IMG'?{img:e.getAttribute('src'),...R(e)}:{t:e.textContent.trim(),...R(e),...fontOf(getComputedStyle(e))})}};
     }, i));
   }
   fs.writeFileSync(require('path').join(__dirname, process.argv[3] || 'layout.json'), JSON.stringify(out));
