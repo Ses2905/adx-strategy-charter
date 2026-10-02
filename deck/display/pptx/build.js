@@ -42,7 +42,7 @@ const tr = c => c && c.a < 1 ? Math.round((1-c.a)*100) : 0;
   pres.author = 'Advertiser Experience';
   L.forEach((s, i) => {
     const sl = pres.addSlide();
-    sl.background = { color: s.navy ? '001E60' : (s.chrome.cx ? 'FFFFFF' : 'F5F6F8') };
+    sl.background = { color: s.navy ? '001E60' : (s.chrome.cx && s.chrome.cx.length ? 'FFFFFF' : 'F5F6F8') };
     for (const sh of s.shapes) {
       if (sh.k === 'line') {
         sl.addShape(pres.shapes.LINE, { x: IN(sh.x), y: IN(sh.y), w: IN(sh.w), h: IN(sh.h),
@@ -80,7 +80,7 @@ const tr = c => c && c.a < 1 ? Math.round((1-c.a)*100) : 0;
     }
     // footer chrome: spark, meta, page number
     const c = s.chrome;
-    if (c.cx) {
+    if (c.cx && c.cx.length) {
       // Walmart Connect presentation chrome (guidelines p71)
       for (const e of c.cx) {
         if (e.img) sl.addImage({ data: images[path.basename(e.img)], x: IN(e.x), y: IN(e.y), w: IN(e.w), h: IN(e.h), altText: /spark/.test(e.img) ? 'Walmart Spark' : 'Walmart Connect' });
