@@ -1,0 +1,80 @@
+// Build the .pptx from layout.json. 1920px stage -> 13.333in; 1px = 1/144in = 0.5pt.
+const pptxgen = require('pptxgenjs');
+const sharp = require('sharp');
+const fs = require('fs');
+const L = JSON.parse(fs.readFileSync(require('path').join(__dirname,'layout.json')));
+const IN = px => px / 144, PT = px => px * 0.5;
+// Desktop Everyday Sans family names. Change here if your PowerPoint lists them differently.
+const FONT = {
+  headline: 'Everyday Sans Headline Light',
+  italic: 'Everyday Sans Light',
+  ui: 'Everyday Sans UI',
+  uiMedium: 'Everyday Sans UI Medium',
+  mono: 'Everyday Sans Mono',
+};
+function face(r){
+  if (/Mono/.test(r.fam)) return {f:FONT.mono,b:false};
+  if (/Headline/.test(r.fam)) return {f:FONT.headline,b:false};
+  if (r.fam==='Everyday Sans') return {f:FONT.italic,b:false};
+  if (r.wt>=500) return {f:FONT.uiMedium,b:r.wt>=600};
+  return {f:FONT.ui,b:false};
+}
+const tr = c => c && c.a < 1 ? Math.round((1-c.a)*100) : 0;
+(async()=>{
+  const spark = {};
+  for (const f of ['spark-white.svg','spark-everyday-blue.svg'])
+    spark[f] = 'image/png;base64,' + (await sharp(fs.readFileSync(require('path').join(__dirname,'../../../docs/logos',f)),{density:600}).resize(256,256).png().toBuffer()).toString('base64');
+  const pres = new pptxgen();
+  pres.layout = 'LAYOUT_WIDE';
+  pres.title = 'Advertiser Experience Strategy';
+  pres.author = 'Advertiser Experience';
+  L.forEach((s, i) => {
+    const sl = pres.addSlide();
+    sl.background = { color: s.navy ? '001E60' : 'F5F6F8' };
+    for (const sh of s.shapes) {
+      if (sh.k === 'line') {
+        sl.addShape(pres.shapes.LINE, { x: IN(sh.x), y: IN(sh.y), w: IN(sh.w), h: IN(sh.h),
+          line: { color: sh.c.hex, width: Math.max(0.5, PT(sh.lw)), transparency: tr(sh.c) } });
+      } else {
+        const o = { x: IN(sh.x), y: IN(sh.y), w: IN(sh.w), h: IN(sh.h) };
+        o.fill = sh.fill ? { color: sh.fill.hex, transparency: tr(sh.fill) } : { type: 'none' };
+        o.line = sh.line ? { color: sh.line.c.hex, width: Math.max(0.5, PT(sh.line.w)), transparency: tr(sh.line.c) } : { type: 'none' };
+        let type = pres.shapes.RECTANGLE;
+        if (sh.k === 'ell' || (sh.round && Math.abs(sh.w - sh.h) < 1)) type = pres.shapes.OVAL;
+        else if (sh.rad > 0) { type = pres.shapes.ROUNDED_RECTANGLE; o.rectRadius = Math.min(0.5, sh.rad / Math.min(sh.w, sh.h)); }
+        sl.addShape(type, o);
+      }
+    }
+    for (const t of s.texts) {
+      const runs = []; let first = true;
+      t.runs.forEach((r, k) => {
+        if (r.br) { if (runs.length) runs[runs.length-1].options.breakLine = true; return; }
+        const fc = face(r); let txt = r.t; if (r.tt === 'uppercase') txt = txt.toUpperCase();
+        const o = { fontFace: fc.f, bold: fc.b, italic: r.it && fc.f !== FONT.italic ? true : (fc.f===FONT.italic), fontSize: PT(r.px),
+          color: (r.color || {hex:'001E60'}).hex };
+        if (r.ls) o.charSpacing = PT(r.ls);
+        if (r.va === 'super' || (r.px < 14 && /^\d$/.test(txt.trim()) && t.runs.length > 1)) o.superscript = true;
+        runs.push({ text: txt, options: o });
+      });
+      if (!runs.length) continue;
+      const single = true; // breaks are explicit now, so every box gets slack
+      // One-line text gets slack so PowerPoint's metrics never force a wrap.
+      let x = t.x, w = t.w + (single ? Math.max(24, t.w * 0.08) : 4);
+      if (t.align === 'c') x -= (w - t.w) / 2; else if (t.align === 'r') x -= (w - t.w);
+      const mainPx = Math.max(...t.runs.filter(r=>!r.br).map(r => r.px));
+      sl.addText(runs, { x: IN(x), y: IN(t.y), w: IN(w), h: IN(Math.max(t.h, t.lh)), margin: 0, isTextBox: true,
+        align: { l: 'left', c: 'center', r: 'right' }[t.align], valign: t.valign === 'm' ? 'middle' : 'top',
+        lineSpacing: PT(t.lh), fit: 'none', wrap: true, paraSpaceBefore: 0, paraSpaceAfter: 0 });
+    }
+    // footer chrome: spark, meta, page number
+    const c = s.chrome;
+    sl.addImage({ data: spark[s.navy ? 'spark-white.svg' : 'spark-everyday-blue.svg'], x: IN(c.spark.x), y: IN(c.spark.y), w: IN(c.spark.w), h: IN(c.spark.h), altText: 'Walmart Spark' });
+    sl.addText(c.meta.t, { x: IN(c.meta.x), y: IN(c.spark.y), w: IN(c.meta.w + 60), h: IN(c.spark.h), margin: 0, isTextBox: true, valign: 'middle',
+      fontFace: FONT.ui, fontSize: PT(c.meta.px), color: s.navy ? 'FFFFFF' : '3D4A63' });
+    sl.addText(String(i+1).padStart(2,'0') + ' / ' + String(L.length).padStart(2,'0'), { x: IN(1640), y: IN(c.spark.y), w: IN(200), h: IN(c.spark.h), margin: 0, isTextBox: true,
+      align: 'right', valign: 'middle', fontFace: FONT.mono, fontSize: PT(13), charSpacing: PT(13*0.12), color: s.navy ? 'D0D5DE' : '3D4A63' });
+    if (s.notes) sl.addNotes(s.notes);
+  });
+  await pres.writeFile({ fileName: require('path').join(__dirname,'../Advertiser-Experience-Strategy.pptx') });
+  console.log('written');
+})();
