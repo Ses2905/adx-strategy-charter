@@ -2,7 +2,19 @@
 const pptxgen = require('pptxgenjs');
 const sharp = require('sharp');
 const fs = require('fs');
-const L = JSON.parse(fs.readFileSync(require('path').join(__dirname,'layout.json')));
+// usage: node build.js [layout.json] [output.pptx]
+const path = require('path');
+const L = JSON.parse(fs.readFileSync(path.join(__dirname, process.argv[2] || 'layout.json')));
+const OUT = path.join(__dirname, '..', process.argv[3] || 'Advertiser-Experience-Strategy.pptx');
+// Walmart Connect theme sentinels (see connect.css): solid colours the browser never shows,
+// swapped here for native PowerPoint gradients.
+const GS = (stops) => '<a:gradFill rotWithShape="1"><a:gsLst>' + stops.map(([p, c]) => `<a:gs pos="${p}"><a:srgbClr val="${c}"/></a:gs>`).join('') + '</a:gsLst><a:lin ang="0" scaled="0"/></a:gradFill>';
+const BAR = ['001E60', 'FFFFFF', '4DBDF5', '0053E2', '993EF4', '00D0CD'];
+const SENTINEL = {
+  '993EF5': GS([[0, '993EF4'], [100000, '0053E2']]),   // text on light grounds
+  '993EF6': GS([[0, '993EF4'], [100000, '00D0CD']]),   // rules, fills, text on navy
+  '993EF7': GS(BAR.flatMap((c, i) => [[Math.round(i * 100000 / 6), c], [Math.round((i + 1) * 100000 / 6) - 1, c]])), // signature bar, hard stops
+};
 const IN = px => px / 144, PT = px => px * 0.5;
 // Desktop Everyday Sans family names. Change here if your PowerPoint lists them differently.
 const FONT = {
@@ -21,9 +33,11 @@ function face(r){
 }
 const tr = c => c && c.a < 1 ? Math.round((1-c.a)*100) : 0;
 (async()=>{
-  const spark = {};
+  const spark = {}, wordmark = {};
   for (const f of ['spark-white.svg','spark-everyday-blue.svg'])
     spark[f] = 'image/png;base64,' + (await sharp(fs.readFileSync(require('path').join(__dirname,'../../../docs/logos',f)),{density:600}).resize(256,256).png().toBuffer()).toString('base64');
+  for (const f of new Set(L.filter(s => s.chrome.wordmark).map(s => path.basename(s.chrome.wordmark.src))))
+    wordmark[f] = 'image/png;base64,' + (await sharp(fs.readFileSync(path.join(__dirname, '../../../docs/logos', f)), { density: 600 }).resize({ height: 160 }).png().toBuffer()).toString('base64');
   const pres = new pptxgen();
   pres.layout = 'LAYOUT_WIDE';
   pres.title = 'Advertiser Experience Strategy';
@@ -73,8 +87,19 @@ const tr = c => c && c.a < 1 ? Math.round((1-c.a)*100) : 0;
       fontFace: FONT.ui, fontSize: PT(c.meta.px), color: s.navy ? 'FFFFFF' : '3D4A63' });
     sl.addText(String(i+1).padStart(2,'0') + ' / ' + String(L.length).padStart(2,'0'), { x: IN(1640), y: IN(c.spark.y), w: IN(200), h: IN(c.spark.h), margin: 0, isTextBox: true,
       align: 'right', valign: 'middle', fontFace: FONT.mono, fontSize: PT(13), charSpacing: PT(13*0.12), color: s.navy ? 'D0D5DE' : '3D4A63' });
+    if (c.wordmark) {
+      sl.addImage({ data: wordmark[path.basename(c.wordmark.src)], x: IN(c.wordmark.x), y: IN(c.wordmark.y), w: IN(c.wordmark.w), h: IN(c.wordmark.h), altText: 'Walmart Connect' });
+    }
     if (s.notes) sl.addNotes(s.notes);
   });
-  await pres.writeFile({ fileName: require('path').join(__dirname,'../Advertiser-Experience-Strategy.pptx') });
+  const JSZip = require('jszip');
+  const zip = await JSZip.loadAsync(await pres.write({ outputType: 'nodebuffer' }));
+  let swapped = 0;
+  for (const name of Object.keys(zip.files).filter(n => /^ppt\/slides\/slide\d+\.xml$/.test(n))) {
+    const xml = (await zip.file(name).async('string')).replace(/<a:solidFill><a:srgbClr val="(993EF[567])"(?:\/>|>.*?<\/a:srgbClr>)<\/a:solidFill>/g, (m, k) => (swapped++, SENTINEL[k]));
+    zip.file(name, xml);
+  }
+  fs.writeFileSync(OUT, await zip.generateAsync({ type: 'nodebuffer', compression: 'DEFLATE' }));
+  console.log('gradients', swapped);
   console.log('written');
 })();

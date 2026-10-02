@@ -1,0 +1,48 @@
+  /* Walmart Connect theme — layered on the Advertiser Experience deck.
+     Source: Walmart brand guidelines, Walmart Connect page (p48). Keep the Spark,
+     typeface, icons and photo style; add the Connect accents and gradient.
+       purple #993EF4 → teal #00D0CD   (the Connect gradient)
+       purple #993EF4 → True Blue      (text on light grounds; teal fails contrast there)
+     The odd solid colours (#993EF5/6/7) are sentinels: the browser paints the
+     gradient, the PPTX exporter reads the solid colour and swaps in a native gradient. */
+  :root { --cx-purple: #993EF4; --cx-teal: #00D0CD; --cx-tint: rgba(153,62,244,0.06); }
+
+  /* rules: any True Blue rule the kit draws becomes the Connect gradient */
+  .cx-rule { border-color: #993EF6 !important; border-image: linear-gradient(90deg, #993EF4, #00D0CD) 1 !important; }
+  .cx-rule-v { border-color: #993EF6 !important; border-image: linear-gradient(180deg, #993EF4, #00D0CD) 1 !important; }
+  .cx-fill { background-color: #993EF6 !important; background-image: linear-gradient(90deg, #993EF4, #00D0CD) !important; }
+
+  /* display type: gradient ink */
+  .cx-text, em.mark {
+    color: #993EF5 !important;
+    background-image: linear-gradient(90deg, #993EF4, #0053E2);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone; box-decoration-break: clone;
+    padding-right: 0.06em; /* keeps an italic's overhang inside the clip */
+  }
+  .navy em.mark, .navy .cx-text {
+    color: #993EF6 !important;
+    background-image: linear-gradient(90deg, #A536FC, #00D0CD);
+  }
+
+  /* quiet surfaces pick up the purple tint instead of the blue one */
+  .slide.s-ls .stack.dx-model .found, .dx-found { background: var(--cx-tint); }
+  .dx-found span { border-color: rgba(153,62,244,0.35); }
+
+  /* signature colour bar: navy · white · Everyday · True Blue · purple · teal */
+  .cx-bar {
+    position: absolute; left: 0; right: 0; top: 0; height: 8px; z-index: 2; pointer-events: none;
+    background-color: #993EF7;
+    background-image: linear-gradient(90deg,
+      #001E60 0 16.666%, #FFFFFF 16.666% 33.333%, #4DBDF5 33.333% 50%,
+      #0053E2 50% 66.666%, #993EF4 66.666% 83.333%, #00D0CD 83.333% 100%);
+  }
+  .slide:not(.navy) .cx-bar { box-shadow: inset 0 -1px 0 rgba(0,30,96,0.06); }
+
+  /* chrome */
+  .toc-fill, .stage[data-theme="navy"] .toc-fill { background: linear-gradient(180deg, #993EF4, #00D0CD); }
+  .toc button.is-done i, .toc button.is-current i { background: #993EF4; border-color: #993EF4; }
+  .stage[data-theme="navy"] .toc button.is-done i,
+  .stage[data-theme="navy"] .toc button.is-current i { background: #00D0CD; border-color: #00D0CD; }
+  .pager .brand .cx-wordmark { height: 15px; width: auto; display: block; flex-shrink: 0; }
